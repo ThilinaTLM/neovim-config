@@ -1,9 +1,12 @@
 {
+  "tsserver.npm": "/usr/bin/npm",
   "tsserver.enable": true,
+  "tsserver.typingsCacheLocation": "./idea",
   "tsserver.log": "verbose",
   "typescript.suggest.enabled": true,
   "typescript.format.enabled": true,
   "tsserver.enableJavascript": true,
+  
   "javascript.format.enabled": true,
   "javascript.suggest.enabled": true,
 
