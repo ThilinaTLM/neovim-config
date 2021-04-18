@@ -3,7 +3,8 @@
 " let &packpath=&runtimepath
 " source ~/.vimrc
 " ------------------------------------------------------
-
+let curdir = expand('<sfile>:p:h')
+execute 'set runtimepath+=' . curdir
 set runtimepath^=~/.config/nvim runtimepath+=~/.config/nvim/after
 let &packpath=&runtimepath
 " ---------------------------------------------------------
@@ -53,17 +54,36 @@ call plug#begin('~/.config/nvim/plugged') " required
     " surround words with quotes
     Plug 'tpope/vim-surround'
     
-    " ------------------ Autocompletion -------------------------
-    " auto completion
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    
-    " ------------------- Language Specific ----------------------
-    " Javascript
-    Plug 'pangloss/vim-javascript'
+    " -------------------- Autocompletion -------------------------
 
-" ------------------------------------------------------------
-" end of vim plug list
+    Plug 'dense-analysis/ale' 
+    if has('nvim')
+      Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    else
+      Plug 'Shougo/deoplete.nvim'
+      Plug 'roxma/nvim-yarp'
+      Plug 'roxma/vim-hug-neovim-rpc'
+    endif
+    let g:deoplete#enable_at_startup = 1
+    
+" ----------------------------------------------------------
 call plug#end()
+" end of vim plug list
+" ----------------------------------------------------------
+
+" ----------------------------------------------------------
+"              ┬  ┌─┤┬─┐  ┌─┐┌─┐┌┐┬┬─┤┬┌─┐
+"              │  └─┐│─┘  │  │ ││││├─ ││ ┬
+"              └─┘├─┘┴    └─┘└─┘┴└┘┴  ┴└─┘
+"            Language Server Configurations
+" ----------------------------------------------------------
+
+let b:ale_fixers = {'javascript': ['tsserver']}
+" Use ALE and also some plugin 'foobar' as completion sources for all code.
+call deoplete#custom#option('sources', {
+\ '_': ['ale', 'foobar'],
+\})
+let g:ale_completion_autoimport = 1
 
 " --------------------------------------------------------------------------
 "  Vim Close Pair
@@ -178,72 +198,46 @@ nnoremap <silent> <C-w>4 :4wincmd w<CR>
 "  COC Vim
 " -----------------------------
 
-" Coc goto the definition
-function! s:GoToDefinition()
-	if CocAction('jumpDefinition')
-	  return v:true
-	endif
 
-	let ret = execute("silent! normal \<C-]>")
-	if ret =~ "Error" || ret =~ "错误"
-	  call searchdecl(expand('<cword>'))
-	endif
+" -----------------------------
+"  Netrw File Manager
+" -----------------------------
+let g:netrw_banner = 0
+let g:netrw_linestyle = 3
+let g:netrw_winsize = 15
+let g:netrw_browse_split = 4 " file with :vsplit to the right of the browser.
+let g:netrw_altv = 1
+let g:netrw_liststyle = 3 " Default to tree mode
+let g:netrw_fastbrowse = 0
+
+" Toggle Vexplore 
+function! ToggleVExplorer()
+  if exists("t:expl_buf_num")
+      let expl_win_num = bufwinnr(t:expl_buf_num)
+      if expl_win_num != -1
+          let cur_win_nr = winnr()
+          exec expl_win_num . 'wincmd w'
+          close
+          exec cur_win_nr . 'wincmd w'
+          unlet t:expl_buf_num
+      else
+          unlet t:expl_buf_num
+      endif
+  else
+      exec 'wincmd w'
+      Vexplore
+      let t:expl_buf_num = bufnr("%")
+  endif
 endfunction
 
-" Coc Explorer Tree
-let g:coc_explorer_global_presets = {
-\   'floating': {
-\     'position': 'floating',
-\     'open-action-strategy': 'sourceWindow',
-\   },
-\   'floatingTop': {
-\     'position': 'floating',
-\     'floating-position': 'center-top',
-\     'open-action-strategy': 'sourceWindow',
-\   },
-\   'floatingLeftside': {
-\     'position': 'floating',
-\     'floating-position': 'left-center',
-\     'floating-width': 50,
-\     'open-action-strategy': 'sourceWindow',
-\   },
-\   'floatingRightside': {
-\     'position': 'floating',
-\     'floating-position': 'right-center',
-\     'floating-width': 50,
-\     'open-action-strategy': 'sourceWindow',
-\   },
-\   'simplify': {
-\     'file-child-template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
-\   },
-\   'buffer': {
-\     'sources': [{'name': 'buffer', 'expand': v:true}]
-\   },
-\ }
-nmap <space>e :CocCommand explorer<CR>
-nmap <space>b :CocCommand explorer --preset buffer<CR>
+" If another buffer tries to replace NetrwTree, put it in the other window, and bring back NetrwTree.
+autocmd BufEnter * if bufname('#') =~ 'NetrwTreeListing' && bufname('%') !~ 'NetrwTreeListing' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+autocmd FileType netrw setl bufhidden=wipe
 
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ca  <Plug>(coc-codeaction)
-nmap <leader>cc  :CocCommand<CR>
-
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+" Toggle explorer with Ctrl-E
+map <silent> <C-e> :call ToggleVExplorer()<CR>
 
 " -----------------------------
 "  Airline Theme & ColorScheme
