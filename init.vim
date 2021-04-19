@@ -1,11 +1,67 @@
+
+" ----------------------------------------
+"           ┌─┐┌─┐┌┐┬┬─┤┬┌─┐              
+"           │  │ ││││├─ ││ ┬              
+"           └─┘└─┘┴└┘┴  ┴└─┘              
+"        Builtin Configuration
+" ----------------------------------------
+
+set runtimepath^=~/.config/nvim 
+set runtimepath+=~/.config/nvim/after
+let &packpath=&runtimepath
 " -------- use vim config for neovim -------------------
 " set runtimepath^=~/.vim runtimepath+=~/.vim/after
 " let &packpath=&runtimepath
 " source ~/.vimrc
 " ------------------------------------------------------
 
-set runtimepath^=~/.config/nvim runtimepath+=~/.config/nvim/after
-let &packpath=&runtimepath
+set nocompatible
+filetype plugin on
+
+" --- indentations options ---
+set autoindent
+set expandtab
+set shiftround
+set shiftwidth=4
+set smarttab
+set tabstop=4
+
+" search options
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+
+" --- text rendering options ---
+syntax enable
+set encoding=utf-8
+set linebreak
+set scrolloff=3
+set sidescrolloff=5
+set wrap
+
+" interface options
+set ruler
+set number
+set relativenumber
+
+" code folding options
+set foldmethod=syntax " syntax, indent
+set splitbelow splitright
+
+" miscellaneous options
+set autoread
+set backspace=indent,eol,start
+set confirm
+set dir=~/.cache/vim
+set formatoptions+=j
+set noswapfile
+set nrformats+=alpha
+set shell
+set path=.,,**
+set hidden
+set mouse=a
+
 " ---------------------------------------------------------
 "                     ┬─┐┬  ┬ ┐┌─┐┌─┤
 "                     │─┘│  │ ││ ┬└─┐
@@ -275,57 +331,4 @@ nnoremap <silent> ts :FloatermShow<CR>
 nnoremap <silent> <space>f :GitFiles<CR>
 nnoremap <silent> <space>F :Files<CR>
 
-" ----------------------------------------
-"           ┌─┐┌─┐┌┐┬┬─┤┬┌─┐              
-"           │  │ ││││├─ ││ ┬              
-"           └─┘└─┘┴└┘┴  ┴└─┘              
-"        Builtin Configuration
-" ----------------------------------------
-
-set nocompatible
-filetype plugin on
-
-" --- indentations options ---
-set autoindent
-set expandtab
-set shiftround
-set shiftwidth=4
-set smarttab
-set tabstop=4
-
-" search options
-set hlsearch
-set ignorecase
-set incsearch
-set smartcase
-
-" --- text rendering options ---
-syntax enable
-set encoding=utf-8
-set linebreak
-set scrolloff=3
-set sidescrolloff=5
-set wrap
-
-" interface options
-set ruler
-set number
-set relativenumber
-
-" code folding options
-set foldmethod=syntax " syntax, indent
-set splitbelow splitright
-
-" miscellaneous options
-set autoread
-set backspace=indent,eol,start
-set confirm
-set dir=~/.cache/vim
-set formatoptions+=j
-set noswapfile
-set nrformats+=alpha
-set shell
-set path=.,,**
-set hidden
-set mouse=a
 
