@@ -9,6 +9,7 @@
 set runtimepath^=~/.config/nvim 
 set runtimepath+=~/.config/nvim/after
 let &packpath=&runtimepath
+let g:config_dir='/home/tlm/.config/nvim'
 " -------- use vim config for neovim -------------------
 " set runtimepath^=~/.vim runtimepath+=~/.vim/after
 " let &packpath=&runtimepath
@@ -38,7 +39,7 @@ set encoding=utf-8
 set linebreak
 set scrolloff=3
 set sidescrolloff=5
-set wrap
+set nowrap
 
 " interface options
 set ruler
@@ -79,7 +80,6 @@ call plug#begin('~/.config/nvim/plugged') " required
     Plug 'vim-airline/vim-airline-themes'
     
     " colorschema
-    Plug 'glepnir/oceanic-material'
     Plug 'morhetz/gruvbox'
     
     " HTML Colors
@@ -90,11 +90,8 @@ call plug#begin('~/.config/nvim/plugged') " required
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     
-    " Git intergration for vim 
-    Plug 'jreybert/vimagit'
-    
-    " Fugitive is the premier Vim plugin for Git  [https://github.com/tpope/vim-fugitive]
-    Plug 'tpope/vim-fugitive'
+    " Git gutter
+    Plug 'airblade/vim-gitgutter'
     
     " ------------------------ Tools ---------------------------
     " Floating Terminal
@@ -104,7 +101,7 @@ call plug#begin('~/.config/nvim/plugged') " required
     Plug 'markonm/traces.vim'
     
     " Vim Wiki
-    Plug 'vimwiki/vimwiki'
+    "Plug 'vimwiki/vimwiki'
 
     " surround words with quotes
     Plug 'tpope/vim-surround'
@@ -114,70 +111,21 @@ call plug#begin('~/.config/nvim/plugged') " required
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     
     " ------------------- Language Specific ----------------------
+    " Language Pack
+    Plug 'sheerun/vim-polyglot'
+
     " Javascript
-    Plug 'pangloss/vim-javascript'
+    "Plug 'pangloss/vim-javascript'
 
 " ------------------------------------------------------------
 " end of vim plug list
 call plug#end()
 
 " --------------------------------------------------------------------------
-"  Vim Close Pair
+"  Vim Auto Pair
 " --------------------------------------------------------------------------
-inoremap ( ()<left>
-inoremap { {}<left>
-inoremap [ []<left>
 
-vnoremap <leader>" "zdi"<c-r>z"
-vnoremap <leader>' "zdi'<c-r>z'
-vnoremap <leader>( "zdi(<c-r>z)
-vnoremap <leader>[ "zdi[<c-r>z]
-vnoremap <leader>{ "zdi{<c-r>z}
-
-inoremap <expr> <bs> <SID>delpair()
-
-inoremap <expr> ) <SID>escapepair(')')
-inoremap <expr> } <SID>escapepair('}')
-inoremap <expr> ] <SID>escapepair(']')
-
-inoremap <expr> " <SID>pairquotes('"')
-inoremap <expr> ' <SID>pairquotes("'")
-
-
-function! s:delpair()
-	let l:lst = ['""',"''",'{}','[]','()']
-	let l:col = col('.')
-	let l:line = getline('.')
-	let l:chr = l:line[l:col-2 : l:col-1]
-	if index(l:lst, l:chr) > -1
-		return "\<bs>\<del>"
-	else
-		" let l:chr = l:line[l:col-3:l:col-2]
-		" if (index(l:lst, l:chr)) > - 1
-		" 	return "\<bs>\<bs>"
-		" endif
-		return "\<bs>"
-endf
-
-function! s:escapepair(right)
-	let l:col = col('.')
-	let l:chr = getline('.')[l:col-1]
-	if a:right == l:chr 
-		return "\<right>"
-	else
-		return a:right
-
-endf
-
-function! s:pairquotes(pair)
-	let l:col = col('.')
-	let l:line = getline('.')
-	let l:chr = l:line[l:col-1]
-	if a:pair == l:chr 
-		return "\<right>"
-	else
-		return a:pair.a:pair."\<left>"
-endf
+execute "source ".g:config_dir."/auto-pair.vim"
 
 " ------------------------------------------------
 "           ┬┌ ┬─┐┐ ┬┌┬┐┌─┐┬─┐┌─┤
@@ -188,7 +136,7 @@ endf
 
 " Leader key
 let mapleader = ','
-inoremap kj <ESC>
+inoremap jj <ESC>
 
 " Clipboard
 vnoremap <C-C> "+y
@@ -266,22 +214,25 @@ let g:coc_explorer_global_presets = {
 \   'floatingRightside': {
 \     'position': 'floating',
 \     'floating-position': 'right-center',
-\     'floating-width': 50,
+\     'floating-width': 60,
 \     'open-action-strategy': 'sourceWindow',
 \   },
 \   'simplify': {
 \     'file-child-template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
 \   },
 \   'buffer': {
+\     'position': 'floating',
+\     'floating-position': 'center-top',
+\     'floating-width': 100,
 \     'sources': [{'name': 'buffer', 'expand': v:true}]
 \   },
 \ }
-nmap <space>e :CocCommand explorer<CR>
-nmap <space>b :CocCommand explorer --preset buffer<CR>
+nmap <silent> <space>e :CocCommand explorer --preset floatingRightside<CR>
+nmap <silent> <space>b :CocCommand explorer --preset buffer<CR>
 
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+"nmap <silent> [g <Plug>(coc-diagnostic-prev)
+"nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -306,10 +257,13 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 " -----------------------------
 
 " ColorScheme
-set background=dark
+let g:gruvbox_italic=1
+let g:gruvbox_termcolors=256
 colorscheme gruvbox
+set termguicolors
+set background=dark
 
-let g:airline_theme='angr'
+let g:airline_theme='base16_gruvbox_dark_pale'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -328,7 +282,12 @@ nnoremap <silent> ts :FloatermShow<CR>
 "  FZF Vim
 " -----------------------------
 
-nnoremap <silent> <space>f :GitFiles<CR>
-nnoremap <silent> <space>F :Files<CR>
 
+nnoremap <silent> <space>ff :Files<CR>
+nnoremap <silent> <space>fg :GitFiles<CR>
+nnoremap <silent> <space>fw :Windows<CR>
+nnoremap <silent> <space>fb :Buffers<CR>
+nnoremap <silent> <space>fm :Marks<CR>
+nnoremap <silent> <space>fl :BLines<CR>
+nnoremap <silent> <space>fL :Lines<CR>
 

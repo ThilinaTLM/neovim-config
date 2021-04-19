@@ -9,6 +9,8 @@
   
   "javascript.format.enabled": true,
   "javascript.suggest.enabled": true,
+  
+  "prettier.tabWidth": 4,
 
   "languageserver": {
     "ccls": {
