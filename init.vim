@@ -105,17 +105,18 @@ call plug#begin('~/.config/nvim/plugged') " required
 
     " surround words with quotes
     Plug 'tpope/vim-surround'
+
+    Plug 'kyazdani42/nvim-web-devicons' " for file icons
+    Plug 'kyazdani42/nvim-tree.lua'
     
     " ------------------ Autocompletion -------------------------
     " auto completion
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'hrsh7th/nvim-compe'
     
     " ------------------- Language Specific ----------------------
     " Language Pack
     Plug 'sheerun/vim-polyglot'
-
-    " Javascript
-    "Plug 'pangloss/vim-javascript'
 
 " ------------------------------------------------------------
 " end of vim plug list
@@ -178,79 +179,152 @@ nnoremap <silent> <C-w>4 :4wincmd w<CR>
 "             Configuration for plugins and other modules
 " --------------------------------------------------------------------------
 
+" -----------------------------------
+"  Naitive LSP and Autocompletion
+" -----------------------------------
+
+lua << EOF
+require'lspconfig'.pyright.setup{}
+require'lspconfig'.tsserver.setup{}
+require'lspconfig'.vuels.setup{}
+require'lspconfig'.clangd.setup{}
+
+vim.o.completeopt = "menuone,noselect"
+
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = false;
+
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    vsnip = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    spell = true;
+    tags = true;
+    snippets_nvim = true;
+    treesitter = true;
+  };
+}
+
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+_G.s_tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
+    return t "<Plug>(vsnip-jump-prev)"
+  else
+    return t "<S-Tab>"
+  end
+end
+
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+EOF
+
+" LSP config (the mappings used in the default file don't quite work right)
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+
+" Autocompletion
+highlight link CompeDocumentation NormalFloat
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
 " -----------------------------
-"  COC Vim
+"  Nvim Tree
 " -----------------------------
 
-" Coc goto the definition
-function! s:GoToDefinition()
-	if CocAction('jumpDefinition')
-	  return v:true
-	endif
+let g:nvim_tree_side = 'left' "left by default
+let g:nvim_tree_width = 30 "30 by default
+let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', '.idea' ] "empty by default
+let g:nvim_tree_gitignore = 1 "0 by default
+let g:nvim_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
+let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
+let g:nvim_tree_auto_ignore_ft = [ 'startify', 'dashboard' ] "empty by default, don't auto open tree on specific filetypes.
+let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
+let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
+let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
+let g:nvim_tree_hide_dotfiles = 1 "0 by default, this option hides files and folders starting with a dot `.`
+let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
+let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
+let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
+let g:nvim_tree_width_allow_resize  = 1 "0 by default, will not resize the tree when opening a file
+let g:nvim_tree_disable_netrw = 0 "1 by default, disables netrw
+let g:nvim_tree_hijack_netrw = 0 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
+let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
+let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
+let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
+let g:nvim_tree_special_files = [ 'README.md', 'Makefile', 'MAKEFILE' ] " List of filenames that gets highlighted with NvimTreeSpecialFile
+let g:nvim_tree_show_icons = {
+    \ 'git': 1,
+    \ 'folders': 1,
+    \ 'files': 1,
+    \ }
+"If 0, do not show the icons for one of 'git' 'folder' and 'files'
+"1 by default, notice that if 'files' is 1, it will only display
+"if nvim-web-devicons is installed and on your runtimepath
 
-	let ret = execute("silent! normal \<C-]>")
-	if ret =~ "Error" || ret =~ "错误"
-	  call searchdecl(expand('<cword>'))
-	endif
-endfunction
+" default will show icon by default if no icon is provided
+" default shows no icon by default
+let g:nvim_tree_icons = {
+    \ 'default': '',
+    \ 'symlink': '',
+    \ 'git': {
+    \   'unstaged': "✗",
+    \   'staged': "✓",
+    \   'unmerged': "",
+    \   'renamed': "➜",
+    \   'untracked': "★",
+    \   'deleted': "",
+    \   'ignored': "◌"
+    \   },
+    \ 'folder': {
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
+    \   },
+    \   'lsp': {
+    \     'hint': "",
+    \     'info': "",
+    \     'warning': "",
+    \     'error': "",
+    \   }
+    \ }
 
-" Coc Explorer Tree
-let g:coc_explorer_global_presets = {
-\   'floating': {
-\     'position': 'floating',
-\     'open-action-strategy': 'sourceWindow',
-\   },
-\   'floatingTop': {
-\     'position': 'floating',
-\     'floating-position': 'center-top',
-\     'open-action-strategy': 'sourceWindow',
-\   },
-\   'floatingLeftside': {
-\     'position': 'floating',
-\     'floating-position': 'left-center',
-\     'floating-width': 50,
-\     'open-action-strategy': 'sourceWindow',
-\   },
-\   'floatingRightside': {
-\     'position': 'floating',
-\     'floating-position': 'right-center',
-\     'floating-width': 60,
-\     'open-action-strategy': 'sourceWindow',
-\   },
-\   'simplify': {
-\     'file-child-template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
-\   },
-\   'buffer': {
-\     'position': 'floating',
-\     'floating-position': 'center-top',
-\     'floating-width': 100,
-\     'sources': [{'name': 'buffer', 'expand': v:true}]
-\   },
-\ }
-nmap <silent> <space>e :CocCommand explorer --preset floatingRightside<CR>
-nmap <silent> <space>b :CocCommand explorer --preset buffer<CR>
+" a list of groups can be found at `:help nvim_tree_highlight`
+highlight NvimTreeFolderIcon guibg=blue
+highlight NvimTreeGitStaged guibg=yellow
 
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-"nmap <silent> [g <Plug>(coc-diagnostic-prev)
-"nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ca  <Plug>(coc-codeaction)
-nmap <leader>cc  :CocCommand<CR>
-
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+nnoremap <space>e :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
 
 " -----------------------------
 "  Airline Theme & ColorScheme
