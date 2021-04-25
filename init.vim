@@ -41,6 +41,7 @@ set linebreak
 set scrolloff=3
 set sidescrolloff=5
 set nowrap
+set guifont=Hack:h9
 
 " interface options
 set ruler
@@ -107,6 +108,7 @@ call plug#begin('~/.config/nvim/plugged') " required
     " surround words with quotes
     Plug 'tpope/vim-surround'
 
+    " NvimTree Explorer
     Plug 'kyazdani42/nvim-web-devicons' " for file icons
     Plug 'kyazdani42/nvim-tree.lua'
     
@@ -114,6 +116,7 @@ call plug#begin('~/.config/nvim/plugged') " required
     " auto completion
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/nvim-compe'
+    Plug 'gfanto/fzf-lsp.nvim'
     
     " ------------------- Language Specific ----------------------
     " Language Pack
@@ -185,79 +188,27 @@ nnoremap <silent> <C-w>4 :4wincmd w<CR>
 "  Naitive LSP and Autocompletion
 " -----------------------------------
 
-lua << EOF
-require'lspconfig'.pyright.setup{}
-require'lspconfig'.tsserver.setup{}
-require'lspconfig'.vuels.setup{}
-require'lspconfig'.clangd.setup{}
-require'lspconfig'.jsonls.setup {
-    commands = {
-      Format = {
-        function()
-          vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
-        end
-      }
-    };
-    filetypes = {"json", "jsonc"}
-}
 
-vim.o.completeopt = "menuone,noselect"
-
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = false;
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    vsnip = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    spell = true;
-    tags = true;
-    snippets_nvim = true;
-    treesitter = true;
-  };
-}
-
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-    return t "<Plug>(vsnip-jump-prev)"
-  else
-    return t "<S-Tab>"
-  end
-end
-
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-EOF
+execute "luafile ".g:config_dir."/lsp.lua"
 
 " LSP config (the mappings used in the default file don't quite work right)
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+
+command Rename :lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <space>r :lua vim.lsp.buf.rename()<CR>
+
+command Format :lua vim.lsp.buf.formatting()<CR>
+
+" Using FZF
+nnoremap <silent> gd :Definitions<CR>
+nnoremap <silent> gD :Declarations<CR>
+nnoremap <silent> gr :References<CR>
+nnoremap <silent> gi :Implementations<CR>
+nnoremap <silent> gi :Implementations<CR>
+nnoremap <silent> <leader>ca :CodeActions<CR>
 
 " Autocompletion
 highlight link CompeDocumentation NormalFloat
@@ -275,19 +226,19 @@ let g:nvim_tree_side = 'left' "left by default
 let g:nvim_tree_width = 30 "30 by default
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', '.idea' ] "empty by default
 let g:nvim_tree_gitignore = 1 "0 by default
-let g:nvim_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
+let g:nvim_tree_auto_open = 0 "0 by default, opens the tree when typing `vim $DIR` or `vim`
 let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
 let g:nvim_tree_auto_ignore_ft = [ 'startify', 'dashboard' ] "empty by default, don't auto open tree on specific filetypes.
 let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
 let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
 let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
-let g:nvim_tree_hide_dotfiles = 1 "0 by default, this option hides files and folders starting with a dot `.`
+let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
 let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
 let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
 let g:nvim_tree_width_allow_resize  = 1 "0 by default, will not resize the tree when opening a file
-let g:nvim_tree_disable_netrw = 0 "1 by default, disables netrw
-let g:nvim_tree_hijack_netrw = 0 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
+let g:nvim_tree_disable_netrw = 1 "1 by default, disables netrw
+let g:nvim_tree_hijack_netrw = 1 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
 let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
 let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
 let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
@@ -311,7 +262,7 @@ let g:nvim_tree_icons = {
     \   'staged': "✓",
     \   'unmerged': "",
     \   'renamed': "➜",
-    \   'untracked': "★",
+    \   'untracked': "",
     \   'deleted': "",
     \   'ignored': "◌"
     \   },
@@ -333,7 +284,7 @@ let g:nvim_tree_icons = {
 
 " a list of groups can be found at `:help nvim_tree_highlight`
 highlight NvimTreeFolderIcon guibg=blue
-highlight NvimTreeGitStaged guibg=yellow
+highlight NvimTreeGitNew guibg=yellow
 
 lua <<EOF
     local tree_cb = require'nvim-tree.config'.nvim_tree_callback
