@@ -11,10 +11,6 @@ set runtimepath+=~/.config/nvim/after
 let &packpath=&runtimepath
 let g:config_dir='/home/tlm/.config/nvim'
 let g:script_dir=g:config_dir.'/scripts'
-" -------- use vim config for neovim -------------------
-" set runtimepath^=~/.vim runtimepath+=~/.vim/after
-" let &packpath=&runtimepath
-" source ~/.vimrc
 " ------------------------------------------------------
 
 set nocompatible
@@ -88,9 +84,10 @@ call plug#begin('~/.config/nvim/plugged') " required
     Plug 'ap/vim-css-color'
     
     " ------------------- Intergrations -----------------------
-    " FZF for Vim
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
+    " Telescope
+    Plug 'nvim-lua/popup.nvim'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
     
     " Git gutter
     Plug 'airblade/vim-gitgutter'
@@ -102,9 +99,6 @@ call plug#begin('~/.config/nvim/plugged') " required
     " Show live subsitution result
     Plug 'markonm/traces.vim'
     
-    " Vim Wiki
-    "Plug 'vimwiki/vimwiki'
-
     " surround words with quotes
     Plug 'tpope/vim-surround'
 
@@ -205,7 +199,7 @@ nnoremap <silent> <space>r :lua vim.lsp.buf.rename()<CR>
 
 command Format :lua vim.lsp.buf.formatting()<CR>
 
-" Using FZF
+" Using FZF-LSP
 nnoremap <silent> gd :Definitions<CR>
 nnoremap <silent> gD :Declarations<CR>
 nnoremap <silent> gr :References<CR>
@@ -376,14 +370,23 @@ nnoremap <silent> tw :FloatermKill<CR>
 nnoremap <silent> ts :FloatermShow<CR>
 
 " -----------------------------
+" Telescope
+" -----------------------------
+
+nnoremap <space>ff <cmd>Telescope find_files<cr>
+nnoremap <space>fg <cmd>Telescope live_grep<cr>
+nnoremap <space>fb <cmd>Telescope buffers<cr>
+nnoremap <space>fh <cmd>Telescope help_tags<cr>
+
+" -----------------------------
 "  FZF Vim
 " -----------------------------
 
-nnoremap <silent> <space>ff :Files<CR>
-nnoremap <silent> <space>fg :GitFiles<CR>
-nnoremap <silent> <space>fw :Windows<CR>
-nnoremap <silent> <space>fb :Buffers<CR>
-nnoremap <silent> <space>fm :Marks<CR>
-nnoremap <silent> <space>fl :BLines<CR>
-nnoremap <silent> <space>fL :Lines<CR>
+"nnoremap <silent> <space>ff :Files<CR>
+"nnoremap <silent> <space>fg :GitFiles<CR>
+"nnoremap <silent> <space>fw :Windows<CR>
+"nnoremap <silent> <space>fb :Buffers<CR>
+"nnoremap <silent> <space>fm :Marks<CR>
+"nnoremap <silent> <space>fl :BLines<CR>
+"nnoremap <silent> <space>fL :Lines<CR>
 
