@@ -115,7 +115,7 @@ call plug#begin('~/.config/nvim/plugged') " required
     " ------------------ Autocompletion -------------------------
     " auto completion
     Plug 'neovim/nvim-lspconfig'
-    Plug 'hrsh7th/nvim-compe'
+    Plug 'nvim-lua/completion-nvim'
     Plug 'gfanto/fzf-lsp.nvim'
     
     " ------------------- Language Specific ----------------------
@@ -191,6 +191,9 @@ nnoremap <silent> <C-w>4 :4wincmd w<CR>
 
 execute "luafile ".g:config_dir."/lsp.lua"
 
+" Use completion-nvim in every buffer
+autocmd BufEnter * lua require'completion'.on_attach()
+
 " LSP config (the mappings used in the default file don't quite work right)
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
@@ -211,12 +214,33 @@ nnoremap <silent> gi :Implementations<CR>
 nnoremap <silent> <leader>ca :CodeActions<CR>
 
 " Autocompletion
-highlight link CompeDocumentation NormalFloat
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
+let g:completion_enable_auto_popup = 1
+let g:completion_enable_auto_hover = 1
+"let g:completion_enable_auto_signature = 0
+"let g:completion_sorting = "none" " possible value: length, alphabet, none
+"let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
+"let g:completion_matching_smart_case = 1
+"let g:completion_matching_ignore_case = 1
+
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+
+imap <tab> <Plug>(completion_smart_tab)
+imap <s-tab> <Plug>(completion_smart_s_tab)
+
+" Snippets support
+" possible value: 'UltiSnips', 'Neosnippet', 'vim-vsnip', 'snippets.nvim'
+"let g:completion_enable_snippet = 'UltiSnips'
 
 " -----------------------------
 "  Nvim Tree
@@ -354,7 +378,6 @@ nnoremap <silent> ts :FloatermShow<CR>
 " -----------------------------
 "  FZF Vim
 " -----------------------------
-
 
 nnoremap <silent> <space>ff :Files<CR>
 nnoremap <silent> <space>fg :GitFiles<CR>
