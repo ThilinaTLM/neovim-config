@@ -79,6 +79,8 @@ call plug#begin('~/.config/nvim/plugged') " required
     
     " colorschema
     Plug 'morhetz/gruvbox'
+    "Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+    "Plug 'sonph/onehalf', { 'rtp': 'vim' }
     
     " HTML Colors
     Plug 'ap/vim-css-color'
@@ -105,13 +107,15 @@ call plug#begin('~/.config/nvim/plugged') " required
     " NvimTree Explorer
     Plug 'kyazdani42/nvim-web-devicons' " for file icons
     Plug 'kyazdani42/nvim-tree.lua'
+
+    Plug 'Raimondi/delimitMate'
     
     " ------------------ Autocompletion -------------------------
     " auto completion
     Plug 'neovim/nvim-lspconfig'
-    Plug 'nvim-lua/completion-nvim'
-    Plug 'kristijanhusak/completion-tags'
-    Plug 'steelsojka/completion-buffers'
+    Plug 'glepnir/lspsaga.nvim'
+    Plug 'onsails/lspkind-nvim'
+    Plug 'hrsh7th/nvim-compe'
     
     " ------------------- Language Specific ----------------------
     " Language Pack
@@ -125,7 +129,6 @@ call plug#end()
 "  Scripts
 " --------------------------------------------------------------------------
 
-execute "source ".g:script_dir."/auto-pair.vim"
 execute "source ".g:script_dir."/buff-only.vim"
 
 " ------------------------------------------------
@@ -292,57 +295,9 @@ nnoremap <leader>r :NvimTreeRefresh<CR>
 " -----------------------------------
 execute "luafile ".g:config_dir."/lsp.lua"
 
-" LSP config (the mappings used in the default file don't quite work right)
-
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> L <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-
-nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-
-command Rename :lua vim.lsp.buf.rename()<CR>
-command Format :lua vim.lsp.buf.formatting()<CR>
-
-" Auto completion
-let g:completion_enable_auto_popup = 1
-let g:completion_enable_auto_hover = 1
-let g:completion_enable_auto_signature = 0
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
-let g:completion_matching_smart_case = 1
-
-let g:completion_chain_complete_list = {
-      \ 'default': [
-      \    {'complete_items': ['lsp']},
-      \    {'complete_items': ['buffers']},
-      \    {'complete_items': ['tags']},
-      \    {'mode': '<c-n>'},
-      \    {'mode': '<c-p>'},
-      \    {'mode': 'spel'}
-      \  ]}
-
-" Trigger character
-augroup CompletionTriggerCharacter
-    autocmd!
-    autocmd BufEnter * let g:completion_trigger_character = ['.']
-    autocmd BufEnter *.c,*.cpp let g:completion_trigger_character = ['.', '::']
-augroup end
-
-" Change complition sources
-imap <C-Right> <Plug>(completion_next_source) 
-imap <C-Left> <Plug>(completion_prev_source) 
-let g:completion_auto_change_source = 1
-
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-imap <tab> <Plug>(completion_smart_tab)
-imap <s-tab> <Plug>(completion_smart_s_tab)
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
@@ -351,9 +306,33 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 
-" Snippets support
-" possible value: 'UltiSnips', 'Neosnippet', 'vim-vsnip', 'snippets.nvim'
-"let g:completion_enable_snippet = 'UltiSnips'
+" Aditional commands
+command Format :lua vim.lsp.buf.formatting()<CR>
+
+" -----------------------------------
+"  LspSaga
+" -----------------------------------
+nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
+nnoremap <silent> <leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
+vnoremap <silent> <leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
+
+nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
+nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
+
+nnoremap <silent> gs <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
+nnoremap <silent> gr <cmd>lua require('lspsaga.rename').rename()<CR>
+nnoremap <silent> gd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
+nnoremap <silent> <leader>cd <cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>
+
+nnoremap <silent> [e <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>
+nnoremap <silent> ]e <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>
+nnoremap <silent> <leader>cc <cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>
+
+nnoremap <silent> <A-d> <cmd>lua require('lspsaga.floaterm').open_float_terminal()<CR>
+tnoremap <silent> <A-d> <C-d><C-\><C-n>:lua require('lspsaga.floaterm').close_float_terminal()<CR>
+
+highlight link LspSagaFinderSelection Search
 
 " -----------------------------
 " Telescope
@@ -437,11 +416,13 @@ EOF
 " -----------------------------
 
 " ColorScheme
-let g:gruvbox_italic=1
-let g:gruvbox_termcolors=256
-colorscheme gruvbox
+set cursorline
 set termguicolors
 set background=dark
+set t_Co=256
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+colorscheme gruvbox
 
 let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled = 1
@@ -462,6 +443,6 @@ nnoremap <silent> ts :FloatermShow<CR>
 "  GitGutter
 " -----------------------------
 
-let g:gitgutter_enabled = 0 " disable when start
+let g:gitgutter_enabled = 1 " disable when start
 
 
