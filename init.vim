@@ -110,6 +110,8 @@ call plug#begin('~/.config/nvim/plugged') " required
     " auto completion
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-lua/completion-nvim'
+    Plug 'kristijanhusak/completion-tags'
+    Plug 'steelsojka/completion-buffers'
     
     " ------------------- Language Specific ----------------------
     " Language Pack
@@ -290,11 +292,15 @@ nnoremap <leader>r :NvimTreeRefresh<CR>
 " -----------------------------------
 execute "luafile ".g:config_dir."/lsp.lua"
 
-" Use completion-nvim in every buffer
-autocmd BufEnter * lua require'completion'.on_attach()
-
 " LSP config (the mappings used in the default file don't quite work right)
+
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> L <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
@@ -305,12 +311,31 @@ command Format :lua vim.lsp.buf.formatting()<CR>
 " Auto completion
 let g:completion_enable_auto_popup = 1
 let g:completion_enable_auto_hover = 1
-let g:completion_enable_auto_signature = 1
-"let g:completion_sorting = "none" " possible value: length, alphabet, none
+let g:completion_enable_auto_signature = 0
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
 let g:completion_matching_smart_case = 1
-let g:completion_matching_ignore_case = 1
 
+let g:completion_chain_complete_list = {
+      \ 'default': [
+      \    {'complete_items': ['lsp']},
+      \    {'complete_items': ['buffers']},
+      \    {'complete_items': ['tags']},
+      \    {'mode': '<c-n>'},
+      \    {'mode': '<c-p>'},
+      \    {'mode': 'spel'}
+      \  ]}
+
+" Trigger character
+augroup CompletionTriggerCharacter
+    autocmd!
+    autocmd BufEnter * let g:completion_trigger_character = ['.']
+    autocmd BufEnter *.c,*.cpp let g:completion_trigger_character = ['.', '::']
+augroup end
+
+" Change complition sources
+imap <C-Right> <Plug>(completion_next_source) 
+imap <C-Left> <Plug>(completion_prev_source) 
+let g:completion_auto_change_source = 1
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -324,6 +349,7 @@ set completeopt=menuone,noinsert,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
+
 
 " Snippets support
 " possible value: 'UltiSnips', 'Neosnippet', 'vim-vsnip', 'snippets.nvim'
@@ -348,13 +374,11 @@ command GBranch :lua require'telescope.builtin'.git_branches{}
 command GStatus :lua require'telescope.builtin'.git_status{}
 
 " LSP
-nnoremap <silent> gd :lua require'telescope.builtin'.lsp_definitions{}<CR>
-nnoremap <silent> gs :lua require'telescope.builtin'.lsp_workspace_symbols{}<CR>
-nnoremap <silent> gr :lua require'telescope.builtin'.lsp_references{}<CR>
-nnoremap <silent> ga :lua require'telescope.builtin'.lsp_code_actions{}<CR>
-nnoremap <silent> ge :lua require'telescope.builtin'.lsp_document_diagnostics{}<CR>
-"nnoremap <silent> gi :Implementations<CR>
-
+command Definitions :lua require'telescope.builtin'.lsp_definitions{}
+command SymbolsWorkspace :lua require'telescope.builtin'.lsp_workspace_symbols{}
+command References :lua require'telescope.builtin'.lsp_references{}
+command Actions :lua require'telescope.builtin'.lsp_code_actions{}
+command Diagnostics :lua require'telescope.builtin'.lsp_document_diagnostics{}
 
 lua << EOF
 require('telescope').setup{
