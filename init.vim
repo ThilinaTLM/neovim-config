@@ -45,7 +45,7 @@ set number
 set relativenumber
 
 " code folding options
-set foldmethod=syntax " syntax, indent
+set foldmethod=indent " syntax, indent
 set splitbelow splitright
 
 " miscellaneous options
@@ -75,7 +75,7 @@ call plug#begin('~/.config/nvim/plugged') " required
     " --------------------- Appearence -----------------------
     " bottom status bar
     Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
+    "Plug 'vim-airline/vim-airline-themes'
     
     " colorschema
     Plug 'morhetz/gruvbox'
@@ -110,7 +110,6 @@ call plug#begin('~/.config/nvim/plugged') " required
     " auto completion
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-lua/completion-nvim'
-    Plug 'gfanto/fzf-lsp.nvim'
     
     " ------------------- Language Specific ----------------------
     " Language Pack
@@ -178,64 +177,6 @@ nnoremap <silent> <C-w>4 :4wincmd w<CR>
 "             Configuration for plugins and other modules
 " --------------------------------------------------------------------------
 
-" -----------------------------------
-"  Naitive LSP and Autocompletion
-" -----------------------------------
-
-
-execute "luafile ".g:config_dir."/lsp.lua"
-
-" Use completion-nvim in every buffer
-autocmd BufEnter * lua require'completion'.on_attach()
-
-" LSP config (the mappings used in the default file don't quite work right)
-nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-
-command Rename :lua vim.lsp.buf.rename()<CR>
-nnoremap <silent> <space>r :lua vim.lsp.buf.rename()<CR>
-
-command Format :lua vim.lsp.buf.formatting()<CR>
-
-" Using FZF-LSP
-nnoremap <silent> gd :Definitions<CR>
-nnoremap <silent> gD :Declarations<CR>
-nnoremap <silent> gr :References<CR>
-nnoremap <silent> gi :Implementations<CR>
-nnoremap <silent> gi :Implementations<CR>
-nnoremap <silent> <leader>ca :CodeActions<CR>
-
-" Autocompletion
-
-let g:completion_enable_auto_popup = 1
-let g:completion_enable_auto_hover = 1
-"let g:completion_enable_auto_signature = 0
-"let g:completion_sorting = "none" " possible value: length, alphabet, none
-"let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
-"let g:completion_matching_smart_case = 1
-"let g:completion_matching_ignore_case = 1
-
-
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-
-" Avoid showing message extra message when using completion
-set shortmess+=c
-
-
-imap <tab> <Plug>(completion_smart_tab)
-imap <s-tab> <Plug>(completion_smart_s_tab)
-
-" Snippets support
-" possible value: 'UltiSnips', 'Neosnippet', 'vim-vsnip', 'snippets.nvim'
-"let g:completion_enable_snippet = 'UltiSnips'
-
 " -----------------------------
 "  Nvim Tree
 " -----------------------------
@@ -260,12 +201,13 @@ let g:nvim_tree_hijack_netrw = 1 "1 by default, prevents netrw from automaticall
 let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
 let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
 let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
-let g:nvim_tree_special_files = [ 'README.md', 'Makefile', 'MAKEFILE' ] " List of filenames that gets highlighted with NvimTreeSpecialFile
+let g:nvim_tree_special_files = [ 'README.md', 'Makefile', 'MAKEFILE', "package.json" ] " List of filenames that gets highlighted with NvimTreeSpecialFile
 let g:nvim_tree_show_icons = {
     \ 'git': 1,
     \ 'folders': 1,
     \ 'files': 1,
     \ }
+
 "If 0, do not show the icons for one of 'git' 'folder' and 'files'
 "1 by default, notice that if 'files' is 1, it will only display
 "if nvim-web-devicons is installed and on your runtimepath
@@ -343,6 +285,129 @@ EOF
 nnoremap <space>e :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
 
+" -----------------------------------
+"  Naitive LSP and Autocompletion
+" -----------------------------------
+execute "luafile ".g:config_dir."/lsp.lua"
+
+" Use completion-nvim in every buffer
+autocmd BufEnter * lua require'completion'.on_attach()
+
+" LSP config (the mappings used in the default file don't quite work right)
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+
+command Rename :lua vim.lsp.buf.rename()<CR>
+command Format :lua vim.lsp.buf.formatting()<CR>
+
+" Auto completion
+let g:completion_enable_auto_popup = 1
+let g:completion_enable_auto_hover = 1
+let g:completion_enable_auto_signature = 1
+"let g:completion_sorting = "none" " possible value: length, alphabet, none
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
+let g:completion_matching_smart_case = 1
+let g:completion_matching_ignore_case = 1
+
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+imap <tab> <Plug>(completion_smart_tab)
+imap <s-tab> <Plug>(completion_smart_s_tab)
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+" Snippets support
+" possible value: 'UltiSnips', 'Neosnippet', 'vim-vsnip', 'snippets.nvim'
+"let g:completion_enable_snippet = 'UltiSnips'
+
+" -----------------------------
+" Telescope
+" -----------------------------
+
+nnoremap <space>ff <cmd>Telescope find_files<cr>
+nnoremap <space>fg <cmd>Telescope live_grep<cr>
+nnoremap <space>fb <cmd>Telescope buffers<cr>
+nnoremap <space>fh <cmd>Telescope help_tags<cr>
+
+" Quick Use Commands
+"
+command Lists :lua require'telescope.builtin'.builtin{}
+command Keymaps :lua require'telescope.builtin'.keymaps{}
+command Spells :lua require'telescope.builtin'.spell_suggest{}
+command Registers :lua require'telescope.builtin'.registers{}
+command GBranch :lua require'telescope.builtin'.git_branches{}
+command GStatus :lua require'telescope.builtin'.git_status{}
+
+" LSP
+nnoremap <silent> gd :lua require'telescope.builtin'.lsp_definitions{}<CR>
+nnoremap <silent> gs :lua require'telescope.builtin'.lsp_workspace_symbols{}<CR>
+nnoremap <silent> gr :lua require'telescope.builtin'.lsp_references{}<CR>
+nnoremap <silent> ga :lua require'telescope.builtin'.lsp_code_actions{}<CR>
+nnoremap <silent> ge :lua require'telescope.builtin'.lsp_document_diagnostics{}<CR>
+"nnoremap <silent> gi :Implementations<CR>
+
+
+lua << EOF
+require('telescope').setup{
+  defaults = {
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case'
+    },
+    prompt_position = "bottom",
+    prompt_prefix = "> ",
+    selection_caret = "> ",
+    entry_prefix = "  ",
+    initial_mode = "insert",
+    selection_strategy = "reset",
+    sorting_strategy = "descending",
+    layout_strategy = "horizontal",
+    layout_defaults = {
+      horizontal = {
+        mirror = false,
+      },
+      vertical = {
+        mirror = false,
+      },
+    },
+    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
+    file_ignore_patterns = {"node_modules", ".git"},
+    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
+    shorten_path = true,
+    winblend = 0,
+    width = 0.75,
+    preview_cutoff = 120,
+    results_height = 1,
+    results_width = 0.8,
+    border = {},
+    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    color_devicons = true,
+    use_less = true,
+    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
+    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+
+    -- Developer configurations: Not meant for general override
+    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
+  }
+}
+EOF
+
 " -----------------------------
 "  Airline Theme & ColorScheme
 " -----------------------------
@@ -354,7 +419,7 @@ colorscheme gruvbox
 set termguicolors
 set background=dark
 
-let g:airline_theme='base16_gruvbox_dark_pale'
+let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -370,23 +435,9 @@ nnoremap <silent> tw :FloatermKill<CR>
 nnoremap <silent> ts :FloatermShow<CR>
 
 " -----------------------------
-" Telescope
+"  GitGutter
 " -----------------------------
 
-nnoremap <space>ff <cmd>Telescope find_files<cr>
-nnoremap <space>fg <cmd>Telescope live_grep<cr>
-nnoremap <space>fb <cmd>Telescope buffers<cr>
-nnoremap <space>fh <cmd>Telescope help_tags<cr>
+let g:gitgutter_enabled = 0 " disable when start
 
-" -----------------------------
-"  FZF Vim
-" -----------------------------
-
-"nnoremap <silent> <space>ff :Files<CR>
-"nnoremap <silent> <space>fg :GitFiles<CR>
-"nnoremap <silent> <space>fw :Windows<CR>
-"nnoremap <silent> <space>fb :Buffers<CR>
-"nnoremap <silent> <space>fm :Marks<CR>
-"nnoremap <silent> <space>fl :BLines<CR>
-"nnoremap <silent> <space>fL :Lines<CR>
 
