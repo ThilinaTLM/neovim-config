@@ -120,17 +120,12 @@ call plug#begin('~/.config/nvim/plugged') " required
     
     " ------------------- Language Specific ----------------------
     " Language Pack
-    Plug 'sheerun/vim-polyglot'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " ------------------------------------------------------------
 " end of vim plug list
 call plug#end()
 
-" --------------------------------------------------------------------------
-"  Scripts
-" --------------------------------------------------------------------------
-
-execute "source ".g:script_dir."/buff-only.vim"
 
 " ------------------------------------------------
 "           ┬┌ ┬─┐┐ ┬┌┬┐┌─┐┬─┐┌─┤
@@ -285,7 +280,7 @@ nnoremap <leader>r :NvimTreeRefresh<CR>
 " -----------------------------------
 "  Naitive LSP and Autocompletion
 " -----------------------------------
-execute "luafile ".g:config_dir."/lsp.lua"
+lua require('lsp_config')
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -454,4 +449,9 @@ let g:gitgutter_enabled = 1 " disable when start
 "  Bufferline
 " -----------------------------
 lua require'bufferline'.setup{}
+
+" -----------------------------
+"  TreeSitter
+" -----------------------------
+lua  require('treesitter')
 
