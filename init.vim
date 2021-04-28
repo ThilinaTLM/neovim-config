@@ -76,11 +76,13 @@ call plug#begin('~/.config/nvim/plugged') " required
     " bottom status bar
     Plug 'vim-airline/vim-airline'
     "Plug 'vim-airline/vim-airline-themes'
-    
+    Plug 'kyazdani42/nvim-web-devicons' " for file icons
+    "Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+
+    Plug 'akinsho/nvim-bufferline.lua'
+
     " colorschema
     Plug 'morhetz/gruvbox'
-    "Plug 'kaicataldo/material.vim', { 'branch': 'main' }
-    "Plug 'sonph/onehalf', { 'rtp': 'vim' }
     
     " HTML Colors
     Plug 'ap/vim-css-color'
@@ -90,6 +92,7 @@ call plug#begin('~/.config/nvim/plugged') " required
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-fzy-native.nvim'
     
     " Git gutter
     Plug 'airblade/vim-gitgutter'
@@ -105,9 +108,7 @@ call plug#begin('~/.config/nvim/plugged') " required
     Plug 'tpope/vim-surround'
 
     " NvimTree Explorer
-    Plug 'kyazdani42/nvim-web-devicons' " for file icons
     Plug 'kyazdani42/nvim-tree.lua'
-
     Plug 'Raimondi/delimitMate'
     
     " ------------------ Autocompletion -------------------------
@@ -187,21 +188,16 @@ nnoremap <silent> <C-w>4 :4wincmd w<CR>
 " -----------------------------
 
 let g:nvim_tree_side = 'left' "left by default
-let g:nvim_tree_width = 30 "30 by default
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', '.idea' ] "empty by default
 let g:nvim_tree_gitignore = 1 "0 by default
-let g:nvim_tree_auto_open = 0 "0 by default, opens the tree when typing `vim $DIR` or `vim`
 let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
-let g:nvim_tree_auto_ignore_ft = [ 'startify', 'dashboard' ] "empty by default, don't auto open tree on specific filetypes.
 let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
 let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
 let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
-let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
 let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
 let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
 let g:nvim_tree_width_allow_resize  = 1 "0 by default, will not resize the tree when opening a file
-let g:nvim_tree_disable_netrw = 1 "1 by default, disables netrw
 let g:nvim_tree_hijack_netrw = 1 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
 let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
 let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
@@ -212,10 +208,6 @@ let g:nvim_tree_show_icons = {
     \ 'folders': 1,
     \ 'files': 1,
     \ }
-
-"If 0, do not show the icons for one of 'git' 'folder' and 'files'
-"1 by default, notice that if 'files' is 1, it will only display
-"if nvim-web-devicons is installed and on your runtimepath
 
 " default will show icon by default if no icon is provided
 " default shows no icon by default
@@ -304,7 +296,6 @@ set completeopt=menuone,noinsert,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
-
 
 " Aditional commands
 command Format :lua vim.lsp.buf.formatting()<CR>
@@ -407,8 +398,24 @@ require('telescope').setup{
 
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
+  };
+  extensions = {
+    fzy_native = {
+            override_generic_sorter = false,
+            override_file_sorter = true,
+        }
   }
 }
+require('telescope').load_extension('fzy_native')
+EOF
+
+" -----------------------------
+"  Galaxyline
+" -----------------------------
+lua << EOF
+
+
+
 EOF
 
 " -----------------------------
@@ -425,9 +432,6 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 colorscheme gruvbox
 
 let g:airline_theme='gruvbox'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_powerline_fonts = 1
 
 " -----------------------------
@@ -445,4 +449,9 @@ nnoremap <silent> ts :FloatermShow<CR>
 
 let g:gitgutter_enabled = 1 " disable when start
 
+
+" -----------------------------
+"  Bufferline
+" -----------------------------
+lua require'bufferline'.setup{}
 
