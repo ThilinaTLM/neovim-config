@@ -15,51 +15,8 @@ let g:script_dir=g:config_dir.'/scripts'
 
 set nocompatible
 filetype plugin on
-
-" --- indentations options ---
-set autoindent
-set expandtab
-set shiftround
-set shiftwidth=4
-set smarttab
-set tabstop=4
-
-" search options
-set hlsearch
-set ignorecase
-set incsearch
-set smartcase
-
-" --- text rendering options ---
 syntax enable
-set encoding=utf-8
-set linebreak
-set scrolloff=3
-set sidescrolloff=5
-set nowrap
-set guifont=Hack:h9
-
-" interface options
-set ruler
-set number
-set relativenumber
-
-" code folding options
-set foldmethod=indent " syntax, indent
-set splitbelow splitright
-
-" miscellaneous options
-set autoread
-set backspace=indent,eol,start
-set confirm
-set dir=~/.cache/vim
-set formatoptions+=j
-set noswapfile
-set nrformats+=alpha
-set shell
-set path=.,,**
-set hidden
-set mouse=a
+lua require('options')
 
 " ---------------------------------------------------------
 "                     ┬─┐┬  ┬ ┐┌─┐┌─┤
@@ -121,6 +78,9 @@ call plug#begin('~/.config/nvim/plugged') " required
     " ------------------- Language Specific ----------------------
     " Language Pack
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    
+    " Emmet Vim 
+    Plug 'mattn/emmet-vim'
 
 " ------------------------------------------------------------
 " end of vim plug list
