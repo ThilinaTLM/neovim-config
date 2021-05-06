@@ -1,11 +1,4 @@
 
-" ----------------------------------------
-"           ┌─┐┌─┐┌┐┬┬─┤┬┌─┐              
-"           │  │ ││││├─ ││ ┬              
-"           └─┘└─┘┴└┘┴  ┴└─┘              
-"        Builtin Configuration
-" ----------------------------------------
-
 set runtimepath^=~/.config/nvim 
 set runtimepath+=~/.config/nvim/after
 let &packpath=&runtimepath
@@ -18,73 +11,69 @@ filetype plugin on
 syntax enable
 lua require('options')
 
-" ---------------------------------------------------------
-"                     ┬─┐┬  ┬ ┐┌─┐┌─┤
-"                     │─┘│  │ ││ ┬└─┐
-"                     ┴  └─┘└─┘└─┘├─┘
-"                    The Plugin Manager
-" ---------------------------------------------------------
-
-" begin of vim plug list
-call plug#begin('~/.config/nvim/plugged') " required
-" ------------------------------------------------------------
-
-    " --------------------- Appearence -----------------------
-    " bottom status bar
-    Plug 'vim-airline/vim-airline'
-    "Plug 'vim-airline/vim-airline-themes'
-    Plug 'kyazdani42/nvim-web-devicons' " for file icons
-    "Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
-
-    Plug 'akinsho/nvim-bufferline.lua'
-
-    " colorschema
-    Plug 'morhetz/gruvbox'
-    
-    " HTML Colors
-    Plug 'ap/vim-css-color'
-    
-    " ------------------- Intergrations -----------------------
-    " Telescope
-    Plug 'nvim-lua/popup.nvim'
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
-    Plug 'nvim-telescope/telescope-fzy-native.nvim'
-    
-    " Git gutter
-    Plug 'airblade/vim-gitgutter'
-    
-    " ------------------------ Tools ---------------------------
-    " Floating Terminal
-    Plug 'voldikss/vim-floaterm' 
-    
-    " Show live subsitution result
-    Plug 'markonm/traces.vim'
-    
-    " surround words with quotes
-    Plug 'tpope/vim-surround'
-
-    " NvimTree Explorer
-    Plug 'kyazdani42/nvim-tree.lua'
-    Plug 'Raimondi/delimitMate'
-    
-    " ------------------ Autocompletion -------------------------
-    " auto completion
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'glepnir/lspsaga.nvim'
-    Plug 'onsails/lspkind-nvim'
-    Plug 'hrsh7th/nvim-compe'
-    
-    " ------------------- Language Specific ----------------------
-    " Language Pack
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    
-    " Emmet Vim 
-    Plug 'mattn/emmet-vim'
-
-" ------------------------------------------------------------
-" end of vim plug list
-call plug#end()
+"  " begin of vim plug list
+"  call plug#begin('~/.config/nvim/plugged') " required
+"  " ------------------------------------------------------------
+"  
+"      " --------------------- Appearence -----------------------
+"      " devicons
+"      Plug 'kyazdani42/nvim-web-devicons' " for file icons
+"  
+"      " Bottom status bar
+"      Plug 'vim-airline/vim-airline'
+"      Plug 'vim-airline/vim-airline-themes'
+"  
+"      " Buffer line
+"      Plug 'akinsho/nvim-bufferline.lua'
+"  
+"      " colorschema
+"      Plug 'morhetz/gruvbox'
+"      
+"      " HTML Colors
+"      Plug 'ap/vim-css-color'
+"      
+"      " ------------------- Intergrations -----------------------
+"      " Telescope
+"      Plug 'nvim-lua/popup.nvim'
+"      Plug 'nvim-lua/plenary.nvim'
+"      Plug 'nvim-telescope/telescope.nvim'
+"      Plug 'nvim-telescope/telescope-fzy-native.nvim'
+"      
+"      " Git gutter
+"      Plug 'airblade/vim-gitgutter'
+"      
+"      " ------------------------ Tools ---------------------------
+"      " Show live subsitution result
+"      Plug 'markonm/traces.vim'
+"      
+"      " surround words with quotes
+"      Plug 'tpope/vim-surround'
+"  
+"      " NvimTree Explorer
+"      Plug 'kyazdani42/nvim-tree.lua'
+"      Plug 'Raimondi/delimitMate'
+"  
+"      " ------------------ Autocompletion -------------------------
+"  	
+"      " auto completion
+"      Plug 'neovim/nvim-lspconfig'
+"      Plug 'glepnir/lspsaga.nvim'
+"      Plug 'onsails/lspkind-nvim'
+"      Plug 'hrsh7th/nvim-compe'
+"      
+"      " ------------------- Language Specific ----------------------
+"      " Language Pack
+"      Plug 'nvim-treesitter/nvim-treesitter'
+"      
+"      " Emmet Vim 
+"      Plug 'mattn/emmet-vim'
+"  
+"  " ------------------------------------------------------------
+"  " end of vim plug list
+"  call plug#end()
+"
+" Plugins
+lua require('plugins')
 
 
 " ------------------------------------------------
@@ -107,9 +96,10 @@ map      <C-P> "+p
 " ---------------------------------------
 
 " Switch buffers
-nnoremap <silent> <space>l :bn<CR>
-nnoremap <silent> <space>h :bp<CR>
-nnoremap <silent> <space>q :bd<CR>
+nnoremap <silent> <space>q  :bd<CR>
+nnoremap <silent> <space>l  :BufferLineCycleNext<CR>
+nnoremap <silent> <space>h  :BufferLineCyclePrev<CR>
+nnoremap <silent> <space>b  :BufferLinePick<CR>
 
 " Save buffer
 nnoremap <C-s> :w<CR>
@@ -365,15 +355,6 @@ require('telescope').load_extension('fzy_native')
 EOF
 
 " -----------------------------
-"  Galaxyline
-" -----------------------------
-lua << EOF
-
-
-
-EOF
-
-" -----------------------------
 "  Airline Theme & ColorScheme
 " -----------------------------
 
@@ -386,24 +367,13 @@ let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 colorscheme gruvbox
 
-let g:airline_theme='gruvbox'
+let g:airline_theme='base16'
 let g:airline_powerline_fonts = 1
-
-" -----------------------------
-"  Floaterm (Floating Terminal)
-" -----------------------------
-
-" Floating terminal
-nnoremap <silent> tt :FloatermNew<CR>
-nnoremap <silent> tw :FloatermKill<CR>
-nnoremap <silent> ts :FloatermShow<CR>
 
 " -----------------------------
 "  GitGutter
 " -----------------------------
-
-let g:gitgutter_enabled = 1 " disable when start
-
+let g:gitgutter_enabled = 0 " disable when start
 
 " -----------------------------
 "  Bufferline
