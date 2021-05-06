@@ -1,6 +1,12 @@
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "vue", 'javascript', 'typescript', 'python' }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ignore_install = {}, -- List of parsers to ignore installing
+  ensure_installed = {
+      'javascript', 'typescript', "jsdoc", "vue", "tsx",
+      "html", "css", "scss",
+      'python', "lua", "java",
+      "c", "cpp", "rust", "go",
+      "json", "yaml"
+  },
+  ignore_install = {},          -- List of parsers to ignore installing
   highlight = {
     enable = true,              -- false will disable the whole extension
   },
@@ -10,13 +16,15 @@ require'nvim-treesitter.configs'.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
+      init_selection = "mnn",
+      node_incremental = "mrn",
+      scope_incremental = "mrc",
+      node_decremental = "mrm",
     },
   }
 }
 
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+
+
