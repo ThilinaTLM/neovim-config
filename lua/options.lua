@@ -1,14 +1,3 @@
---- Utils
-local function set_opt(option, value)
-    if value == nil then
-        value = true
-    end
-    vim.o[option]=value
-end
-
-local function ext_opt(option, value)
-    vim.o[option]= vim.o[option] .. value
-end
 
 --- indentations options
 vim.o.autoindent=true

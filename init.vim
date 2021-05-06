@@ -11,70 +11,8 @@ filetype plugin on
 syntax enable
 lua require('options')
 
-"  " begin of vim plug list
-"  call plug#begin('~/.config/nvim/plugged') " required
-"  " ------------------------------------------------------------
-"  
-"      " --------------------- Appearence -----------------------
-"      " devicons
-"      Plug 'kyazdani42/nvim-web-devicons' " for file icons
-"  
-"      " Bottom status bar
-"      Plug 'vim-airline/vim-airline'
-"      Plug 'vim-airline/vim-airline-themes'
-"  
-"      " Buffer line
-"      Plug 'akinsho/nvim-bufferline.lua'
-"  
-"      " colorschema
-"      Plug 'morhetz/gruvbox'
-"      
-"      " HTML Colors
-"      Plug 'ap/vim-css-color'
-"      
-"      " ------------------- Intergrations -----------------------
-"      " Telescope
-"      Plug 'nvim-lua/popup.nvim'
-"      Plug 'nvim-lua/plenary.nvim'
-"      Plug 'nvim-telescope/telescope.nvim'
-"      Plug 'nvim-telescope/telescope-fzy-native.nvim'
-"      
-"      " Git gutter
-"      Plug 'airblade/vim-gitgutter'
-"      
-"      " ------------------------ Tools ---------------------------
-"      " Show live subsitution result
-"      Plug 'markonm/traces.vim'
-"      
-"      " surround words with quotes
-"      Plug 'tpope/vim-surround'
-"  
-"      " NvimTree Explorer
-"      Plug 'kyazdani42/nvim-tree.lua'
-"      Plug 'Raimondi/delimitMate'
-"  
-"      " ------------------ Autocompletion -------------------------
-"  	
-"      " auto completion
-"      Plug 'neovim/nvim-lspconfig'
-"      Plug 'glepnir/lspsaga.nvim'
-"      Plug 'onsails/lspkind-nvim'
-"      Plug 'hrsh7th/nvim-compe'
-"      
-"      " ------------------- Language Specific ----------------------
-"      " Language Pack
-"      Plug 'nvim-treesitter/nvim-treesitter'
-"      
-"      " Emmet Vim 
-"      Plug 'mattn/emmet-vim'
-"  
-"  " ------------------------------------------------------------
-"  " end of vim plug list
-"  call plug#end()
-"
 " Plugins
 lua require('plugins')
-
 
 " ------------------------------------------------
 "           ┬┌ ┬─┐┐ ┬┌┬┐┌─┐┬─┐┌─┤

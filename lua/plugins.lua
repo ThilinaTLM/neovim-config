@@ -61,6 +61,9 @@ return require('packer').startup(function(use)
     use 'kyazdani42/nvim-tree.lua'
     use 'Raimondi/delimitMate'
 
+    -- NeoFormat
+    use {'sbdchd/neoformat', opt = true, cmd = {'NeoFormat'}}
+
     ------------------ Autocompletion -------------------------
 
     -- auto completion

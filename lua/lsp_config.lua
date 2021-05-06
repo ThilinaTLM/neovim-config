@@ -1,29 +1,39 @@
--- Completions
+-- LSP Saga
 require('lspkind').init({})
-
 local saga = require 'lspsaga'
 saga.init_lsp_saga()
 
+-- Neovim Compe
 local map = vim.api.nvim_set_keymap
+vim.o.completeopt = "menuone,noselect"
+vim.cmd [[set shortmess+=c]]
 
 require("compe").setup {
   enabled = true,
+  autocomplete = true,
   debug = false,
   min_length = 1,
   preselect = "enable",
   allow_prefix_unmatch = false,
   documentation = true,
+  throttle_time = 80,
+  source_timeout = 200,
+  incomplete_delay = 400,
+  max_abbr_width = 1000,
+  max_kind_width = 1000,
+  max_menu_width = 1000000,
+
   source = {
     path = true,
-    nvim_lsp = true,
     buffer = true,
-    vsnip = true,
+    nvim_lsp = true,
     nvim_lua = true,
-	spell = true
+    spell = true,
+    vsnip = true,
+    treesitter = true,
+    calc = true,
   }
 }
-
-vim.o.completeopt = "menuone,noselect"
 
 map("i", "<C-Space>", "compe#complete()", {silent = true, expr = true})
 map(
