@@ -22,7 +22,7 @@ vim.o.guifont="Hack:h9"
 vim.o.ruler=true
 
 --- code folding options
-vim.o.foldmethod="indent"
+--vim.o.foldmethod="indent"
 vim.o.splitbelow=true
 vim.o.splitright=true
 
