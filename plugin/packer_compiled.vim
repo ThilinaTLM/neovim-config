@@ -71,6 +71,10 @@ end
 time("try_loadstring definition", false)
 time("Defining packer_plugins", true)
 _G.packer_plugins = {
+  ["compe-tabnine"] = {
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/compe-tabnine"
+  },
   delimitMate = {
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/delimitMate"
@@ -79,6 +83,20 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/emmet-vim"
+  },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/friendly-snippets"
+  },
+  ["galaxyline.nvim"] = {
+    config = { "\27LJ\2\n*\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\15statusline\frequire\0" },
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/galaxyline.nvim"
+  },
+  ["gitsigns.nvim"] = {
+    config = { "\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0" },
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
   },
   gruvbox = {
     loaded = true,
@@ -98,9 +116,17 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/neoformat"
   },
+  ["nvim-autopairs"] = {
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
+  },
   ["nvim-bufferline.lua"] = {
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/nvim-bufferline.lua"
+  },
+  ["nvim-comment"] = {
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/nvim-comment"
   },
   ["nvim-compe"] = {
     loaded = true,
@@ -117,6 +143,10 @@ _G.packer_plugins = {
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+  },
+  ["nvim-ts-autotag"] = {
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/nvim-ts-autotag"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
@@ -143,32 +173,29 @@ _G.packer_plugins = {
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
   ["traces.vim"] = {
-    loaded = true,
-    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/traces.vim"
-  },
-  ["vim-airline"] = {
-    loaded = true,
-    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/vim-airline"
-  },
-  ["vim-airline-themes"] = {
-    loaded = true,
-    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/vim-airline-themes"
-  },
-  ["vim-css-color"] = {
-    loaded = true,
-    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/vim-css-color"
-  },
-  ["vim-gitgutter"] = {
-    loaded = true,
-    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/vim-gitgutter"
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/traces.vim"
   },
   ["vim-surround"] = {
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/vim-surround"
+  },
+  ["vim-vsnip"] = {
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/vim-vsnip"
   }
 }
 
 time("Defining packer_plugins", false)
+-- Config for: gitsigns.nvim
+time("Config for gitsigns.nvim", true)
+try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
+time("Config for gitsigns.nvim", false)
+-- Config for: galaxyline.nvim
+time("Config for galaxyline.nvim", true)
+try_loadstring("\27LJ\2\n*\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\15statusline\frequire\0", "config", "galaxyline.nvim")
+time("Config for galaxyline.nvim", false)
 
 -- Command lazy-loads
 time("Defining lazy-load commands", true)

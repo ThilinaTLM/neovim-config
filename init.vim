@@ -9,7 +9,6 @@ let g:script_dir=g:config_dir.'/scripts'
 set nocompatible
 filetype plugin on
 syntax enable
-lua require('options')
 
 " Plugins
 lua require('plugins')
@@ -69,98 +68,11 @@ nnoremap <silent> <C-w>4 :4wincmd w<CR>
 " -----------------------------
 "  Nvim Tree
 " -----------------------------
-
-let g:nvim_tree_side = 'left' "left by default
-let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', '.idea' ] "empty by default
-let g:nvim_tree_gitignore = 1 "0 by default
-let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
-let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
-let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
-let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
-let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
-let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
-let g:nvim_tree_width_allow_resize  = 1 "0 by default, will not resize the tree when opening a file
-let g:nvim_tree_hijack_netrw = 1 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
-let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
-let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
-let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
-let g:nvim_tree_special_files = [ 'README.md', 'Makefile', 'MAKEFILE', "package.json" ] " List of filenames that gets highlighted with NvimTreeSpecialFile
-let g:nvim_tree_show_icons = {
-    \ 'git': 1,
-    \ 'folders': 1,
-    \ 'files': 1,
-    \ }
-
-" default will show icon by default if no icon is provided
-" default shows no icon by default
-let g:nvim_tree_icons = {
-    \ 'default': '',
-    \ 'symlink': '',
-    \ 'git': {
-    \   'unstaged': "✗",
-    \   'staged': "✓",
-    \   'unmerged': "",
-    \   'renamed': "➜",
-    \   'untracked': "",
-    \   'deleted': "",
-    \   'ignored': "◌"
-    \   },
-    \ 'folder': {
-    \   'default': "",
-    \   'open': "",
-    \   'empty': "",
-    \   'empty_open': "",
-    \   'symlink': "",
-    \   'symlink_open': "",
-    \   },
-    \   'lsp': {
-    \     'hint': "",
-    \     'info': "",
-    \     'warning': "",
-    \     'error': "",
-    \   }
-    \ }
+lua require("nvim_tree")
 
 " a list of groups can be found at `:help nvim_tree_highlight`
 highlight NvimTreeFolderIcon guibg=blue
 highlight NvimTreeGitNew guibg=yellow
-
-lua <<EOF
-    local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-    vim.g.nvim_tree_bindings = {
-      -- default mappings
-      ["<CR>"]           = tree_cb("edit"),
-      ["<right>"]        = tree_cb("edit"),
-      ["o"]              = tree_cb("edit"),
-      ["<2-LeftMouse>"]  = tree_cb("edit"),
-      ["<2-RightMouse>"] = tree_cb("cd"),
-      ["<C-]>"]          = tree_cb("cd"),
-      ["<C-v>"]          = tree_cb("vsplit"),
-      ["<C-x>"]          = tree_cb("split"),
-      ["<C-t>"]          = tree_cb("tabnew"),
-      ["<"]              = tree_cb("prev_sibling"),
-      [">"]              = tree_cb("next_sibling"),
-      ["<BS>"]           = tree_cb("close_node"),
-      ["<left>"]         = tree_cb("close_node"),
-      ["<S-CR>"]         = tree_cb("close_node"),
-      ["<Tab>"]          = tree_cb("preview"),
-      ["I"]              = tree_cb("toggle_ignored"),
-      ["H"]              = tree_cb("toggle_dotfiles"),
-      ["R"]              = tree_cb("refresh"),
-      ["a"]              = tree_cb("create"),
-      ["d"]              = tree_cb("remove"),
-      ["r"]              = tree_cb("rename"),
-      ["<C-r>"]          = tree_cb("full_rename"),
-      ["x"]              = tree_cb("cut"),
-      ["c"]              = tree_cb("copy"),
-      ["p"]              = tree_cb("paste"),
-      ["[c"]             = tree_cb("prev_git_item"),
-      ["]c"]             = tree_cb("next_git_item"),
-      ["-"]              = tree_cb("dir_up"),
-      ["q"]              = tree_cb("close"),
-    }
-EOF
 
 nnoremap <space>e :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
@@ -174,11 +86,21 @@ lua require('lsp_config')
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" nvim-compe with using delimitMate 
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
+
+" highlight
+highlight link CompeDocumentation NormalFloat
 
 " Aditional commands
 command Format :lua vim.lsp.buf.formatting()<CR>
@@ -211,6 +133,7 @@ highlight link LspSagaFinderSelection Search
 " -----------------------------
 " Telescope
 " -----------------------------
+lua require("conf_telescope")
 
 nnoremap <space>ff <cmd>Telescope find_files<cr>
 nnoremap <space>fg <cmd>Telescope live_grep<cr>
@@ -218,7 +141,6 @@ nnoremap <space>fb <cmd>Telescope buffers<cr>
 nnoremap <space>fh <cmd>Telescope help_tags<cr>
 
 " Quick Use Commands
-"
 command Lists :lua require'telescope.builtin'.builtin{}
 command Keymaps :lua require'telescope.builtin'.keymaps{}
 command Spells :lua require'telescope.builtin'.spell_suggest{}
@@ -232,65 +154,6 @@ command SymbolsWorkspace :lua require'telescope.builtin'.lsp_workspace_symbols{}
 command References :lua require'telescope.builtin'.lsp_references{}
 command Actions :lua require'telescope.builtin'.lsp_code_actions{}
 command Diagnostics :lua require'telescope.builtin'.lsp_document_diagnostics{}
-
-lua << EOF
-require('telescope').setup{
-  defaults = {
-    vimgrep_arguments = {
-      'rg',
-      '--color=never',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case'
-    },
-    prompt_position = "bottom",
-    prompt_prefix = "> ",
-    selection_caret = "> ",
-    entry_prefix = "  ",
-    initial_mode = "insert",
-    selection_strategy = "reset",
-    sorting_strategy = "descending",
-    layout_strategy = "horizontal",
-    layout_defaults = {
-      horizontal = {
-        mirror = false,
-      },
-      vertical = {
-        mirror = false,
-      },
-    },
-    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
-    file_ignore_patterns = {"node_modules", ".git"},
-    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-    shorten_path = true,
-    winblend = 0,
-    width = 0.75,
-    preview_cutoff = 120,
-    results_height = 1,
-    results_width = 0.8,
-    border = {},
-    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-    color_devicons = true,
-    use_less = true,
-    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
-    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
-    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
-
-    -- Developer configurations: Not meant for general override
-    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
-  };
-  extensions = {
-    fzy_native = {
-            override_generic_sorter = false,
-            override_file_sorter = true,
-        }
-  }
-}
-require('telescope').load_extension('fzy_native')
-EOF
 
 " -----------------------------
 "  Airline Theme & ColorScheme
@@ -309,11 +172,6 @@ let g:airline_theme='base16'
 let g:airline_powerline_fonts = 1
 
 " -----------------------------
-"  GitGutter
-" -----------------------------
-let g:gitgutter_enabled = 0 " disable when start
-
-" -----------------------------
 "  Bufferline
 " -----------------------------
 lua require'bufferline'.setup{}
@@ -323,3 +181,12 @@ lua require'bufferline'.setup{}
 " -----------------------------
 lua  require('treesitter')
 
+" Options
+lua require('options')
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+set expandtab
+set smartindent
+set smarttab

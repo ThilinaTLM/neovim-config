@@ -24,6 +24,7 @@ require("compe").setup {
   max_menu_width = 1000000,
 
   source = {
+    tabnine = true,
     path = true,
     buffer = true,
     nvim_lsp = true,
@@ -31,7 +32,6 @@ require("compe").setup {
     spell = true,
     vsnip = true,
     treesitter = true,
-    calc = true,
   }
 }
 
@@ -46,7 +46,33 @@ map("i", "<C-e>", "compe#close('<C-e>')", {silent = true, expr = true})
 map("i", "<C-f>", "compe#scroll({ 'delta': +4 })", {silent = true, expr = true})
 map("i", "<C-b>", "compe#scroll({ 'delta': -4 })", {silent = true, expr = true})
 
+-- Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
+}
+
+
 -- Language Servers
+-- EFM General Purpose
+require "lspconfig".efm.setup {
+    init_options = {documentFormatting = true},
+    settings = {
+        rootMarkers = {".git/"},
+        languages = {
+            lua = {
+                {formatCommand = "lua-format -i", formatStdin = true}
+            }
+        }
+    },
+    filetypes = {"javascript", "javascriptreact", "typescript", "json"}
+}
+
 -- Python
 require'lspconfig'.pyright.setup{
 }
@@ -151,20 +177,11 @@ require'lspconfig'.sumneko_lua.setup {
 }
 
 -- CSS SCSS LESS
---Enable (broadcasting) snippet capability for completion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 require'lspconfig'.cssls.setup {
     capabilities = capabilities,
 }
 
-
 -- HTML
---Enable (broadcasting) snippet capability for completion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 require'lspconfig'.html.setup {
   capabilities = capabilities,
 }

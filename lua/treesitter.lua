@@ -28,4 +28,5 @@ require'nvim-treesitter.configs'.setup {
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 
-
+-- AutoTag
+require('nvim-ts-autotag').setup()

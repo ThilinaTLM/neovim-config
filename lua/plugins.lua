@@ -10,14 +10,11 @@
 
 local execute = vim.api.nvim_command
 local fn = vim.fn
-
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-
 if fn.empty(fn.glob(install_path)) > 0 then
   fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
   execute 'packadd packer.nvim'
 end
-
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
@@ -29,16 +26,20 @@ return require('packer').startup(function(use)
     use 'kyazdani42/nvim-web-devicons' -- for file icons
 
     -- Bottom status bar
-    use { 'vim-airline/vim-airline', requires = {'vim-airline/vim-airline-themes'}}
+    use {
+        'glepnir/galaxyline.nvim',
+        branch = 'main',
+        -- your statusline
+        config = function() require'statusline' end,
+        -- some optional icons
+        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    }
 
     -- Buffer line
     use 'akinsho/nvim-bufferline.lua'
 
     -- colorschema
     use 'morhetz/gruvbox'
-
-    -- HTML Colors
-    use 'ap/vim-css-color'
 
     ------------------- Intergrations -----------------------
     -- Telescope
@@ -48,11 +49,20 @@ return require('packer').startup(function(use)
     }
 
     -- Git gutter
-    use 'airblade/vim-gitgutter'
+    -- use 'airblade/vim-gitgutter'
+    use {
+        'lewis6991/gitsigns.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        },
+        config = function()
+            require('gitsigns').setup()
+        end
+    }
 
     ------------------------ Tools ---------------------------
     -- Show live subsitution result
-    use 'markonm/traces.vim'
+    use { 'markonm/traces.vim', opt = true }
 
     -- surround words with quotes
     use 'tpope/vim-surround'
@@ -72,12 +82,22 @@ return require('packer').startup(function(use)
     use 'onsails/lspkind-nvim'
     use 'hrsh7th/nvim-compe'
 
+    use {"hrsh7th/vim-vsnip"}
+    use {"rafamadriz/friendly-snippets"}
+    use {'tzachar/compe-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-compe'}
+
     ------------------- Language Specific ----------------------
     -- Language Pack
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
-    -- Emmet Vim
+    -- AutoTag
+    use { 'windwp/nvim-ts-autotag'}
+    use {"windwp/nvim-autopairs"}
     use {'mattn/emmet-vim', opt = true}
 
+    -- Comment
+    use {"terrortylor/nvim-comment"}
+
 end)
+
 

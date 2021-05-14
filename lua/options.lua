@@ -1,10 +1,11 @@
 
 --- indentations options
 vim.o.autoindent=true
-vim.o.expandtab=true
 vim.o.smarttab=true
 vim.o.shiftwidth=4
 vim.o.softtabstop=4
+vim.o.tabstop=4
+vim.bo.expandtab=true
 
 --- search options
 vim.o.hlsearch=true
@@ -22,7 +23,6 @@ vim.o.guifont="Hack:h9"
 vim.o.ruler=true
 
 --- code folding options
---vim.o.foldmethod="indent"
 vim.o.splitbelow=true
 vim.o.splitright=true
 
@@ -43,3 +43,5 @@ vim.o.mouse="a"
 vim.wo.number=true
 vim.wo.relativenumber=true
 
+-- Spells
+vim.o.spellfile="/home/tlm/.config/nvim/spell/words.txt"
