@@ -68,8 +68,6 @@ nnoremap <silent> <C-w>4 :4wincmd w<CR>
 " -----------------------------
 "  Nvim Tree
 " -----------------------------
-lua require("nvim_tree")
-
 " a list of groups can be found at `:help nvim_tree_highlight`
 highlight NvimTreeFolderIcon guibg=blue
 highlight NvimTreeGitNew guibg=yellow
@@ -133,8 +131,6 @@ highlight link LspSagaFinderSelection Search
 " -----------------------------
 " Telescope
 " -----------------------------
-lua require("conf_telescope")
-
 nnoremap <space>ff <cmd>Telescope find_files<cr>
 nnoremap <space>fg <cmd>Telescope live_grep<cr>
 nnoremap <space>fb <cmd>Telescope buffers<cr>
@@ -176,11 +172,6 @@ let g:airline_powerline_fonts = 1
 " -----------------------------
 lua require'bufferline'.setup{}
 
-" -----------------------------
-"  TreeSitter
-" -----------------------------
-lua  require('treesitter')
-
 " Options
 lua require('options')
 set tabstop=4
@@ -190,3 +181,6 @@ set autoindent
 set expandtab
 set smartindent
 set smarttab
+
+
+

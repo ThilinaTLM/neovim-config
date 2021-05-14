@@ -1,12 +1,3 @@
-
---- indentations options
-vim.o.autoindent=true
-vim.o.smarttab=true
-vim.o.shiftwidth=4
-vim.o.softtabstop=4
-vim.o.tabstop=4
-vim.bo.expandtab=true
-
 --- search options
 vim.o.hlsearch=true
 vim.o.ignorecase=true
@@ -43,5 +34,3 @@ vim.o.mouse="a"
 vim.wo.number=true
 vim.wo.relativenumber=true
 
--- Spells
-vim.o.spellfile="/home/tlm/.config/nvim/spell/words.txt"
