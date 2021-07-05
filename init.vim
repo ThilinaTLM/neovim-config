@@ -21,7 +21,8 @@ lua require('plugins')
 " ------------------------------------------------
 
 " Leader key
-let mapleader = ','
+nnoremap <space> <Nop>
+let mapleader = ' '
 inoremap jj <ESC>
 
 " Clipboard
@@ -33,10 +34,10 @@ map      <C-P> "+p
 " ---------------------------------------
 
 " Switch buffers
-nnoremap <silent> <space>q  :bd<CR>
-nnoremap <silent> <space>l  :BufferLineCycleNext<CR>
-nnoremap <silent> <space>h  :BufferLineCyclePrev<CR>
-nnoremap <silent> <space>b  :BufferLinePick<CR>
+nnoremap <silent> <leader>q  :bd<CR>
+nnoremap <silent> <leader>l  :BufferLineCycleNext<CR>
+nnoremap <silent> <leader>h  :BufferLineCyclePrev<CR>
+nnoremap <silent> <leader>b  :BufferLinePick<CR>
 
 " Save buffer
 nnoremap <C-s> :w<CR>
@@ -52,11 +53,24 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Window navigations
 nnoremap <silent> <C-Up> :vertical resize +1<CR>
 nnoremap <silent> <C-Down> :vertical resize -1<CR>
-nnoremap <space>w <C-w>
+nnoremap <leader>w <C-w>
 nnoremap <silent> <C-w>1 :1wincmd w<CR>
 nnoremap <silent> <C-w>2 :2wincmd w<CR>
 nnoremap <silent> <C-w>3 :3wincmd w<CR>
 nnoremap <silent> <C-w>4 :4wincmd w<CR>
+
+
+" ---------------------------------------
+" -- Dashboard 
+" ---------------------------------------
+nmap <Leader>ss :<C-u>SessionSave<CR>
+nmap <Leader>sl :<C-u>SessionLoad<CR>
+nnoremap <silent> <leader>fh :DashboardFindHistory<CR>
+nnoremap <silent> <leader>ff :DashboardFindFile<CR>
+nnoremap <silent> <leader>tc :DashboardChangeColorscheme<CR>
+nnoremap <silent> <leader>fa :DashboardFindWord<CR>
+nnoremap <silent> <leader>fb :DashboardJumpMark<CR>
+nnoremap <silent> <leader>cn :DashboardNewFile<CR>
 
 " --------------------------------------------------------------------------
 "                       ┌┬┐┌─┐┬─┐┬ ┐┬  ┬─┐┌─┤
@@ -72,7 +86,7 @@ nnoremap <silent> <C-w>4 :4wincmd w<CR>
 highlight NvimTreeFolderIcon guibg=blue
 highlight NvimTreeGitNew guibg=yellow
 
-nnoremap <space>e :NvimTreeToggle<CR>
+nnoremap <leader>e :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
 
 " -----------------------------------
@@ -131,10 +145,10 @@ highlight link LspSagaFinderSelection Search
 " -----------------------------
 " Telescope
 " -----------------------------
-nnoremap <space>ff <cmd>Telescope find_files<cr>
-nnoremap <space>fg <cmd>Telescope live_grep<cr>
-nnoremap <space>fb <cmd>Telescope buffers<cr>
-nnoremap <space>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " Quick Use Commands
 command Lists :lua require'telescope.builtin'.builtin{}

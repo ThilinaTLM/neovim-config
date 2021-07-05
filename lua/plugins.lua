@@ -69,7 +69,7 @@ return require('packer').startup(function(use)
 
     ------------------------ Tools ---------------------------
     -- Show live subsitution result
-    use {'markonm/traces.vim', opt = true}
+    use {'markonm/traces.vim'}
 
     -- surround words with quotes
     use 'tpope/vim-surround'
@@ -81,7 +81,7 @@ return require('packer').startup(function(use)
     }
 
     -- NeoFormat
-    use {'sbdchd/neoformat', opt = true, cmd = {'NeoFormat'}}
+    use {'sbdchd/neoformat', cmd = {'NeoFormat'}}
 
     ------------------ Autocompletion -------------------------
     -- auto completion
@@ -106,10 +106,13 @@ return require('packer').startup(function(use)
     -- AutoTag
     use {'windwp/nvim-ts-autotag'}
     use {'windwp/nvim-autopairs'}
-    use {'mattn/emmet-vim', opt = true}
+    use {'mattn/emmet-vim'}
 
     -- Comment
-    use {'terrortylor/nvim-comment'}
+    use {
+        'terrortylor/nvim-comment',
+        config = function() require('nvim_comment').setup() end
+    }
 
 end)
 

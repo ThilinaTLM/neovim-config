@@ -24,7 +24,7 @@ require("compe").setup {
   max_menu_width = 1000000,
 
   source = {
-    tabnine = true,
+    tabnine = false,
     path = true,
     buffer = true,
     nvim_lsp = true,
