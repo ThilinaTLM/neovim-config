@@ -33,7 +33,11 @@ return require('packer').startup(function(use)
     }
 
     -- Buffer line
-    use 'akinsho/nvim-bufferline.lua'
+    use {
+        'akinsho/nvim-bufferline.lua',
+         requires = 'kyazdani42/nvim-web-devicons',
+        config = function() require'conf_bufferline' end
+    }
 
     -- colorschema
     use 'morhetz/gruvbox'

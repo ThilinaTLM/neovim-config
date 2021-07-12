@@ -190,11 +190,3 @@ command References :lua require'telescope.builtin'.lsp_references{}
 command Actions :lua require'telescope.builtin'.lsp_code_actions{}
 command Diagnostics :lua require'telescope.builtin'.lsp_document_diagnostics{}
 
-" -----------------------------
-"  Bufferline
-" -----------------------------
-lua require'bufferline'.setup{}
-
-
-
-
