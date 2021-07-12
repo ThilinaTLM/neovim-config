@@ -12,15 +12,15 @@ require'nvim-treesitter.configs'.setup {
   },
   indent = {
       enable = true,
-      disable = {'javascript'}
+       -- disable = {'javascript'}
   },
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "mnn",
-      node_incremental = "mrn",
-      scope_incremental = "mrc",
-      node_decremental = "mrm",
+      init_selection = "gnn",
+      node_incremental = "gw",
+      scope_incremental = "gmm",
+      node_decremental = "gW",
     },
   }
 }

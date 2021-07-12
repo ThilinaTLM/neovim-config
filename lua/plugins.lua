@@ -27,12 +27,9 @@ return require('packer').startup(function(use)
 
     -- Bottom status bar
     use {
-        'glepnir/galaxyline.nvim',
-        branch = 'main',
-        -- your statusline
-        config = function() require'conf_statusline' end,
-        -- some optional icons
-        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+        'hoob3rt/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        config = function() require'conf_lualine' end
     }
 
     -- Buffer line
@@ -56,7 +53,6 @@ return require('packer').startup(function(use)
     }
 
     -- Git gutter
-    -- use 'airblade/vim-gitgutter'
     use {
         'lewis6991/gitsigns.nvim',
         requires = {
@@ -85,15 +81,25 @@ return require('packer').startup(function(use)
 
     ------------------ Autocompletion -------------------------
     -- auto completion
-    use 'neovim/nvim-lspconfig'
-    use 'glepnir/lspsaga.nvim'
-    use 'onsails/lspkind-nvim'
-    use 'hrsh7th/nvim-compe'
+    use 'neovim/nvim-lspconfig' -- Language server protocol support
+    use 'glepnir/lspsaga.nvim'  -- Highely performant UI for buitin LSP
+    use 'onsails/lspkind-nvim'  -- Add vs-code like pictogram to completion list
+
+    use 'hrsh7th/nvim-compe'    -- Completion provider
     use 'Raimondi/delimitMate'
+    use 'ray-x/lsp_signature.nvim' -- Provide signature for functions as you type
+    use {
+        'folke/lsp-colors.nvim',
+        config = function() require'conf_lspcolors' end
+    }   -- Diagnostic Colors
+    use {
+        'tzachar/compe-tabnine',
+        run='./install.sh',
+        requires = 'hrsh7th/nvim-compe'
+    }                           -- tabnine extension for nvim-compe
 
     use {'hrsh7th/vim-vsnip'}
     use {'rafamadriz/friendly-snippets'}
-    use {'tzachar/compe-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-compe'}
 
     ------------------- Language Specific ----------------------
     -- Language Pack

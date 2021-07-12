@@ -10,7 +10,35 @@ set nocompatible
 filetype plugin on
 syntax enable
 
-" Plugins
+" -----------------------------
+"  ColorScheme
+" -----------------------------
+set cursorline
+set termguicolors
+set background=dark
+colorscheme gruvbox
+
+" let g:gruvbox_contrast_dark = 'hard'
+" let g:gruvbox_invert_selection='0'
+
+set t_Co=256
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+" Options
+lua require('options')
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+set expandtab
+set smartindent
+set smarttab
+
+
+" Plugins -----------------------
 lua require('plugins')
 
 " ------------------------------------------------
@@ -105,14 +133,11 @@ inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
 " highlight
-highlight link CompeDocumentation NormalFloat
+"highlight link CompeDocumentation NormalFloat
 
 " Aditional commands
 command Format :lua vim.lsp.buf.formatting()<CR>
@@ -166,35 +191,10 @@ command Actions :lua require'telescope.builtin'.lsp_code_actions{}
 command Diagnostics :lua require'telescope.builtin'.lsp_document_diagnostics{}
 
 " -----------------------------
-"  Airline Theme & ColorScheme
-" -----------------------------
-
-" ColorScheme
-set cursorline
-set termguicolors
-set background=dark
-set t_Co=256
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-colorscheme gruvbox
-
-let g:airline_theme='base16'
-let g:airline_powerline_fonts = 1
-
-" -----------------------------
 "  Bufferline
 " -----------------------------
 lua require'bufferline'.setup{}
 
-" Options
-lua require('options')
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set autoindent
-set expandtab
-set smartindent
-set smarttab
 
 
 
