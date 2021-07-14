@@ -19,11 +19,14 @@ vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
 
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+    -- Basic -------------------------------------------------------
+    use 'wbthomason/packer.nvim' -- packer can manage itself
 
     -- Appearence
     use 'kyazdani42/nvim-web-devicons' -- for file icons
+
+    -- colorschema
+    use 'folke/tokyonight.nvim'
 
     -- Bottom status bar
     use {
@@ -39,13 +42,21 @@ return require('packer').startup(function(use)
         config = function() require'conf_bufferline' end
     }
 
-    -- colorschema
-    use 'morhetz/gruvbox'
-
     -- dashboard
     use {
         'glepnir/dashboard-nvim',
         config =  function() vim.g.dashboard_default_executive = 'telescope' end
+    }
+
+    -- Indentations guidlines
+    use "lukas-reineke/indent-blankline.nvim"
+
+    use {
+        "folke/twilight.nvim",
+        config = function()
+            require("twilight").setup{}
+        end,
+        cmd = {"Twilight", "TwilightEnable" }
     }
 
     ------------------- Intergrations -----------------------
@@ -77,7 +88,7 @@ return require('packer').startup(function(use)
     -- NvimTree Explorer
     use {
         'kyazdani42/nvim-tree.lua',
-        config = function() require'conf_tree' end,
+        config = function() require'conf_nvimtree' end,
     }
 
     -- NeoFormat

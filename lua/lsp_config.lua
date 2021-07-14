@@ -81,11 +81,12 @@ require "lspconfig".efm.setup {
 }
 
 -- Python
-require'lspconfig'.pyright.setup{
-    on_attach = function()
-        require "lsp_signature".on_attach()
-    end
-}
+-- require'lspconfig'.pyright.setup{
+--     on_attach = function()
+--         require "lsp_signature".on_attach()
+--     end
+-- }
+require'lspconfig'.pyls.setup{}
 
 -- TypeScript JavaScript ReactJs
 require'lspconfig'.tsserver.setup{
@@ -196,6 +197,9 @@ require'lspconfig'.html.setup {
   capabilities = capabilities,
 }
 
+-- Java
+require'lspconfig'.java_language_server.setup{}
+
 -- Diagnostics
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics,
@@ -206,4 +210,5 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 		update_in_insert = false
 	}
 )
+
 

@@ -15,8 +15,14 @@ syntax enable
 " -----------------------------
 set cursorline
 set termguicolors
-set background=dark
-colorscheme gruvbox
+
+" Example config in VimScript
+let g:tokyonight_style = "storm"
+let g:tokyonight_italic_functions = 1
+let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
+
+" Load the colorscheme
+colorscheme tokyonight
 
 " let g:gruvbox_contrast_dark = 'hard'
 " let g:gruvbox_invert_selection='0'
@@ -190,3 +196,6 @@ command References :lua require'telescope.builtin'.lsp_references{}
 command Actions :lua require'telescope.builtin'.lsp_code_actions{}
 command Diagnostics :lua require'telescope.builtin'.lsp_document_diagnostics{}
 
+
+" Colorscheme
+colorscheme tokyonight

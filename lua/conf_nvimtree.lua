@@ -71,8 +71,8 @@ vim.g.nvim_tree_icons = {
         ignored= "◌"
     },
     folder= {
-        default= "",
-        open= "",
+        default= "",
+        open= "",
         empty= "",
         empty_open= "",
         symlink= "",
