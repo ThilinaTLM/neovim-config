@@ -197,8 +197,6 @@ require'lspconfig'.html.setup {
   capabilities = capabilities,
 }
 
--- Java
-require'lspconfig'.java_language_server.setup{}
 
 -- Diagnostics
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
@@ -210,5 +208,4 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 		update_in_insert = false
 	}
 )
-
 

@@ -49,7 +49,7 @@ return require('packer').startup(function(use)
     }
 
     -- Indentations guidlines
-    use "lukas-reineke/indent-blankline.nvim"
+    use { "lukas-reineke/indent-blankline.nvim", opt = true }
 
     use {
         "folke/twilight.nvim",
@@ -93,6 +93,8 @@ return require('packer').startup(function(use)
 
     -- NeoFormat
     use {'sbdchd/neoformat', cmd = {'NeoFormat'}}
+
+    use {'metakirby5/codi.vim', cmd = {'Codi', 'CodiUpdate'}}
 
     ------------------ Autocompletion -------------------------
     -- auto completion
