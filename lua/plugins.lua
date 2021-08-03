@@ -21,50 +21,38 @@ return require('packer').startup(function(use)
 
     -- Basic -------------------------------------------------------
     use 'wbthomason/packer.nvim' -- packer can manage itself
-
-    -- Appearence
     use 'kyazdani42/nvim-web-devicons' -- for file icons
-
-    -- colorschema
     use 'folke/tokyonight.nvim'
+    use {
+        'nvim-telescope/telescope.nvim', -- Telecope
+        config = function () require'conf_telescope' end,
+        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
+    }
 
-    -- Bottom status bar
+    -- Statusbar and Bufferline
     use {
         'hoob3rt/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons', opt = true},
         config = function() require'conf_lualine' end
     }
-
-    -- Buffer line
     use {
         'akinsho/nvim-bufferline.lua',
          requires = 'kyazdani42/nvim-web-devicons',
         config = function() require'conf_bufferline' end
     }
 
-    -- dashboard
-    use {
+    -- Tools and Tweaks
+    use { -- Dashboard
         'glepnir/dashboard-nvim',
         config =  function() vim.g.dashboard_default_executive = 'telescope' end
     }
-
-    -- Indentations guidlines
-    use { "lukas-reineke/indent-blankline.nvim", opt = true }
-
+    use { "lukas-reineke/indent-blankline.nvim", opt = true } -- Indentations guidlines
     use {
-        "folke/twilight.nvim",
+        "folke/twilight.nvim", -- Focus writing
         config = function()
             require("twilight").setup{}
         end,
         cmd = {"Twilight", "TwilightEnable" }
-    }
-
-    ------------------- Intergrations -----------------------
-    -- Telescope
-    use {
-        'nvim-telescope/telescope.nvim',
-        config = function () require'conf_telescope' end,
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
     }
 
     -- Git gutter
@@ -78,7 +66,6 @@ return require('packer').startup(function(use)
         end
     }
 
-    ------------------------ Tools ---------------------------
     -- Show live subsitution result
     use {'markonm/traces.vim'}
 
@@ -109,14 +96,14 @@ return require('packer').startup(function(use)
         'folke/lsp-colors.nvim',
         config = function() require'conf_lspcolors' end
     }   -- Diagnostic Colors
-    use {
+    use {'hrsh7th/vim-vsnip'}
+    use {'rafamadriz/friendly-snippets'}
+
+    use {    -- tabnine extension for nvim-compe
         'tzachar/compe-tabnine',
         run='./install.sh',
         requires = 'hrsh7th/nvim-compe'
-    }                           -- tabnine extension for nvim-compe
-
-    use {'hrsh7th/vim-vsnip'}
-    use {'rafamadriz/friendly-snippets'}
+    }
 
     ------------------- Language Specific ----------------------
     -- Language Pack

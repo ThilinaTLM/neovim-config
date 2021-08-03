@@ -10,7 +10,7 @@ vim.o.linebreak=true
 vim.o.scrolloff=3
 vim.o.sidescrolloff=5
 vim.o.wrap=false
-vim.o.guifont="Hack:h9"
+vim.o.guifont="Jet Brains:h9"
 vim.o.ruler=true
 
 --- code folding options

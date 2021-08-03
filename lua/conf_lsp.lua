@@ -31,10 +31,10 @@ require("compe").setup {
   };
 
   source = {
+    nvim_lsp = true,
     tabnine = false,
     path = true,
     buffer = true,
-    nvim_lsp = true,
     nvim_lua = true,
     spell = true,
     vsnip = true,

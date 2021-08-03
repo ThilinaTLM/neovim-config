@@ -126,7 +126,7 @@ nnoremap <leader>r :NvimTreeRefresh<CR>
 " -----------------------------------
 "  Naitive LSP and Autocompletion
 " -----------------------------------
-lua require('lsp_config')
+lua require('conf_lsp')
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
