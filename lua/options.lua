@@ -43,7 +43,6 @@ wrp.so("shell", "zsh")
 wrp.so("path", ".,,**")
 wrp.so("hidden", true)
 wrp.so("mouse", "a")
-wrp.so_con("shortmess", "c")
 
 --- interface options
 wrp.so("number", true)
