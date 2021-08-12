@@ -2,7 +2,7 @@
 -- LSP Saga
 require('lspkind').init({})
 require('lspsaga').init_lsp_saga()
-require('config/lsp/compe').setup()
+require('lsp/compe').setup()
 
 -- Enable (broadcasting) snippet capability for completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -16,7 +16,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 -- Language Servers
-local lsps = require('config/lsp/lspconfig')
+local lsps = require('lsp/lspconfig')
 lsps.efm()
 lsps.lua()
 lsps.python()

@@ -16,7 +16,7 @@ local function efm()
 end
 
 local function typescript()
-  lspconfig.tsserver.setup()
+  lspconfig.tsserver.setup({})
 end
 
 local function vuejs()
