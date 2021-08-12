@@ -1,36 +1,53 @@
---- search options
-vim.o.hlsearch=true
-vim.o.ignorecase=true
-vim.o.incsearch=true
-vim.o.smartcase=true
+
+local wrp = require('utils/wrappers')
+
+-- Search and Highliting
+wrp.so("hlsearch", true)
+wrp.so("ignorecase", true)
+wrp.so("incsearch", true)
+wrp.so("smartcase", true)
 
 --- text rendering options
-vim.o.encoding="utf-8"
-vim.o.linebreak=true
-vim.o.scrolloff=3
-vim.o.sidescrolloff=5
-vim.o.wrap=false
-vim.o.guifont="Jet Brains:h9"
-vim.o.ruler=true
+wrp.so("encoding", "utf-8")
+wrp.so("linebreak", true)
+wrp.so("scrolloff", 3)
+wrp.so("sidescrolloff", 5)
+wrp.so("wrap", false)
+wrp.so("guifont", "Jet Brains:h9")
+wrp.so("ruler", true)
+
+-- indentation
+wrp.so("tabstop", 4)
+wrp.so("softtabstop", -1)
+wrp.so("shiftwidth", 4)
+wrp.so("shiftround", true)
+wrp.so("expandtab", true)
+wrp.so("autoindent", true)
+wrp.so_con("cpoptions", 'I')
+wrp.so("smartindent", true)
+wrp.so("cindent", true)
 
 --- code folding options
-vim.o.splitbelow=true
-vim.o.splitright=true
+wrp.so("splitbelow", true)
+wrp.so("splitright", true)
 
 --- miscellaneous options
-vim.o.autoread=true
-vim.o.backspace="indent,eol,start"
-vim.o.confirm=true
-vim.o.dir="/home/tlm/.cache/vim"
-vim.o.formatoptions=vim.o.formatoptions .. "j"
-vim.o.swapfile=false
-vim.o.nrformats=vim.o.nrformats .. ",alpha"
-vim.o.shell="zsh"
-vim.o.path=".,,**"
-vim.o.hidden=true
-vim.o.mouse="a"
+wrp.so("autoread", true)
+wrp.so("backspace", "indent,eol,start")
+wrp.so("confirm", true)
+wrp.so("dir", "/home/tlm/.cache/vim")
+wrp.so_con("formatoptions", "j")
+wrp.so("swapfile", false)
+wrp.so_con("nrformats", ",alpha")
+wrp.so("shell", "zsh")
+wrp.so("path", ".,,**")
+wrp.so("hidden", true)
+wrp.so("mouse", "a")
 
 --- interface options
-vim.wo.number=true
-vim.wo.relativenumber=true
+wrp.so("number", true)
+wrp.so("relativenumber", true)
+wrp.so("cursorline", true)
+wrp.so("termguicolors", true)
+
 

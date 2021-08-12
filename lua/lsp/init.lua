@@ -80,13 +80,6 @@ require "lspconfig".efm.setup {
     filetypes = {"javascript", "javascriptreact", "typescript", "json"}
 }
 
--- Python
--- require'lspconfig'.pyright.setup{
---     on_attach = function()
---         require "lsp_signature".on_attach()
---     end
--- }
-require'lspconfig'.pyls.setup{}
 
 -- TypeScript JavaScript ReactJs
 require'lspconfig'.tsserver.setup{
@@ -186,6 +179,8 @@ require'lspconfig'.sumneko_lua.setup {
         },
     },
 }
+
+require'lspconfig'.pylsp.setup{}
 
 -- CSS SCSS LESS
 require'lspconfig'.cssls.setup {

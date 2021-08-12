@@ -1,0 +1,1 @@
+-- require('conf_lsp/python').setup()

@@ -4,18 +4,13 @@
 -- ┴  ┘ └└─┘┴ ┘┴─┘┴└┘
 -- Plugin Manager
 -- Install using,
--- 	git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+-- 	git clone https://github.com/wbthomason/packer.nvim \
+-- 	    ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 --
 
-local execute = vim.api.nvim_command
-local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
-  execute 'packadd packer.nvim'
-end
-vim.cmd [[packadd packer.nvim]]
 
+-- Run Packer compile when plugins.lua updated
+vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])
 
 return require('packer').startup(function(use)
 
@@ -25,34 +20,39 @@ return require('packer').startup(function(use)
     use 'folke/tokyonight.nvim'
     use {
         'nvim-telescope/telescope.nvim', -- Telecope
-        config = function () require'conf_telescope' end,
+        config = function () require'config/telescope' end,
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
+    }
+    use {
+        "folke/which-key.nvim",
+        config = function() require('config/whichkey').setup() end
     }
 
     -- Statusbar and Bufferline
     use {
         'hoob3rt/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons', opt = true},
-        config = function() require'conf_lualine' end
+        config = function() require'config/lualine' end
     }
     use {
         'akinsho/nvim-bufferline.lua',
          requires = 'kyazdani42/nvim-web-devicons',
-        config = function() require'conf_bufferline' end
+        config = function() require'config/bufferline' end
     }
 
     -- Tools and Tweaks
-    use { -- Dashboard
-        'glepnir/dashboard-nvim',
-        config =  function() vim.g.dashboard_default_executive = 'telescope' end
-    }
+    -- use { -- Dashboard
+    --     'glepnir/dashboard-nvim',
+    --     config =  function() vim.g.dashboard_default_executive = 'telescope' end
+    -- }
     use { "lukas-reineke/indent-blankline.nvim", opt = true } -- Indentations guidlines
     use {
         "folke/twilight.nvim", -- Focus writing
         config = function()
             require("twilight").setup{}
         end,
-        cmd = {"Twilight", "TwilightEnable" }
+        cmd = {"Twilight", "TwilightEnable" },
+        opt = true
     }
 
     -- Git gutter
@@ -63,25 +63,29 @@ return require('packer').startup(function(use)
         },
         config = function()
             require('gitsigns').setup()
-        end
+        end,
+        opt = true
     }
 
     -- Show live subsitution result
-    use {'markonm/traces.vim'}
+    use {
+        'markonm/traces.vim',
+        opt = true
+    }
 
     -- surround words with quotes
-    use 'tpope/vim-surround'
+    use { 'tpope/vim-surround' }
 
     -- NvimTree Explorer
     use {
         'kyazdani42/nvim-tree.lua',
-        config = function() require'conf_nvimtree' end,
+        config = function() require'config/nvimtree' end
     }
 
     -- NeoFormat
-    use {'sbdchd/neoformat', cmd = {'NeoFormat'}}
+    use {'sbdchd/neoformat', cmd = {'NeoFormat'}, opt = true}
 
-    use {'metakirby5/codi.vim', cmd = {'Codi', 'CodiUpdate'}}
+    use {'metakirby5/codi.vim', cmd = {'Codi', 'CodiUpdate'}, opt = true}
 
     ------------------ Autocompletion -------------------------
     -- auto completion
@@ -94,7 +98,7 @@ return require('packer').startup(function(use)
     use 'ray-x/lsp_signature.nvim' -- Provide signature for functions as you type
     use {
         'folke/lsp-colors.nvim',
-        config = function() require'conf_lspcolors' end
+        config = function() require'config/lspcolors' end
     }   -- Diagnostic Colors
     use {'hrsh7th/vim-vsnip'}
     use {'rafamadriz/friendly-snippets'}
@@ -102,7 +106,8 @@ return require('packer').startup(function(use)
     use {    -- tabnine extension for nvim-compe
         'tzachar/compe-tabnine',
         run='./install.sh',
-        requires = 'hrsh7th/nvim-compe'
+        requires = 'hrsh7th/nvim-compe',
+        opt = true
     }
 
     ------------------- Language Specific ----------------------
@@ -110,18 +115,19 @@ return require('packer').startup(function(use)
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
-        config = function () require'conf_treesitter' end,
+        config = function () require'config/treesitter' end,
     }
 
     -- AutoTag
-    use {'windwp/nvim-ts-autotag'}
-    use {'windwp/nvim-autopairs'}
-    use {'mattn/emmet-vim'}
+    use {'windwp/nvim-ts-autotag', opt = true}
+    use {'windwp/nvim-autopairs', opt = true}
+    use {'mattn/emmet-vim', opt = true}
 
     -- Comment
     use {
         'terrortylor/nvim-comment',
-        config = function() require('nvim_comment').setup() end
+        config = function() require('nvim_comment').setup() end,
+        opt = true
     }
 
 end)
