@@ -27,6 +27,11 @@ return require('packer').startup(function(use)
         "folke/which-key.nvim",
         config = function() require('config/whichkey').setup() end
     }
+    -- Comment
+    use {
+        'terrortylor/nvim-comment',
+        config = function() require('config/comment') end,
+    }
 
     -- Statusbar and Bufferline
     use {
@@ -124,11 +129,6 @@ return require('packer').startup(function(use)
     use {'mattn/emmet-vim', opt = true}
 
     -- Comment
-    use {
-        'terrortylor/nvim-comment',
-        config = function() require('nvim_comment').setup() end,
-        opt = true
-    }
 
 end)
 

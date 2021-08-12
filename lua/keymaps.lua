@@ -10,7 +10,6 @@ vim.cmd [[
     map      <C-P> "+p
 ]]
 
-
 -- Autocompletion
 vim.cmd [[
     inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -39,7 +38,6 @@ reg({
 
     w = { "<C-w>", "Window" },
 }, { prefix = "<leader>" })
-
 reg({
     -- Buffers
     ['<C-Left>'] = { "<cmd>BufferLineCycleNext<CR>", "Next" },
@@ -47,8 +45,18 @@ reg({
 
     -- Window
     ['<C-Up>'] = { "<cmd>vertical resize +1<CR>" },
-    ['<C-Down>'] = { "<cmd>vertical resize -1<CR>" }
+    ['<C-Down>'] = { "<cmd>vertical resize -1<CR>" },
+
+    -- Save
+    ['C-s'] = { "<cmd>w<CR>", "Save" }
+
 }, { prefix = "" })
+reg({
+   ["/"] = { ":CommentToggle<CR>", "Comment" },
+}, { prefix = "", mode = "v" })
+reg({
+   ["/"] = { "<cmd>CommentToggle<CR>", "Comment" },
+}, { prefix = "<leader>", mode = "n" })
 
 -- Findings
 reg({
