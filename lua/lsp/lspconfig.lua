@@ -102,6 +102,7 @@ end
 
 local function python()
   lspconfig.pylsp.setup({
+    cmd = { "pyls" },
     config = {
       plugins = {
         pyls_mypy = {
