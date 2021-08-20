@@ -14,51 +14,84 @@ vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])
 
 return require('packer').startup(function(use)
 
-    -- Basic -------------------------------------------------------
+    -- =====================================================
+    --                     ESSENTIALS
+    -- =====================================================
+
     use 'wbthomason/packer.nvim' -- packer can manage itself
+
     use 'kyazdani42/nvim-web-devicons' -- for file icons
+
     use 'folke/tokyonight.nvim'
+
     use {
         'nvim-telescope/telescope.nvim', -- Telecope
         config = function () require'config/telescope' end,
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
     }
+
     use {
         "folke/which-key.nvim",
         config = function() require('config/whichkey').setup() end
     }
-    -- Comment
+
     use {
-        'terrortylor/nvim-comment',
+        'terrortylor/nvim-comment', -- NvimComment: Comments
         config = function() require('config/comment') end,
     }
 
-    -- Statusbar and Bufferline
     use {
-        'hoob3rt/lualine.nvim',
+        "AckslD/nvim-neoclip.lua", -- NeoClip: Clipboard Manager
+        config = function()
+            require('neoclip').setup()
+        end,
+    }
+
+    use {
+        'hoob3rt/lualine.nvim', -- Lualine: Status bar
         requires = {'kyazdani42/nvim-web-devicons', opt = true},
         config = function() require'config/lualine' end
     }
+
     use {
-        'akinsho/nvim-bufferline.lua',
+        'akinsho/nvim-bufferline.lua', -- Bufferline: Buffer manager
          requires = 'kyazdani42/nvim-web-devicons',
         config = function() require'config/bufferline' end
     }
 
-    -- Tools and Tweaks
-    -- use { -- Dashboard
-    --     'glepnir/dashboard-nvim',
-    --     config =  function() vim.g.dashboard_default_executive = 'telescope' end
-    -- }
-    use { "lukas-reineke/indent-blankline.nvim", opt = true } -- Indentations guidlines
+
+    use { 'tpope/vim-surround' } -- surround words with quotes
+
     use {
-        "folke/twilight.nvim", -- Focus writing
-        config = function()
-            require("twilight").setup{}
-        end,
-        cmd = {"Twilight", "TwilightEnable" },
-        opt = true
+        'kyazdani42/nvim-tree.lua', -- NvimTree Explorer
+        config = function() require'config/nvimtree' end
     }
+
+    --::::::::::::::::::: LSP Stuff START :::::::::::::::::::::::::
+    use 'neovim/nvim-lspconfig'         -- Language server protocol support
+    -- use 'glepnir/lspsaga.nvim'          -- Highely performant UI for buitin LSP
+    -- use 'onsails/lspkind-nvim'          -- Add vs-code like pictogram to completion list
+    use {
+        'ray-x/navigator.lua', -- Better gui for code navigation
+        requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
+        config = function() require'navigator'.setup({}) end
+    }
+    use 'hrsh7th/nvim-compe'            -- Completion provider
+    use 'Raimondi/delimitMate'
+    use 'ray-x/lsp_signature.nvim'      -- Provide signature for functions as you type
+    use {
+        'folke/lsp-colors.nvim',        -- Colors for diagnostics messages
+        config = function() require'config/lspcolors' end
+    }
+    use {'hrsh7th/vim-vsnip'}           -- Snippets
+    use {'rafamadriz/friendly-snippets'}
+
+    use {
+        'nvim-treesitter/nvim-treesitter', -- Tresitter: Treesitter for neovim
+        run = ':TSUpdate',
+        config = function () require'config/treesitter' end,
+    }
+    --::::::::::::::::::: LSP Stuff END :::::::::::::::::::::::::
 
     -- Git gutter
     use {
@@ -78,14 +111,6 @@ return require('packer').startup(function(use)
         opt = true
     }
 
-    -- surround words with quotes
-    use { 'tpope/vim-surround' }
-
-    -- NvimTree Explorer
-    use {
-        'kyazdani42/nvim-tree.lua',
-        config = function() require'config/nvimtree' end
-    }
 
     -- NeoFormat
     use {'sbdchd/neoformat', cmd = {'NeoFormat'}, opt = true}
@@ -94,19 +119,6 @@ return require('packer').startup(function(use)
 
     ------------------ Autocompletion -------------------------
     -- auto completion
-    use 'neovim/nvim-lspconfig' -- Language server protocol support
-    use 'glepnir/lspsaga.nvim'  -- Highely performant UI for buitin LSP
-    use 'onsails/lspkind-nvim'  -- Add vs-code like pictogram to completion list
-
-    use 'hrsh7th/nvim-compe'    -- Completion provider
-    use 'Raimondi/delimitMate'
-    use 'ray-x/lsp_signature.nvim' -- Provide signature for functions as you type
-    use {
-        'folke/lsp-colors.nvim',
-        config = function() require'config/lspcolors' end
-    }   -- Diagnostic Colors
-    use {'hrsh7th/vim-vsnip'}
-    use {'rafamadriz/friendly-snippets'}
 
     use {    -- tabnine extension for nvim-compe
         'tzachar/compe-tabnine',
@@ -116,12 +128,6 @@ return require('packer').startup(function(use)
     }
 
     ------------------- Language Specific ----------------------
-    -- Language Pack
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
-        config = function () require'config/treesitter' end,
-    }
 
     -- AutoTag
     use {'windwp/nvim-ts-autotag', opt = true}

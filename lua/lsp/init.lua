@@ -1,7 +1,7 @@
 
 -- LSP Saga
-require('lspkind').init({})
-require('lspsaga').init_lsp_saga()
+-- require('lspkind').init({})
+-- require('lspsaga').init_lsp_saga()
 require('lsp/compe').setup()
 
 -- Enable (broadcasting) snippet capability for completion

@@ -23,7 +23,6 @@ local function setup_compe()
 
     source = {
         nvim_lsp = true,
-        tabnine = false,
         path = true,
         buffer = true,
         nvim_lua = true,

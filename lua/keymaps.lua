@@ -37,6 +37,7 @@ reg({
     q = { "<cmd>bd<CR>", "Delete" },
 
     w = { "<C-w>", "Window" },
+    h = { "<cmd>nohl<CR>", "No Highlight" }
 }, { prefix = "<leader>" })
 reg({
     -- Buffers
@@ -48,7 +49,7 @@ reg({
     ['<C-Down>'] = { "<cmd>vertical resize -1<CR>" },
 
     -- Save
-    ['C-s'] = { "<cmd>w<CR>", "Save" }
+    ['<C-s>'] = { "<cmd>w<CR>", "Save" }
 
 }, { prefix = "" })
 reg({
@@ -65,7 +66,25 @@ reg({
         f = { "<cmd>Telescope find_files<CR>", "Find Files" },
         g = { "<cmd>Telescope live_grep<CR>", "Live Grep" },
     },
-    p = { "<cmd>Telescope registers<CR>", "Registers" },
+    p = { "<cmd>Telescope neoclip<CR>", "Clipboard" },
 }, { prefix = "<leader>" })
 
+-- Lsp
+-- reg({
+--     g = {
+--         name = "LSP",
+--         h = { require('lspsaga.provider').lsp_finder, "Definition" },
+--         d = { require('lspsaga.provider').preview_definition, "Preview" },
+--         r = { require('lspsaga.rename').rename, "Rename" }
+--     },
+--     ["<leader>"] = {
+--         a = { require('lspsaga.codeaction').code_action, "Actions" },
+--     },
+--     ["<A-d>"] = { require('lspsaga.floaterm').open_float_terminal, "Terminal" }
+-- }, { mode = "n" })
+
+
+-- reg({
+--     ["<A-d>"] = { require('lspsaga.floaterm').close_float_terminal, "Terminal" }
+-- }, { mode = "t" })
 
