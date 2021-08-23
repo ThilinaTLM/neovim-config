@@ -11,7 +11,7 @@ local no_errors, error_msg = pcall(function()
 
   local time
   local profile_info
-  local should_profile = true
+  local should_profile = false
   if should_profile then
     local hrtime = vim.loop.hrtime
     profile_info = {}
@@ -69,6 +69,10 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  LuaSnip = {
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/LuaSnip"
+  },
   ["codi.vim"] = {
     commands = { "Codi", "CodiUpdate" },
     loaded = false,
@@ -76,20 +80,14 @@ _G.packer_plugins = {
     path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/codi.vim"
   },
   ["compe-tabnine"] = {
-    after = { "nvim-compe" },
     after_files = { "/home/tlm/.local/share/nvim/site/pack/packer/opt/compe-tabnine/after/plugin/compe_tabnine.vim" },
     loaded = false,
     needs_bufread = false,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/compe-tabnine"
   },
-  ["coq.artifacts"] = {
+  delimitMate = {
     loaded = true,
-    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/coq.artifacts"
-  },
-  coq_nvim = {
-    config = { "\27LJ\1\2*\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\15config/coq\frequire\0" },
-    loaded = true,
-    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/coq_nvim"
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/delimitMate"
   },
   ["emmet-vim"] = {
     loaded = false,
@@ -115,6 +113,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/lsp-colors.nvim"
   },
+  ["lsp_signature.nvim"] = {
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim"
+  },
   ["lualine.nvim"] = {
     config = { "\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config/lualine\frequire\0" },
     loaded = true,
@@ -132,9 +134,8 @@ _G.packer_plugins = {
     path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/neoformat"
   },
   ["nvim-autopairs"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/nvim-autopairs"
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
   },
   ["nvim-bufferline.lua"] = {
     config = { "\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22config/bufferline\frequire\0" },
@@ -147,13 +148,9 @@ _G.packer_plugins = {
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/nvim-comment"
   },
   ["nvim-compe"] = {
-    after_files = { "/home/tlm/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe.vim" },
-    load_after = {
-      ["compe-tabnine"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/nvim-compe"
+    config = { "\27LJ\1\2,\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\17config/compe\frequire\0" },
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/nvim-compe"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -195,6 +192,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/popup.nvim"
   },
+  ["snippets.nvim"] = {
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/snippets.nvim"
+  },
   ["telescope-fzy-native.nvim"] = {
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim"
@@ -213,6 +214,10 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/traces.vim"
   },
+  ultisnips = {
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/ultisnips"
+  },
   ["vim-surround"] = {
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/vim-surround"
@@ -220,6 +225,10 @@ _G.packer_plugins = {
   ["vim-vsnip"] = {
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/vim-vsnip"
+  },
+  ["vim-vsnip-integ"] = {
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/vim-vsnip-integ"
   },
   ["which-key.nvim"] = {
     config = { "\27LJ\1\2=\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\20config/whichkey\frequire\0" },
@@ -245,22 +254,14 @@ time([[Config for lsp-colors.nvim]], false)
 time([[Config for which-key.nvim]], true)
 try_loadstring("\27LJ\1\2=\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\20config/whichkey\frequire\0", "config", "which-key.nvim")
 time([[Config for which-key.nvim]], false)
--- Config for: coq_nvim
-time([[Config for coq_nvim]], true)
-try_loadstring("\27LJ\1\2*\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\15config/coq\frequire\0", "config", "coq_nvim")
-time([[Config for coq_nvim]], false)
+-- Config for: nvim-compe
+time([[Config for nvim-compe]], true)
+try_loadstring("\27LJ\1\2,\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\17config/compe\frequire\0", "config", "nvim-compe")
+time([[Config for nvim-compe]], false)
 -- Config for: nvim-comment
 time([[Config for nvim-comment]], true)
 try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config/comment\frequire\0", "config", "nvim-comment")
 time([[Config for nvim-comment]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config/lualine\frequire\0", "config", "lualine.nvim")
-time([[Config for lualine.nvim]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-try_loadstring("\27LJ\1\2/\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\20config/nvimtree\frequire\0", "config", "nvim-tree.lua")
-time([[Config for nvim-tree.lua]], false)
 -- Config for: nvim-neoclip.lua
 time([[Config for nvim-neoclip.lua]], true)
 try_loadstring("\27LJ\1\0025\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\fneoclip\frequire\0", "config", "nvim-neoclip.lua")
@@ -269,6 +270,14 @@ time([[Config for nvim-neoclip.lua]], false)
 time([[Config for nvim-treesitter]], true)
 try_loadstring("\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22config/treesitter\frequire\0", "config", "nvim-treesitter")
 time([[Config for nvim-treesitter]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config/lualine\frequire\0", "config", "lualine.nvim")
+time([[Config for lualine.nvim]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+try_loadstring("\27LJ\1\2/\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\20config/nvimtree\frequire\0", "config", "nvim-tree.lua")
+time([[Config for nvim-tree.lua]], false)
 -- Config for: navigator.lua
 time([[Config for navigator.lua]], true)
 try_loadstring("\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21config/navigator\frequire\0", "config", "navigator.lua")

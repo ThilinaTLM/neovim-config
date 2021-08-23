@@ -13,14 +13,8 @@ vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])
 
 return require('packer').startup(function(use)
 
-    -- =====================================================
-    --                     ESSENTIALS
-    -- =====================================================
-
     use 'wbthomason/packer.nvim' -- packer can manage itself
-
     use 'kyazdani42/nvim-web-devicons' -- for file icons
-
     use 'folke/tokyonight.nvim'
 
     use {
@@ -29,21 +23,11 @@ return require('packer').startup(function(use)
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
     }
 
-    use {
-        "folke/which-key.nvim",
-        config = function() require('config/whichkey').setup() end
-    }
-
-    use {
-        'terrortylor/nvim-comment', -- NvimComment: Comments
-        config = function() require('config/comment') end,
-    }
-
+    use { "folke/which-key.nvim", config = function() require('config/whichkey').setup() end }
+    use { 'terrortylor/nvim-comment', config = function() require('config/comment') end, }
     use {
         "AckslD/nvim-neoclip.lua", -- NeoClip: Clipboard Manager
-        config = function()
-            require('neoclip').setup()
-        end,
+        config = function() require('neoclip').setup() end,
     }
 
     use {
@@ -54,7 +38,7 @@ return require('packer').startup(function(use)
 
     use {
         'akinsho/nvim-bufferline.lua', -- Bufferline: Buffer manager
-         requires = 'kyazdani42/nvim-web-devicons',
+        requires = 'kyazdani42/nvim-web-devicons',
         config = function() require'config/bufferline' end
     }
 
@@ -74,26 +58,30 @@ return require('packer').startup(function(use)
         requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
         config = function() require'config/navigator' end
     }
-    -- use 'hrsh7th/nvim-compe'            -- Completion provider
-    -- use 'Raimondi/delimitMate'
-    -- use 'ray-x/lsp_signature.nvim'      -- Provide signature for functions as you type
-    use {
-        'ms-jpq/coq_nvim', branch = 'coq',
-        config = function() require'config/coq' end
-    }
-    use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
-    use {
-        'folke/lsp-colors.nvim',        -- Colors for diagnostics messages
-        config = function() require'config/lspcolors' end
-    }
-    use {'hrsh7th/vim-vsnip'}           -- Snippets
-    use {'rafamadriz/friendly-snippets'}
-
     use {
         'nvim-treesitter/nvim-treesitter', -- Tresitter: Treesitter for neovim
-        run = ':TSUpdate',
-        config = function () require'config/treesitter' end,
+        run = ':TSUpdate', config = function () require'config/treesitter' end,
     }
+
+    ------------------ Autocompletion START -------------------
+    use { 'hrsh7th/nvim-compe', config = function() require'config/compe' end }            -- Completion provider
+    use 'Raimondi/delimitMate'
+    use 'ray-x/lsp_signature.nvim'      -- Provide signature for functions as you type
+    -- use { 'ms-jpq/coq_nvim', branch = 'coq', config = function() require'config/coq' end }
+    -- use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
+    use { 'tzachar/compe-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-compe', opt = true }
+    ------------------ Autocompletion END ---------------------
+
+    -------------------- Snippets START ------------------------
+    use {'hrsh7th/vim-vsnip'}
+    use {'hrsh7th/vim-vsnip-integ'}
+    use {'rafamadriz/friendly-snippets'}
+    use {'SirVer/ultisnips'}
+    use {'norcalli/snippets.nvim'}
+    use {'L3MON4D3/LuaSnip'}
+    -------------------- Snippets END --------------------------
+
+    use { 'folke/lsp-colors.nvim', config = function() require'config/lspcolors' end }
     --::::::::::::::::::: LSP Stuff END :::::::::::::::::::::::::
 
     -- Git gutter
@@ -120,21 +108,12 @@ return require('packer').startup(function(use)
 
     use {'metakirby5/codi.vim', cmd = {'Codi', 'CodiUpdate'}, opt = true}
 
-    ------------------ Autocompletion -------------------------
-    -- auto completion
-
-    use {    -- tabnine extension for nvim-compe
-        'tzachar/compe-tabnine',
-        run='./install.sh',
-        requires = 'hrsh7th/nvim-compe',
-        opt = true
-    }
 
     ------------------- Language Specific ----------------------
 
     -- AutoTag
+    use {'windwp/nvim-autopairs'}
     use {'windwp/nvim-ts-autotag', opt = true}
-    use {'windwp/nvim-autopairs', opt = true}
     use {'mattn/emmet-vim', opt = true}
 
 end)
