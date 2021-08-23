@@ -8,7 +8,6 @@
 -- 	    ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 --
 
-
 -- Run Packer compile when plugins.lua updated
 vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])
 
@@ -59,7 +58,6 @@ return require('packer').startup(function(use)
         config = function() require'config/bufferline' end
     }
 
-
     use { 'tpope/vim-surround' } -- surround words with quotes
 
     use {
@@ -74,11 +72,16 @@ return require('packer').startup(function(use)
     use {
         'ray-x/navigator.lua', -- Better gui for code navigation
         requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
-        config = function() require'navigator'.setup({}) end
+        config = function() require'config/navigator' end
     }
-    use 'hrsh7th/nvim-compe'            -- Completion provider
-    use 'Raimondi/delimitMate'
-    use 'ray-x/lsp_signature.nvim'      -- Provide signature for functions as you type
+    -- use 'hrsh7th/nvim-compe'            -- Completion provider
+    -- use 'Raimondi/delimitMate'
+    -- use 'ray-x/lsp_signature.nvim'      -- Provide signature for functions as you type
+    use {
+        'ms-jpq/coq_nvim', branch = 'coq',
+        config = function() require'config/coq' end
+    }
+    use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
     use {
         'folke/lsp-colors.nvim',        -- Colors for diagnostics messages
         config = function() require'config/lspcolors' end
@@ -133,8 +136,6 @@ return require('packer').startup(function(use)
     use {'windwp/nvim-ts-autotag', opt = true}
     use {'windwp/nvim-autopairs', opt = true}
     use {'mattn/emmet-vim', opt = true}
-
-    -- Comment
 
 end)
 
