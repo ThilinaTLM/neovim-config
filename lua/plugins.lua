@@ -76,7 +76,7 @@ return require('packer').startup(function(use)
     use {'hrsh7th/vim-vsnip'}
     use {'hrsh7th/vim-vsnip-integ'}
     use {'rafamadriz/friendly-snippets'}
-    use {'SirVer/ultisnips'}
+    -- use {'SirVer/ultisnips'}
     use {'norcalli/snippets.nvim'}
     use {'L3MON4D3/LuaSnip'}
     -------------------- Snippets END --------------------------
@@ -108,14 +108,20 @@ return require('packer').startup(function(use)
 
     use {'metakirby5/codi.vim', cmd = {'Codi', 'CodiUpdate'}, opt = true}
 
+    use {
+        "numtostr/FTerm.nvim",
+        config = function()
+            require("FTerm").setup()
+        end
+    }
+
 
     ------------------- Language Specific ----------------------
 
     -- AutoTag
-    use {'windwp/nvim-autopairs'}
+    -- use {'windwp/nvim-autopairs'}
     use {'windwp/nvim-ts-autotag', opt = true}
     use {'mattn/emmet-vim', opt = true}
 
 end)
-
 

@@ -69,6 +69,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["FTerm.nvim"] = {
+    config = { "\27LJ\1\0023\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\nFTerm\frequire\0" },
+    loaded = true,
+    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/FTerm.nvim"
+  },
   LuaSnip = {
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/LuaSnip"
@@ -132,10 +137,6 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/neoformat"
-  },
-  ["nvim-autopairs"] = {
-    loaded = true,
-    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
   },
   ["nvim-bufferline.lua"] = {
     config = { "\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22config/bufferline\frequire\0" },
@@ -214,10 +215,6 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/traces.vim"
   },
-  ultisnips = {
-    loaded = true,
-    path = "/home/tlm/.local/share/nvim/site/pack/packer/start/ultisnips"
-  },
   ["vim-surround"] = {
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/vim-surround"
@@ -266,18 +263,22 @@ time([[Config for nvim-comment]], false)
 time([[Config for nvim-neoclip.lua]], true)
 try_loadstring("\27LJ\1\0025\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\fneoclip\frequire\0", "config", "nvim-neoclip.lua")
 time([[Config for nvim-neoclip.lua]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-try_loadstring("\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22config/treesitter\frequire\0", "config", "nvim-treesitter")
-time([[Config for nvim-treesitter]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config/lualine\frequire\0", "config", "lualine.nvim")
-time([[Config for lualine.nvim]], false)
 -- Config for: nvim-tree.lua
 time([[Config for nvim-tree.lua]], true)
 try_loadstring("\27LJ\1\2/\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\20config/nvimtree\frequire\0", "config", "nvim-tree.lua")
 time([[Config for nvim-tree.lua]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config/lualine\frequire\0", "config", "lualine.nvim")
+time([[Config for lualine.nvim]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+try_loadstring("\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22config/treesitter\frequire\0", "config", "nvim-treesitter")
+time([[Config for nvim-treesitter]], false)
+-- Config for: FTerm.nvim
+time([[Config for FTerm.nvim]], true)
+try_loadstring("\27LJ\1\0023\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\nFTerm\frequire\0", "config", "FTerm.nvim")
+time([[Config for FTerm.nvim]], false)
 -- Config for: navigator.lua
 time([[Config for navigator.lua]], true)
 try_loadstring("\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21config/navigator\frequire\0", "config", "navigator.lua")

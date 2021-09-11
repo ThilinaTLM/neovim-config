@@ -16,6 +16,7 @@ local lspconfig = require('lspconfig')
 local configs = {
     require('lsp/python'),
     require('lsp/typescript'),
+    require('lsp/rust')
 }
 
 for i = 1, #configs do

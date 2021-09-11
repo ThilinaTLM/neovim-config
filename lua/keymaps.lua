@@ -1,4 +1,3 @@
-
 local reg = require('config/whichkey').register
 
 -- map leader key to <space>
@@ -6,33 +5,21 @@ vim.g.mapleader = ' '
 
 -- Copy & Paste
 vim.cmd [[
-    vnoremap <C-C> "+y
-    map      <C-P> "+p
+vnoremap <C-C> "+y
+map      <C-P> "+p
 ]]
 
--- Autocompletion
--- vim.cmd [[
---     inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
---     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
--- 
---     inoremap <silent><expr> <C-Space> compe#complete()
---     inoremap <silent><expr> <CR>      compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })
---     inoremap <silent><expr> <C-e>     compe#close('<C-e>')
---     inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
---     inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
--- ]]
--- 
 -- Essentials
 reg({
     e = { "<cmd>NvimTreeToggle<CR>", "File Explorer" },
 
     -- Buffer Manipulations
     b = {
-      name = "Buffer",
-      l = { "<cmd>BufferLineCycleNext<CR>", "Next" },
-      h = { "<cmd>BufferLineCyclePrev<CR>", "Previous" },
-      b = { "<cmd>BufferLinePick<CR>", "Pick" },
-      d = { "<cmd>bd<CR>", "Delete" }
+        name = "Buffer",
+        l = { "<cmd>BufferLineCycleNext<CR>", "Next" },
+        h = { "<cmd>BufferLineCyclePrev<CR>", "Previous" },
+        b = { "<cmd>BufferLinePick<CR>", "Pick" },
+        d = { "<cmd>bd<CR>", "Delete" }
     },
     q = { "<cmd>bd<CR>", "Delete" },
 
@@ -53,10 +40,10 @@ reg({
 
 }, { prefix = "" })
 reg({
-   ["/"] = { ":CommentToggle<CR>", "Comment" },
+    ["/"] = { ":CommentToggle<CR>", "Comment" },
 }, { prefix = "", mode = "v" })
 reg({
-   ["/"] = { "<cmd>CommentToggle<CR>", "Comment" },
+    ["/"] = { "<cmd>CommentToggle<CR>", "Comment" },
 }, { prefix = "<leader>", mode = "n" })
 
 -- Findings
@@ -67,24 +54,26 @@ reg({
         g = { "<cmd>Telescope live_grep<CR>", "Live Grep" },
     },
     p = { "<cmd>Telescope neoclip<CR>", "Clipboard" },
-}, { prefix = "<leader>" })
-
--- Lsp
--- reg({
---     g = {
---         name = "LSP",
---         h = { require('lspsaga.provider').lsp_finder, "Definition" },
---         d = { require('lspsaga.provider').preview_definition, "Preview" },
---         r = { require('lspsaga.rename').rename, "Rename" }
---     },
---     ["<leader>"] = {
---         a = { require('lspsaga.codeaction').code_action, "Actions" },
---     },
---     ["<A-d>"] = { require('lspsaga.floaterm').open_float_terminal, "Terminal" }
--- }, { mode = "n" })
+}, { prefix = "<leader>", mode='n' })
 
 
--- reg({
---     ["<A-d>"] = { require('lspsaga.floaterm').close_float_terminal, "Terminal" }
--- }, { mode = "t" })
+-- Usefull maps
+vim.cmd [[
+    nnoremap Y y$
+    nnoremap n nzzzv
+    nnoremap N Nzzzv
+    nnoremap J mzJ`z
+    
+    inoremap , ,<c-g>u
+    inoremap . .<c-g>u
+    inoremap ! !<c-g>u
+    inoremap ? ?<c-g>u
 
+    nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+    nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+
+    vnoremap K :m '>+1<CR>gv=gv
+    vnoremap J :m '<-2<CR>gv=gv
+    nnoremap <leader>k :m .-2<CR>==
+    nnoremap <leader>j :m .+1<CR>==
+]]
