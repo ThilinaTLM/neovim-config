@@ -32,6 +32,7 @@ wrp.so("splitbelow", true)
 wrp.so("splitright", true)
 wrp.so("foldmethod", "expr")
 wrp.so("foldexpr", "nvim_treesitter#foldexpr()")
+wrp.so("foldlevel", 5)
 
 --- miscellaneous options
 wrp.so("autoread", true)

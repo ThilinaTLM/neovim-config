@@ -51,8 +51,7 @@ return require('packer').startup(function(use)
 
     --::::::::::::::::::: LSP Stuff START :::::::::::::::::::::::::
     use 'neovim/nvim-lspconfig'         -- Language server protocol support
-    -- use 'glepnir/lspsaga.nvim'          -- Highely performant UI for buitin LSP
-    -- use 'onsails/lspkind-nvim'          -- Add vs-code like pictogram to completion list
+    use 'onsails/lspkind-nvim'          -- Add vs-code like pictogram to completion list
     use {
         'ray-x/navigator.lua', -- Better gui for code navigation
         requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
@@ -67,9 +66,6 @@ return require('packer').startup(function(use)
     use { 'hrsh7th/nvim-compe', config = function() require'config/compe' end }            -- Completion provider
     use 'Raimondi/delimitMate'
     use 'ray-x/lsp_signature.nvim'      -- Provide signature for functions as you type
-    -- use { 'ms-jpq/coq_nvim', branch = 'coq', config = function() require'config/coq' end }
-    -- use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
-    use { 'tzachar/compe-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-compe', opt = true }
     ------------------ Autocompletion END ---------------------
 
     -------------------- Snippets START ------------------------
@@ -111,17 +107,18 @@ return require('packer').startup(function(use)
     use {
         "numtostr/FTerm.nvim",
         config = function()
-            require("FTerm").setup()
+            require("FTerm")
         end
     }
 
+    use { 'rafcamlet/nvim-luapad' }
 
     ------------------- Language Specific ----------------------
 
     -- AutoTag
-    -- use {'windwp/nvim-autopairs'}
     use {'windwp/nvim-ts-autotag', opt = true}
     use {'mattn/emmet-vim', opt = true}
+    use {'cdelledonne/vim-cmake', ft = {'cpp', 'cmake'}}
 
 end)
 

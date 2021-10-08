@@ -45,8 +45,8 @@ _G.tab_completion = function()
         return termcodes("<C-n>")
     -- elseif vim.fn['vsnip#available'](1) == 1 then
     --     return termcodes("<C-l>")
-    elseif vim.fn["UltiSnips#CanExpandSnippet"]() == 1 or vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-        return termcodes("<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>")
+    -- elseif vim.fn["UltiSnips#CanExpandSnippet"]() == 1 or vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+    --     return termcodes("<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>")
     elseif is_prior_char_whitespace() then
         return termcodes("<Tab>")
     else
