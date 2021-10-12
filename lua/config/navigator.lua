@@ -27,7 +27,7 @@ local navigator_config = {
         disable_lsp = {
             "angularls", "flow", "dockerls", "julials", "pyright",
             "jedi_language_server", "solargraph", "cssls",
-            "yamlls", "ccls", "sqls", "denols", "graphql", "dartls", "dotls",
+            "yamlls", "sqls", "denols", "graphql", "dartls", "dotls",
             "kotlin_language_server", "nimls", "intelephense", "phpactor", "omnisharp",
             "r_language_server", "terraformls",
         },

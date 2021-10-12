@@ -1,11 +1,25 @@
-local fterm = require("FTerm.terminal")
+
+--
+-- █░█ ▀█▀ █ █░░ █▀
+-- █▄█ ░█░ █ █▄▄ ▄█
+--
+
+local function is_empty(str)
+   return str == nil or str == ''
+end
 
 -- Get curret opened file name
-local function current_file_name()
+local function current_filename()
     return vim.fn.expand("%:p")
 end
 
+-- Get current filetype
+local function current_filetype()
+    return vim.bo.filetype
+end
 
+-- Custom floating terminal
+local fterm = require("FTerm.terminal")
 local runner_terminal = fterm:new():setup({
     cmd = "python",
     dimensions = {
@@ -14,58 +28,69 @@ local runner_terminal = fterm:new():setup({
     }
 })
 
-local function run_python_shell()
+-- Run command in floating terminal
+local function run_cmd_floating_terminal(command)
     runner_terminal:setup({
-        cmd = 'python'
+        cmd = command
     })
-    print(current_file_name())
     runner_terminal:open()
 end
 
-local function run_current_python()
-    runner_terminal:setup({
-        cmd = 'python -i \'' .. current_file_name() .. '\''
-    })
-    print(current_file_name())
-    runner_terminal:open()
+-- Run command in split window using tmux
+local function run_cmd_split_window(command)
+    vim.cmd("silent !tmux send-keys -t 1 '".. command .."' Enter")
 end
 
-local function run_current_rpal()
-    runner_terminal:setup({
-        cmd = 'rpal \'' .. current_file_name() .. '\'; zsh'
-    })
-    print(current_file_name())
-    runner_terminal:open()
+-- Run command high-level function
+-- mode=0 : (default) run command in split window
+-- mode=1 : run command in floating window
+local function run_cmd(command, mode)
+    mode = mode or 0 -- default mode is 0
+    if mode == 0 then
+        run_cmd_split_window(command)
+    else
+        run_cmd_floating_terminal(command)
+    end
 end
 
 
-local function run_current_cargo()
-    runner_terminal:setup({
-        cmd = 'cargo run; zsh'
-    })
-    print(current_file_name())
-    runner_terminal:open()
+--
+-- █░░ ▄▀█ █▄░█ █▀▀   █▀ █▀█ █▀▀ █▀▀
+-- █▄▄ █▀█ █░▀█ █▄█   ▄█ █▀▀ ██▄ █▄▄
+--
+
+local function get_python_cmd()
+    return "python \"" .. current_filename() .. "\""
 end
 
-local function run_shell()
-    runner_terminal:setup({
-        cmd = 'zsh'
-    })
-    print(current_file_name())
-    runner_terminal:open()
+local function get_run_command()
+    if current_filetype() == "python" then
+        return get_python_cmd()
+    end
 end
 
-vim.api.nvim_command("command! RunShell lua require('utils/runner').run_shell()")
-vim.api.nvim_command("command! RunPython lua require('utils/runner').run_python()")
-vim.api.nvim_command("command! RunPyShell lua require('utils/runner').python_shell()")
-vim.api.nvim_command("command! RunRPAL lua require('utils/runner').run_rpal()")
-vim.api.nvim_command("command! RunCargo lua require('utils/runner').run_cargo()")
+-- local function is_tmux_pane_exists()
+--     return tonumber(string.match(result, '%d')) > 1
+-- end
+
+local function run(arg, mode)
+    local cmd = is_empty(arg) and get_run_command() or arg
+    run_cmd(cmd, mode)
+end
+
+local reg = require('config/whichkey').register
+vim.api.nvim_command("command! -nargs=* Run lua require('utils/runner').run(<q-args>)")
+vim.api.nvim_command("command! -nargs=* RFloat lua require('utils/runner').run(<q-args>, 1)")
+vim.api.nvim_command("command! -nargs=* RClear lua require('utils/runner').run('clear')")
+
+reg({
+    r = { "<cmd>Run<CR>", "Run File" },
+    c = { "<cmd>RClear<CR>", "Clear Term" },
+}, {prefix="<leader>r", mode="n"})
 
 
 return {
-    run_shell = run_shell,
-    run_python = run_current_python,
-    python_shell = run_python_shell,
-    run_rpal = run_current_rpal,
-    run_cargo = run_current_cargo
+    run = run
 }
+
+

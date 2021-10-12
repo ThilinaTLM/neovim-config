@@ -43,8 +43,8 @@ reg({
     ["/"] = { ":CommentToggle<CR>", "Comment" },
 }, { prefix = "", mode = "v" })
 reg({
-    ["/"] = { "<cmd>CommentToggle<CR>", "Comment" },
-}, { prefix = "<leader>", mode = "n" })
+    ["<C-/>"] = { "<cmd>CommentToggle<CR>", "Comment" },
+}, { prefix = "", mode = "n" })
 
 -- Findings
 reg({
