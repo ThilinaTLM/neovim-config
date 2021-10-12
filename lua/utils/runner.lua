@@ -69,8 +69,14 @@ local function get_run_command()
     end
 end
 
+local function is_tmux_session()
+    if os.getenv('TMUX') then
+        return true
+    end
+end
+
 -- local function is_tmux_pane_exists()
---     return tonumber(string.match(result, '%d')) > 1
+-- return tonumber(string.match(result, '%d')) > 1
 -- end
 
 local function run(arg, mode)
@@ -79,7 +85,7 @@ local function run(arg, mode)
 end
 
 local reg = require('config/whichkey').register
-vim.api.nvim_command("command! -nargs=* Run lua require('utils/runner').run(<q-args>)")
+vim.api.nvim_command("command! -nargs=* RRun lua require('utils/runner').run(<q-args>)")
 vim.api.nvim_command("command! -nargs=* RFloat lua require('utils/runner').run(<q-args>, 1)")
 vim.api.nvim_command("command! -nargs=* RClear lua require('utils/runner').run('clear')")
 

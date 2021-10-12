@@ -5,8 +5,8 @@ vim.g.mapleader = ' '
 
 -- Copy & Paste
 vim.cmd [[
-vnoremap <C-C> "+y
-map      <C-P> "+p
+    vnoremap <C-C> "+y
+    map      <C-P> "+p
 ]]
 
 -- Essentials
@@ -39,12 +39,10 @@ reg({
     ['<C-s>'] = { "<cmd>w<CR>", "Save" }
 
 }, { prefix = "" })
-reg({
-    ["/"] = { ":CommentToggle<CR>", "Comment" },
-}, { prefix = "", mode = "v" })
-reg({
-    ["<C-/>"] = { "<cmd>CommentToggle<CR>", "Comment" },
-}, { prefix = "", mode = "n" })
+
+-- Toggle Comment
+reg({ ["<C-_>"] = { ":CommentToggle<CR>", "Comment" }, }, { prefix = "", mode = "v" })
+reg({ ["<C-_>"] = { "<cmd>CommentToggle<CR>", "Comment" }, }, { prefix = "", mode = "n" })
 
 -- Findings
 reg({

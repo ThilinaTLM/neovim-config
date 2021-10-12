@@ -9,7 +9,7 @@
 --
 
 -- Run Packer compile when plugins.lua updated
-vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])
+-- vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])
 
 return require('packer').startup(function(use)
 
@@ -25,10 +25,7 @@ return require('packer').startup(function(use)
 
     use { "folke/which-key.nvim", config = function() require('config/whichkey').setup() end }
     use { 'terrortylor/nvim-comment', config = function() require('config/comment') end, }
-    use {
-        "AckslD/nvim-neoclip.lua", -- NeoClip: Clipboard Manager
-        config = function() require('neoclip').setup() end,
-    }
+    use { "AckslD/nvim-neoclip.lua", config = function() require('neoclip').setup() end, } -- NeoClip: Clipboard Manager
 
     use {
         'hoob3rt/lualine.nvim', -- Lualine: Status bar
@@ -49,36 +46,38 @@ return require('packer').startup(function(use)
         config = function() require'config/nvimtree' end
     }
 
-    --::::::::::::::::::: LSP Stuff START :::::::::::::::::::::::::
-    use 'neovim/nvim-lspconfig'         -- Language server protocol support
-    use 'onsails/lspkind-nvim'          -- Add vs-code like pictogram to completion list
-    use {
-        'ray-x/navigator.lua', -- Better gui for code navigation
-        requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
-        config = function() require'config/navigator' end
-    }
+    -- Treesitter highlighting
     use {
         'nvim-treesitter/nvim-treesitter', -- Tresitter: Treesitter for neovim
         run = ':TSUpdate', config = function () require'config/treesitter' end,
     }
 
-    ------------------ Autocompletion START -------------------
-    use { 'hrsh7th/nvim-compe', config = function() require'config/compe' end }            -- Completion provider
-    use 'Raimondi/delimitMate'
-    use 'ray-x/lsp_signature.nvim'      -- Provide signature for functions as you type
-    ------------------ Autocompletion END ---------------------
-
-    -------------------- Snippets START ------------------------
-    use {'hrsh7th/vim-vsnip'}
-    use {'hrsh7th/vim-vsnip-integ'}
-    use {'rafamadriz/friendly-snippets'}
-    -- use {'SirVer/ultisnips'}
-    use {'norcalli/snippets.nvim'}
-    use {'L3MON4D3/LuaSnip'}
-    -------------------- Snippets END --------------------------
-
+    -- LSP Completion
+    use 'neovim/nvim-lspconfig'         -- Language server protocol support
+    use 'onsails/lspkind-nvim'          -- Add vs-code like pictogram to completion list
     use { 'folke/lsp-colors.nvim', config = function() require'config/lspcolors' end }
-    --::::::::::::::::::: LSP Stuff END :::::::::::::::::::::::::
+    use 'ray-x/lsp_signature.nvim'      -- Provide signature for functions as you type
+    use {
+        'ray-x/navigator.lua', -- Better gui for code navigation
+        requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
+        config = function() require'config/navigator' end
+    }
+
+    -- Snippets
+    use { 'hrsh7th/vim-vsnip' }
+    use {'SirVer/ultisnips'}
+    -- use {'norcalli/snippets.nvim'}
+    -- use {'L3MON4D3/LuaSnip'}
+
+    -- Completion plugins
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-vsnip', 'quangnguyen30192/cmp-nvim-ultisnips',
+            'hrsh7th/cmp-nvim-lua', 'hrsh7th/cmp-path'
+        },
+        config = function () require('config/nvim-cmp') end
+    }
 
     -- Git gutter
     use {

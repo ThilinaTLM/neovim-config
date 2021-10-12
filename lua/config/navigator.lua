@@ -34,15 +34,15 @@ local navigator_config = {
     }
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-        'documentation',
-        'detail',
-        'additionalTextEdits',
-    }
-}
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- capabilities.textDocument.completion.completionItem.resolveSupport = {
+--     properties = {
+--         'documentation',
+--         'detail',
+--         'additionalTextEdits',
+--     }
+-- }
 
 local lsp_configs = {
     require('lsp/python'),
@@ -53,6 +53,7 @@ local lsp_configs = {
 }
 
 require'lspconfig'.cmake.setup(require('lsp/cmake').config())
+local capabilities = require('config/nvim-cmp').capabilities
 
 for i = 1, #lsp_configs do
     local lang_config = lsp_configs[i]
