@@ -43,6 +43,7 @@ return require('packer').startup(function(use)
 
     use {
         'kyazdani42/nvim-tree.lua', -- NvimTree Explorer
+        requires = {'kyazdani42/nvim-web-devicons'},
         config = function() require'config/nvimtree' end
     }
 
@@ -92,14 +93,10 @@ return require('packer').startup(function(use)
     }
 
     -- Show live subsitution result
-    use {
-        'markonm/traces.vim',
-        opt = true
-    }
-
+    use { 'markonm/traces.vim', opt = true }
 
     -- NeoFormat
-    use {'sbdchd/neoformat', cmd = {'NeoFormat'}, opt = true}
+    use {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true}
 
     use {'metakirby5/codi.vim', cmd = {'Codi', 'CodiUpdate'}, opt = true}
 
