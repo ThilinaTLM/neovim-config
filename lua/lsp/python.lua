@@ -17,12 +17,19 @@ end
 
 local function lsp_configuration()
     return {
-        cmd = { "pyls" },
+        cmd = { "pylsp" },
         config = {
+            configurationSources = { "flake8" },
             plugins = {
                 pyls_mypy = {
                     enabled = true,
-                    live_mode = false
+                    live_mode = true
+                },
+                flake8 = {
+                    enabled = true,
+                },
+                pydocstyle = {
+                    enabled = true
                 }
             }
         },

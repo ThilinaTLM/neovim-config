@@ -15,7 +15,6 @@ require('lsp')
 require('keymaps')
 require('utils/runner')
 
-
 -- Colorscheme
 vim.cmd [[
     let g:tokyonight_style = "night"

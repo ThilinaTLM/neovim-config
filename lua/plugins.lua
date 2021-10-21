@@ -64,6 +64,9 @@ return require('packer').startup(function(use)
         config = function() require'config/navigator' end
     }
 
+    -- Auto pair
+    use { 'jiangmiao/auto-pairs' }
+
     -- Snippets
     use { 'hrsh7th/vim-vsnip' }
     use {'SirVer/ultisnips'}
@@ -71,10 +74,11 @@ return require('packer').startup(function(use)
     -- use {'L3MON4D3/LuaSnip'}
 
     -- Completion plugins
+    use 'hrsh7th/cmp-nvim-lsp'
     use {
         'hrsh7th/nvim-cmp',
         requires = {
-            'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-vsnip', 'quangnguyen30192/cmp-nvim-ultisnips',
+            'hrsh7th/cmp-buffer', 'hrsh7th/cmp-vsnip', 'quangnguyen30192/cmp-nvim-ultisnips',
             'hrsh7th/cmp-nvim-lua', 'hrsh7th/cmp-path'
         },
         config = function () require('config/nvim-cmp') end
@@ -94,6 +98,7 @@ return require('packer').startup(function(use)
 
     -- Show live subsitution result
     use { 'markonm/traces.vim', opt = true }
+    use { 'easymotion/vim-easymotion', config = function () require('config/easy-motion') end }
 
     -- NeoFormat
     use {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true}

@@ -34,7 +34,7 @@ end
 -- Custom floating terminal
 local fterm = require("FTerm.terminal")
 local runner_terminal = fterm:new():setup({
-    cmd = "python",
+    cmd = "zsh",
     dimensions = {
         height = 0.9,
         width = 0.9
@@ -64,9 +64,21 @@ local function python_run_cmd()
     return "python \"" .. current_filename() .. "\""
 end
 
+local function cpp_run_cmd()
+    return "./build.sh && ./build.sh run"
+end
+
+local function go_run_cmd()
+    return "go run ./main.go"
+end
+
 local function get_run_command()
     if current_filetype() == "python" then
         return python_run_cmd()
+    elseif current_filetype() == "go" then
+        return go_run_cmd()
+    elseif current_filetype() == "cpp" then
+        return cpp_run_cmd()
     else
         print("unsupoort filetype")
         return ""

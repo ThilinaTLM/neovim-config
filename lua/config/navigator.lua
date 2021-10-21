@@ -18,7 +18,7 @@ local navigator_config = {
     lspinstall = false, -- set to true if you would like use the lsp installed by lspinstall
     lsp = {
         code_action = {enable = true, sign = true, sign_priority = 40, virtual_text = true},
-        format_on_save = true, -- set to false to disasble lsp code format on save (if you are using prettier/efm/formater etc)
+        format_on_save = false, -- set to false to disasble lsp code format on save (if you are using prettier/efm/formater etc)
         disable_format_cap = {"sqls"},  -- a list of lsp not enable auto-format (e.g. if you using efm or vim-codeformat etc), empty by default
         diagnostic_scroll_bar_sign = {'▃', '█'}, -- experimental:  diagnostic status in scroll bar area; set to nil to disable the diagnostic sign,
         diagnostic_virtual_text = true,  -- show virtual for diagnostic message
