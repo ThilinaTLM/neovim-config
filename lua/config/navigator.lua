@@ -15,7 +15,7 @@ local navigator_config = {
         diagnostic_head = '🐛',
         diagnostic_head_severity_1 = "🈲",
     },
-    lspinstall = false, -- set to true if you would like use the lsp installed by lspinstall
+    ['lsp-install'] = false, -- set to true if you would like use the lsp installed by lspinstall
     lsp = {
         code_action = {enable = true, sign = true, sign_priority = 40, virtual_text = true},
         format_on_save = false, -- set to false to disasble lsp code format on save (if you are using prettier/efm/formater etc)

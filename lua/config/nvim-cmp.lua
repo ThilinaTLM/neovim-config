@@ -36,6 +36,7 @@ cmp.setup({
         { name = 'path' },
         { name = 'luasnip' },
         { name = 'buffer', keyword_length = 5 },
+        { name = 'cmp_tabnine', priority = 41 },
     },
     snippet = {
         expand = function (args)
@@ -51,6 +52,7 @@ cmp.setup({
                 nvim_lua = "⟦NVIM⟧",
                 path = "⟦PATH⟧",
                 luasnip = "⟦SNIP⟧",
+                cmp_tabnine = "⟦TN⟧",
             }
         }),
     },
