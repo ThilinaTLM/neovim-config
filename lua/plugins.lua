@@ -8,9 +8,6 @@
 -- 	    ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 --
 
--- Run Packer compile when plugins.lua updated
--- vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])
-
 return require('packer').startup(function(use)
 
     use 'wbthomason/packer.nvim' -- packer can manage itself
@@ -25,7 +22,6 @@ return require('packer').startup(function(use)
 
     use { "folke/which-key.nvim", config = function() require('config/whichkey').setup() end }
     use { 'terrortylor/nvim-comment', config = function() require('config/comment') end, }
-    use { "AckslD/nvim-neoclip.lua", config = function() require('neoclip').setup() end, } -- NeoClip: Clipboard Manager
 
     use {
         'hoob3rt/lualine.nvim', -- Lualine: Status bar
@@ -53,34 +49,29 @@ return require('packer').startup(function(use)
         run = ':TSUpdate', config = function () require'config/treesitter' end,
     }
 
-    -- LSP Completion
+    use {'folke/lsp-colors.nvim', config = function() require'config/lspcolors' end }
+
+    -- Auto pair
+    use { 'jiangmiao/auto-pairs' }
+
+    -- Lsp Config
     use 'neovim/nvim-lspconfig'         -- Language server protocol support
-    use 'onsails/lspkind-nvim'          -- Add vs-code like pictogram to completion list
-    use { 'folke/lsp-colors.nvim', config = function() require'config/lspcolors' end }
-    use 'ray-x/lsp_signature.nvim'      -- Provide signature for functions as you type
     use {
         'ray-x/navigator.lua', -- Better gui for code navigation
         requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
         config = function() require'config/navigator' end
     }
 
-    -- Auto pair
-    use { 'jiangmiao/auto-pairs' }
 
-    -- Snippets
-    use { 'hrsh7th/vim-vsnip' }
-    use {'SirVer/ultisnips'}
-    -- use {'norcalli/snippets.nvim'}
-    -- use {'L3MON4D3/LuaSnip'}
-
-    -- Completion plugins
+    -- Auto Completion 
+    use 'onsails/lspkind-nvim'          -- Add vs-code like pictogram to completion list
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-nvim-lua'
     use 'hrsh7th/cmp-nvim-lsp'
+
     use {
         'hrsh7th/nvim-cmp',
-        requires = {
-            'hrsh7th/cmp-buffer', 'hrsh7th/cmp-vsnip', 'quangnguyen30192/cmp-nvim-ultisnips',
-            'hrsh7th/cmp-nvim-lua', 'hrsh7th/cmp-path'
-        },
         config = function () require('config/nvim-cmp') end
     }
 
@@ -102,24 +93,12 @@ return require('packer').startup(function(use)
 
     -- NeoFormat
     use {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true}
-
-    use {'metakirby5/codi.vim', cmd = {'Codi', 'CodiUpdate'}, opt = true}
-
-    use {
-        "numtostr/FTerm.nvim",
-        config = function()
-            require("FTerm")
-        end
-    }
-
-    use { 'rafcamlet/nvim-luapad' }
+    use { "numtostr/FTerm.nvim", config = function() require("FTerm") end }
 
     ------------------- Language Specific ----------------------
 
-    -- AutoTag
-    use {'windwp/nvim-ts-autotag', opt = true}
-    use {'mattn/emmet-vim', opt = true}
     use {'cdelledonne/vim-cmake', ft = {'cpp', 'cmake'}}
+    use { 'rafcamlet/nvim-luapad' }
 
 end)
 

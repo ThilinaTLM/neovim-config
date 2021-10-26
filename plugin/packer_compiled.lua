@@ -106,6 +106,7 @@ _G.packer_plugins = {
     commands = { "Codi", "CodiUpdate" },
     loaded = false,
     needs_bufread = false,
+    only_cond = false,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/codi.vim"
   },
   ["emmet-vim"] = {
@@ -150,6 +151,7 @@ _G.packer_plugins = {
     commands = { "Neoformat" },
     loaded = false,
     needs_bufread = false,
+    only_cond = false,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/neoformat"
   },
   ["nvim-bufferline.lua"] = {
@@ -236,6 +238,7 @@ _G.packer_plugins = {
   ["vim-cmake"] = {
     loaded = false,
     needs_bufread = false,
+    only_cond = false,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/opt/vim-cmake"
   },
   ["vim-easymotion"] = {

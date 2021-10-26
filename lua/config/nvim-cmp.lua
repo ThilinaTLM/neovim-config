@@ -1,38 +1,63 @@
 -- Setup nvim-cmp.
-local cmp = require'cmp'
-local lspkind = require('lspkind')
+local lspkind = require("lspkind")
+local cmp = require("cmp")
+
+lspkind.init()
 
 cmp.setup({
-    snippet = {
-        expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
-            -- vim.fn["UltiSnips#Anon"](args.body)
-        end,
-    },
     mapping = {
-        ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-        ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
         ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
         ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.close(),
-        ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true, }),
-        ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
+        ['<C-Space>'] = cmp.mapping.complete(),
+        -- ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+        -- ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+        ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true, }),
+        ['<Tab>'] = function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            else
+                fallback()
+            end
+        end,
+        ['<S-Tab>'] = function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            else
+                fallback()
+            end
+        end,
     },
     sources = {
-        { name = 'vsnip' },
-        -- { name = 'ultisnips' },
+        { name = 'nvim_lua', priority = 40 },
         { name = 'nvim_lsp' },
-        { name = 'buffer' },
-        { name = 'nvim_lua' },
         { name = 'path' },
+        { name = 'luasnip' },
+        { name = 'buffer', keyword_length = 5 },
+    },
+    snippet = {
+        expand = function (args)
+            require('luasnip').lsp_expand(args.body)
+        end
     },
     formatting = {
-        format = lspkind.cmp_format(),
+        format = lspkind.cmp_format({
+            with_text = true,
+            menu = {
+                buffer = "⟦BUF⟧",
+                nvim_lsp = "⟦LSP⟧",
+                nvim_lua = "⟦NVIM⟧",
+                path = "⟦PATH⟧",
+                luasnip = "⟦SNIP⟧",
+            }
+        }),
     },
-    -- preselect = cmp.PreselectMode.Item
+    experimental = {
+        native_menu = false,
+        ghost_text = true
+    }
 })
 
 vim.cmd [[
