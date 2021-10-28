@@ -31,7 +31,7 @@ local configuration = {
         args = {}
     },
     view = {
-        width = 35,
+        width = 30,
         height = 30,
         side = 'left',
         auto_resize = false,
