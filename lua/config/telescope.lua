@@ -1,5 +1,7 @@
+local telescope = require("telescope")
+local km = require("keymaps")
 
-require('telescope').setup{
+local config = {
     defaults = {
     vimgrep_arguments = {
       'rg',
@@ -49,5 +51,18 @@ require('telescope').setup{
         }
   }
 }
-require('telescope').load_extension('fzy_native')
+
+local keymaps = {
+    f = {
+        name = "Find",
+        f = { "<cmd>Telescope find_files<CR>", "Find Files" },
+        g = { "<cmd>Telescope live_grep<CR>", "Live Grep" },
+    },
+    p = { "<cmd>Telescope registers<CR>", "Clipboard" },
+}
+
+
+km.lnreg(keymaps)
+telescope.setup(config)
+telescope.load_extension('fzy_native')
 

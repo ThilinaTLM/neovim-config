@@ -2,8 +2,15 @@ local wk = require('config/whichkey')
 
 local reg = wk.register;
 
-local keys = {
+local km = {
+    reg = wk.register,
     leader = function(key) vim.g.mapleader = key end,
+    nreg = function(mappings) wk.register(mappings, {mode="n", noremap = true}) end,
+    ireg = function(mappings) wk.register(mappings, {mode="i"}) end,
+    vreg = function(mappings) wk.register(mappings, {mode="v"}) end,
+    lnreg = function(mappings) wk.register(mappings, {prefix="<leader>", mode="n"}) end,
+    lireg = function(mappings) wk.register(mappings, {prefix="<leader>", mode="i"}) end,
+    lvreg = function(mappings) wk.register(mappings, {prefix="<leader>", mode="v"}) end,
     map = function(keys, event, comment) wk.register({[keys] = {event, comment}}, {noremap = true}) end,
     lmap = function(keys, event, comment) wk.register({[keys] = {event, comment}}, {prefix="<leader>", noremap=true}) end,
     nmap = function(keys, event, comment) wk.register({[keys] = {event, comment}}, {mode="n", noremap = true}) end,
@@ -12,17 +19,10 @@ local keys = {
     limap = function(keys, event, comment) wk.register({[keys] = {event, comment}}, {prefix="<leader>", mode="i", noremap = true}) end,
     vmap = function(keys, event, comment) wk.register({[keys] = {event, comment}}, {mode="v", noremap = true}) end,
     lvmap = function(keys, event, comment) wk.register({[keys] = {event, comment}}, {prefix="<leader>", mode="v", noremap = true}) end,
-    reg = wk.register,
-    nreg = function(mappings) wk.register(mappings, {mode="n", noremap = true}) end,
-    ireg = function(mappings) wk.register(mappings, {mode="i"}) end,
-    vreg = function(mappings) wk.register(mappings, {mode="v"}) end,
-    lnreg = function(mappings) wk.register(mappings, {prefix="<leader>", mode="n"}) end,
-    lireg = function(mappings) wk.register(mappings, {prefix="<leader>", mode="i"}) end,
-    lvreg = function(mappings) wk.register(mappings, {prefix="<leader>", mode="v"}) end,
 }
 
 -- map leader key to <space>
-keys.leader(' ')
+km.leader(' ')
 
 -- Copy & Paste
 vim.cmd [[
@@ -61,21 +61,6 @@ reg({
 
 }, { prefix = "" })
 
--- Toggle Comment
-reg({ ["<C-_>"] = { ":CommentToggle<CR>", "Comment" }, }, { prefix = "", mode = "v" })
-reg({ ["<C-_>"] = { "<cmd>CommentToggle<CR>", "Comment" }, }, { prefix = "", mode = "n" })
-
--- Findings
-reg({
-    f = {
-        name = "Find",
-        f = { "<cmd>Telescope find_files<CR>", "Find Files" },
-        g = { "<cmd>Telescope live_grep<CR>", "Live Grep" },
-    },
-    p = { "<cmd>Telescope neoclip<CR>", "Clipboard" },
-}, { prefix = "<leader>", mode='n' })
-
-
 -- Usefull maps
 vim.cmd [[
     nnoremap Y y$
@@ -97,4 +82,4 @@ vim.cmd [[
     nnoremap <leader>j :m .+1<CR>==
 ]]
 
-return keys;
+return km;
