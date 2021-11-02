@@ -1,5 +1,5 @@
 local nc = require("nvim_comment")
-local km = require("km")
+local km = require("keymaps")
 
 local config = {
   marker_padding = true,

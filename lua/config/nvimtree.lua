@@ -10,7 +10,7 @@ local configuration = {
         enable = true,
         auto_open = true,
     },
-    hijack_cursor       = false,
+    hijack_cursor       = true,
     update_cwd          = false,
     diagnostics = {
         enable = true,
@@ -22,7 +22,7 @@ local configuration = {
         }
     },
     update_focused_file = {
-        enable      = false,
+        enable      = true,
         update_cwd  = false,
         ignore_list = {}
     },

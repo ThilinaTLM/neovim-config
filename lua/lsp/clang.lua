@@ -12,7 +12,20 @@ end
 
 local function lsp_configuration()
     return {
-        cmd = { "clangd", "--background-index" },
+        cmd = {
+            "clangd",
+            "--background-index",
+            "--compile-commands-dir=debug",
+            "--all-scopes-completion",
+            "--clang-tidy",
+            "--completion-style=detailed",
+            "--cross-file-rename",
+            "--fallback-style='{BasedOnStyle: LLVM, IndentWidth: 4, ColumnLimit: 120}'",
+            "--header-insertion=iwyu",
+            "--header-insertion-decorators",
+            "--hidden-features"
+        },
+        filetypes = {"c", "cpp", "objc", "objcpp", "h", "hpp"},
         root_dir = root_dir_matcher
     }
 end

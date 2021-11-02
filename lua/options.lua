@@ -1,5 +1,5 @@
 
-local wrp = require('utils/wrappers')
+local wrp = require('utils/options')
 
 -- Search and Highliting
 wrp.so("hlsearch", true)

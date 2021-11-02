@@ -80,6 +80,8 @@ vim.cmd [[
     vnoremap J :m '<-2<CR>gv=gv
     nnoremap <leader>k :m .-2<CR>==
     nnoremap <leader>j :m .+1<CR>==
+
+    inoremap jk <ESC>
 ]]
 
 return km;

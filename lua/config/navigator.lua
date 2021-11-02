@@ -1,4 +1,5 @@
 local navigator = require('navigator')
+local km = require("keymaps")
 
 local navigator_config = {
     debug = false, -- log output, set to true and log path: ~/.local/share/nvim/gh.log
@@ -21,8 +22,8 @@ local navigator_config = {
         format_on_save = false, -- set to false to disasble lsp code format on save (if you are using prettier/efm/formater etc)
         disable_format_cap = {"sqls"},  -- a list of lsp not enable auto-format (e.g. if you using efm or vim-codeformat etc), empty by default
         diagnostic_scroll_bar_sign = {'▃', '█'}, -- experimental:  diagnostic status in scroll bar area; set to nil to disable the diagnostic sign,
-        diagnostic_virtual_text = false,  -- show virtual for diagnostic message
-        diagnostic_update_in_insert = false, -- update diagnostic message in insert mode
+        diagnostic_virtual_text = true,  -- show virtual for diagnostic message
+        diagnostic_update_in_insert = true, -- update diagnostic message in insert mode
         disply_diagnostic_qf = true, -- always show quickfix if there are diagnostic errors, set to false if you  want to
         disable_lsp = {
             "angularls", "flow", "dockerls", "julials", "pyright",
@@ -33,16 +34,6 @@ local navigator_config = {
         },
     }
 }
-
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
--- capabilities.textDocument.completion.completionItem.resolveSupport = {
---     properties = {
---         'documentation',
---         'detail',
---         'additionalTextEdits',
---     }
--- }
 
 local lsp_configs = {
     require('lsp/python'),
@@ -62,5 +53,7 @@ for i = 1, #lsp_configs do
     navigator_config.lsp[lang_config.server] = lsp_config
 end
 
+
 navigator.setup(navigator_config)
+km.nmap("<A-CR>", "<Cmd>lua require('navigator.codeAction').code_action()<CR>", "Show code actions")
 
