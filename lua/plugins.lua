@@ -10,7 +10,28 @@
 
 local packer = require("packer")
 
-local function cutomization_plugins(use)
+local function basic_plugins(use)
+    use 'nvim-lua/plenary.nvim'
+    use {
+        'nvim-telescope/telescope.nvim', -- Telecope
+        config = function () require'config/telescope' end,
+        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
+    }
+    use {
+        'nvim-treesitter/nvim-treesitter', -- Tresitter: Treesitter for neovim
+        run = ':TSUpdate', config = function () require'config/treesitter' end,
+    }
+    use { "folke/which-key.nvim", config = function() require('config/whichkey').setup() end }
+    use { 'terrortylor/nvim-comment', config = function() require('config/comment') end, }
+    use { 'tpope/vim-surround' }
+    use { 'jiangmiao/auto-pairs' }
+    use { 'markonm/traces.vim', opt = true }
+    use { 'easymotion/vim-easymotion', config = function () require('config/easy-motion') end }
+
+    use 'ThePrimeagen/harpoon'
+end
+
+local function customization_plugins(use)
     use 'kyazdani42/nvim-web-devicons' -- for file icons
     use 'folke/tokyonight.nvim'
     use {'kaicataldo/material.vim',  branch = 'main' }
@@ -31,6 +52,7 @@ local function cutomization_plugins(use)
         config = function() require'config/nvimtree' end
     }
     use {'folke/lsp-colors.nvim', config = function() require'config/lspcolors' end }
+
 end
 
 local function language_plugins(use)
@@ -41,7 +63,7 @@ local function language_plugins(use)
         requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
         config = function() require'config/navigator' end
     }
-
+    use 'mfussenegger/nvim-jdtls'
 
     -- Auto Completion
     use 'onsails/lspkind-nvim' -- Add vs-code like pictogram to completion list
@@ -63,24 +85,6 @@ local function language_plugins(use)
     use {'cdelledonne/vim-cmake', ft = {'cpp', 'cmake'}}
 end
 
-local function basic_plugins(use)
-    use {
-        'nvim-telescope/telescope.nvim', -- Telecope
-        config = function () require'config/telescope' end,
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
-    }
-    use {
-        'nvim-treesitter/nvim-treesitter', -- Tresitter: Treesitter for neovim
-        run = ':TSUpdate', config = function () require'config/treesitter' end,
-    }
-    use { "folke/which-key.nvim", config = function() require('config/whichkey').setup() end }
-    use { 'terrortylor/nvim-comment', config = function() require('config/comment') end, }
-    use { 'tpope/vim-surround' }
-    use { 'jiangmiao/auto-pairs' }
-    use { 'markonm/traces.vim', opt = true }
-    use { 'easymotion/vim-easymotion', config = function () require('config/easy-motion') end }
-end
-
 local function ehancement_plugins(use)
     use {
         'lewis6991/gitsigns.nvim',
@@ -100,7 +104,7 @@ end
 return packer.startup(function(use)
     use 'wbthomason/packer.nvim' -- packer can manage itself
     basic_plugins(use)
-    cutomization_plugins(use)
+    customization_plugins(use)
     language_plugins(use)
     ehancement_plugins(use)
 end)

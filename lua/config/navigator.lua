@@ -23,7 +23,7 @@ local navigator_config = {
         disable_format_cap = {"sqls"},  -- a list of lsp not enable auto-format (e.g. if you using efm or vim-codeformat etc), empty by default
         diagnostic_scroll_bar_sign = {'▃', '█'}, -- experimental:  diagnostic status in scroll bar area; set to nil to disable the diagnostic sign,
         diagnostic_virtual_text = true,  -- show virtual for diagnostic message
-        diagnostic_update_in_insert = true, -- update diagnostic message in insert mode
+        diagnostic_update_in_insert = false, -- update diagnostic message in insert mode
         disply_diagnostic_qf = true, -- always show quickfix if there are diagnostic errors, set to false if you  want to
         disable_lsp = {
             "angularls", "flow", "dockerls", "julials", "pyright",
@@ -31,6 +31,7 @@ local navigator_config = {
             "yamlls", "sqls", "denols", "graphql", "dartls", "dotls",
             "kotlin_language_server", "nimls", "intelephense", "phpactor", "omnisharp",
             "r_language_server", "terraformls",
+            "jdtls"
         },
     }
 }
@@ -41,6 +42,7 @@ local lsp_configs = {
     require('lsp/rust'),
     require('lsp/clang'),
     require('lsp/go'),
+    -- require('lsp/java')
 }
 
 require'lspconfig'.cmake.setup(require('lsp/cmake').config())
