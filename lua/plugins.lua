@@ -52,6 +52,7 @@ local function customization_plugins(use)
         config = function() require'config/nvimtree' end
     }
     use {'folke/lsp-colors.nvim', config = function() require'config/lspcolors' end }
+    use { 'glepnir/dashboard-nvim', config = function() vim.g.dashboard_default_executive = 'telescope' end, }
 
 end
 
@@ -83,6 +84,7 @@ local function language_plugins(use)
     }
     use {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true}
     use {'cdelledonne/vim-cmake', ft = {'cpp', 'cmake'}}
+    use { 'github/copilot.vim', config = function () require('config/copilot') end}
 end
 
 local function ehancement_plugins(use)
@@ -99,6 +101,7 @@ local function ehancement_plugins(use)
 
     use { "numtostr/FTerm.nvim", config = function() require("FTerm") end }
     use { 'rafcamlet/nvim-luapad' }
+    use { 'vimwiki/vimwiki', opt = true, cmd = {'VimwikiIndex'}, config = function() require("config/vimwiki") end }
 end
 
 return packer.startup(function(use)
