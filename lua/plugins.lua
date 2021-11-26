@@ -28,7 +28,7 @@ local function basic_plugins(use)
     use { 'markonm/traces.vim', opt = true }
     use { 'easymotion/vim-easymotion', config = function () require('config/easy-motion') end }
 
-    use 'ThePrimeagen/harpoon'
+    -- use 'ThePrimeagen/harpoon'
 end
 
 local function customization_plugins(use)
@@ -102,6 +102,8 @@ local function ehancement_plugins(use)
     use { "numtostr/FTerm.nvim", config = function() require("FTerm") end }
     use { 'rafcamlet/nvim-luapad' }
     use { 'vimwiki/vimwiki', opt = true, cmd = {'VimwikiIndex'}, config = function() require("config/vimwiki") end }
+
+    use { 'lervag/vimtex', config  = function() require('config/vimtex') end }
 end
 
 return packer.startup(function(use)
