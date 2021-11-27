@@ -46,6 +46,7 @@ wrp.so("shell", "zsh")
 wrp.so("path", ".,,**")
 wrp.so("hidden", true)
 wrp.so("mouse", "a")
+wrp.so('spellfile', '/home/tlm/.config/nvim/spell/en.utf-8.add')
 
 --- interface options
 wrp.so("number", true)
