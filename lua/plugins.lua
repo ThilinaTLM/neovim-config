@@ -24,8 +24,7 @@ local function basic_plugins(use)
     use { "folke/which-key.nvim", config = function() require('config/whichkey').setup() end }
     use { 'terrortylor/nvim-comment', config = function() require('config/comment') end, }
     use { 'tpope/vim-surround' }
-    use { 'jiangmiao/auto-pairs' }
-    use { 'markonm/traces.vim', opt = true }
+    use { 'rstacruz/vim-closer' }
     use { 'easymotion/vim-easymotion', config = function () require('config/easy-motion') end }
 
     -- use 'ThePrimeagen/harpoon'
@@ -38,7 +37,6 @@ local function customization_plugins(use)
 
     use {
         'hoob3rt/lualine.nvim', -- Lualine: Status bar
-        requires = {'kyazdani42/nvim-web-devicons', opt = true},
         config = function() require'config/lualine' end
     }
     use {
@@ -59,6 +57,7 @@ end
 local function language_plugins(use)
     -- Lsp Config
     use 'neovim/nvim-lspconfig'         -- Language server protocol support
+    use 'williamboman/nvim-lsp-installer'
     use {
         'ray-x/navigator.lua', -- Better gui for code navigation
         requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
@@ -98,10 +97,6 @@ local function ehancement_plugins(use)
         end,
         opt = true
     }
-
-    use { "numtostr/FTerm.nvim", config = function() require("FTerm") end }
-    use { 'rafcamlet/nvim-luapad' }
-    use { 'vimwiki/vimwiki', opt = true, cmd = {'VimwikiIndex'}, config = function() require("config/vimwiki") end }
 
     use { 'lervag/vimtex', config  = function() require('config/vimtex') end }
 end
