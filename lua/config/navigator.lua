@@ -35,19 +35,15 @@ local navigator_config = {
     }
 }
 
-local lsp_configs = {
-}
-
+local langs = {'lua', 'python', 'go'}
+local lsp_configs = require('lsp/init').configs
 local capabilities = require('config/nvim-cmp').capabilities
 
-for i = 1, #lsp_configs do
-    local lang_config = lsp_configs[i]
-    local lsp_config = lang_config.config()
-    lsp_config.capabilities = capabilities
-    navigator_config.lsp[lang_config.server] = lsp_config
+for i = 1, #langs do
+    local lang_config = lsp_configs[langs[i]]
+    lang_config.capabilities = capabilities
+    navigator_config.lsp[lang_config.name] = lang_config
 end
-
-navigator_config.lsp[require('lsp/init').lua.name] = require('lsp/init').lua
 
 navigator.setup(navigator_config)
 km.nmap("<A-CR>", "<Cmd>lua require('navigator.codeAction').code_action()<CR>", "Show code actions")

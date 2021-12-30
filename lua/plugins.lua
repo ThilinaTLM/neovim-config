@@ -92,6 +92,7 @@ local function ehancement_plugins(use)
         opt = true
     }
     use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+    use {'is0n/jaq-nvim'}
 end
 
 return packer.startup(function(use)
