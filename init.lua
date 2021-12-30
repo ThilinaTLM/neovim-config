@@ -15,17 +15,7 @@ require('lsp')
 require('keymaps')
 require('utils/runner')
 
--- Colorscheme
--- vim.cmd [[
---     let g:tokyonight_style = "night"
---     let g:tokyonight_italic_functions = 1
---     let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
---     colorscheme tokyonight
--- ]]
-
 vim.cmd [[
-    let g:material_theme_style = 'darker'
-    let g:material_terminal_italics = 1
-    colorscheme material 
+    colorscheme nightfox
 ]]
 

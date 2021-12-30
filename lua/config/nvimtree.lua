@@ -6,7 +6,7 @@ local configuration = {
     hijack_netrw        = true,
     open_on_setup       = false,
     ignore_ft_on_setup  = {},
-    auto_close          = true,
+    auto_close          = false,
     open_on_tab         = false,
     update_to_buf_dir   = {
         enable = true,
@@ -78,4 +78,5 @@ local configuration = {
 }
 
 nvim_tree.setup(configuration)
+
 

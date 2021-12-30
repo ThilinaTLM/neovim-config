@@ -24,17 +24,12 @@ local function basic_plugins(use)
     use { "folke/which-key.nvim", config = function() require('config/whichkey').setup() end }
     use { 'terrortylor/nvim-comment', config = function() require('config/comment') end, }
     use { 'tpope/vim-surround' }
-    use { 'rstacruz/vim-closer' }
     use { 'easymotion/vim-easymotion', config = function () require('config/easy-motion') end }
-
-    -- use 'ThePrimeagen/harpoon'
 end
 
 local function customization_plugins(use)
     use 'kyazdani42/nvim-web-devicons' -- for file icons
-    use 'folke/tokyonight.nvim'
-    use {'kaicataldo/material.vim',  branch = 'main' }
-
+    use 'EdenEast/nightfox.nvim' -- for nightfox
     use {
         'hoob3rt/lualine.nvim', -- Lualine: Status bar
         config = function() require'config/lualine' end
@@ -50,8 +45,6 @@ local function customization_plugins(use)
         config = function() require'config/nvimtree' end
     }
     use {'folke/lsp-colors.nvim', config = function() require'config/lspcolors' end }
-    use { 'glepnir/dashboard-nvim', config = function() vim.g.dashboard_default_executive = 'telescope' end, }
-
 end
 
 local function language_plugins(use)
@@ -81,9 +74,10 @@ local function language_plugins(use)
         'hrsh7th/nvim-cmp',
         config = function () require('config/nvim-cmp') end
     }
+    use {'windwp/nvim-autopairs', config = function() require('config/autopairs') end }
     use {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true}
     use {'cdelledonne/vim-cmake', ft = {'cpp', 'cmake'}}
-    use { 'github/copilot.vim', config = function () require('config/copilot') end}
+    use {'github/copilot.vim', config = function () require('config/copilot') end}
 end
 
 local function ehancement_plugins(use)
@@ -97,8 +91,7 @@ local function ehancement_plugins(use)
         end,
         opt = true
     }
-
-    use { 'lervag/vimtex', config  = function() require('config/vimtex') end }
+    use { 'michaelb/sniprun', run = 'bash ./install.sh'}
 end
 
 return packer.startup(function(use)

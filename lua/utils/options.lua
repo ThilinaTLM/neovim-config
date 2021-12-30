@@ -1,5 +1,4 @@
 
-
 -- function which set options
 local function set_opt(name, value, options)
     if options == nil then

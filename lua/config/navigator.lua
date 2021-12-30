@@ -18,7 +18,7 @@ local navigator_config = {
     lsp_installer = false,
     lsp = {
         code_action = {enable = true, sign = true, sign_priority = 40, virtual_text = true},
-        format_on_save = false, -- set to false to disasble lsp code format on save (if you are using prettier/efm/formater etc)
+        format_on_save = true, -- set to false to disasble lsp code format on save (if you are using prettier/efm/formater etc)
         disable_format_cap = {"sqls"},  -- a list of lsp not enable auto-format (e.g. if you using efm or vim-codeformat etc), empty by default
         diagnostic_scrollbar_sign = {'▃', '▆', '█'},
         diagnostic_virtual_text = true,  -- show virtual for diagnostic message
@@ -36,14 +36,6 @@ local navigator_config = {
 }
 
 local lsp_configs = {
-    require('lsp/python'),
-    require('lsp/typescript'),
-    require('lsp/rust'),
-    require('lsp/clang'),
-    require('lsp/go'),
-    require('lsp/latex'),
-    require('lsp/cmake'),
-    -- require('lsp/java')
 }
 
 local capabilities = require('config/nvim-cmp').capabilities
@@ -55,6 +47,7 @@ for i = 1, #lsp_configs do
     navigator_config.lsp[lang_config.server] = lsp_config
 end
 
+navigator_config.lsp[require('lsp/init').lua.name] = require('lsp/init').lua
 
 navigator.setup(navigator_config)
 km.nmap("<A-CR>", "<Cmd>lua require('navigator.codeAction').code_action()<CR>", "Show code actions")

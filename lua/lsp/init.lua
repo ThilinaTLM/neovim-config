@@ -1,33 +1,80 @@
---
--- Moved to config/navigator plugin
---
+-- LSP Configurations
 
+-- Generate absolute path to lsp servers
+local lsp_dir = vim.fn.stdpath('data') .. '/lsp_servers'
+local function lsp_path(relative_path)
+  return vim.fn.expand(lsp_dir .. '/' .. relative_path)
+end
 
--- Enable (broadcasting) snippet capability for completion
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
--- capabilities.textDocument.completion.completionItem.resolveSupport = {
---   properties = {
---     'documentation',
---     'detail',
---     'additionalTextEdits',
---   }
--- }
--- 
--- 
--- local lspconfig = require('lspconfig')
--- 
--- local configs = {
---     require('lsp/python'),
---     require('lsp/typescript'),
---     require('lsp/rust'),
---     require('lsp/clang')
--- }
--- 
--- for i = 1, #configs do
---     local lang_config = configs[i]
---     local lsp_config = lang_config.config()
---     lsp_config.capabilities = capabilities
---     lspconfig[lang_config.server].setup(lsp_config)
--- end
--- 
+-- root dir pattern generator
+local function root_dirs(patterns)
+    return function (fname)
+        local util = require('lspconfig').util
+        return util.root_pattern(unpack(patterns))(fname) or util.find_git_ancestor(fname) or util.path.dirname(fname)
+    end
+end
+
+-------------------------------------------------------------------------------------------------------------
+local lsp_configs = {}
+
+-- Lua ------------------------------------------------------------------------------------------------------
+lsp_configs.lua = {
+        name = 'sumneko_lua',
+        cmd = {lsp_path('sumneko_lua/extension/server/bin/lua-language-server')};
+        settings = {
+            Lua = {
+                runtime = {
+                    version = 'LuaJIT',
+                    path = vim.split(package.path, ';'),
+                },
+                diagnostics = {
+                    globals = {'vim'},
+                },
+                workspace = {
+                    library = {
+                        [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                        [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+                    },
+                },
+                telemetry = {
+                    enable = false,
+                },
+            },
+        },
+}
+
+-- Python ---------------------------------------------------------------------------------------------------
+lsp_configs.python = {
+    name = 'pylsp',
+    cmd = {lsp_path('pylsp/venv/bin/pylsp')};
+    config = {
+        configurationSources = { "flake8" },
+        plugins = {
+            pyls_mypy = {
+                enabled = true,
+                live_mode = true
+            },
+            flake8 = {
+                enabled = true,
+            },
+            pydocstyle = {
+                enabled = true
+            }
+        }
+    },
+    root_dir = root_dirs({
+        'pyproject.toml',
+        'setup.py',
+        'setup.cfg',
+        'requirements.txt',
+        'Pipfile',
+        'main.py'
+    }),
+
+}
+
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+return lsp_configs
+
