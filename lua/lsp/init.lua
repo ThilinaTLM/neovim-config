@@ -76,7 +76,7 @@ lsp_configs.python = {
 -- Go lang --------------------------------------------------------------------------------------------------
 lsp_configs.go = {
     name = 'gopls',
-    cmd = {lsp_path('go/gopls')};
+    cmd = {lsp_path('go/gopls')},
     config = {},
     root_dir = root_dirs({
         'go.mod',
@@ -86,6 +86,37 @@ lsp_configs.go = {
     }),
 
 }
+
+-- Typescript, Javascript -----------------------------------------------------------------------------------
+lsp_configs.typescript = {
+    name = 'tsserver',
+    cmd = {'node', lsp_path('tsserver/node_modules/typescript-language-server/lib/cli.js'), '--stdio'},
+    config = {},
+    init_options = { hostInfo = "neovim" },
+    root_dir = root_dirs({
+        'package.json',
+        'tsconfig.json',
+        '.git',
+        'main.ts',
+        'main.js',
+        'index.ts',
+        'index.js',
+    })
+}
+
+-- Angular --------------------------------------------------------------------------------------------------
+lsp_configs.angular = {
+    name = 'angularls',
+    cmd = {lsp_path('angularls/node_modules/@angular/language-server/bin/ngserver'), '--stdio'},
+    config = {},
+    root_dir = root_dirs({
+        'angular.json',
+        'package.json',
+        'tsconfig.json',
+        '.git',
+    })
+}
+-------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------
 return {

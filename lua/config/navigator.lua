@@ -35,7 +35,7 @@ local navigator_config = {
     }
 }
 
-local langs = {'lua', 'python', 'go'}
+local langs = {'lua', 'python', 'go', 'typescript', 'angular'}
 local lsp_configs = require('lsp/init').configs
 local capabilities = require('config/nvim-cmp').capabilities
 
