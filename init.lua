@@ -15,7 +15,4 @@ require('lsp')
 require('keymaps')
 require('utils/runner')
 
-vim.cmd [[
-    colorscheme nightfox
-]]
-
+require('nightfox').load('nightfox')

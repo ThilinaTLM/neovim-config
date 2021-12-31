@@ -123,6 +123,7 @@ _G.packer_plugins = {
     url = "https://github.com/ray-x/guihua.lua"
   },
   ["jaq-nvim"] = {
+    config = { "\27LJ\1\2*\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\15config/jaq\frequire\0" },
     loaded = true,
     path = "/home/tlm/.local/share/nvim/site/pack/packer/start/jaq-nvim",
     url = "https://github.com/is0n/jaq-nvim"
@@ -301,6 +302,10 @@ time([[Config for nvim-tree.lua]], false)
 time([[Config for vim-easymotion]], true)
 try_loadstring("\27LJ\1\0022\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\23config/easy-motion\frequire\0", "config", "vim-easymotion")
 time([[Config for vim-easymotion]], false)
+-- Config for: jaq-nvim
+time([[Config for jaq-nvim]], true)
+try_loadstring("\27LJ\1\2*\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\15config/jaq\frequire\0", "config", "jaq-nvim")
+time([[Config for jaq-nvim]], false)
 -- Config for: nvim-comment
 time([[Config for nvim-comment]], true)
 try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config/comment\frequire\0", "config", "nvim-comment")
