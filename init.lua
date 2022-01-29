@@ -15,4 +15,7 @@ require('lsp')
 require('keymaps')
 require('utils/runner')
 
-require('nightfox').load('nightfox')
+-- set colorscheme
+vim.cmd [[
+  colorscheme gruvbox8_hard
+]]

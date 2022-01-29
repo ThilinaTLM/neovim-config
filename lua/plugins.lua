@@ -14,7 +14,7 @@ local function basic_plugins(use)
     use 'nvim-lua/plenary.nvim'
     use {
         'nvim-telescope/telescope.nvim', -- Telecope
-        config = function () require'config/telescope' end,
+        config = function () require('config/telescope') end,
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
     }
     use {
@@ -29,7 +29,8 @@ end
 
 local function customization_plugins(use)
     use 'kyazdani42/nvim-web-devicons' -- for file icons
-    use 'EdenEast/nightfox.nvim' -- for nightfox
+    use 'EdenEast/nightfox.nvim' -- nightfox theme
+    use 'lifepillar/vim-gruvbox8' -- gruvbox8 theme
     use {
         'hoob3rt/lualine.nvim', -- Lualine: Status bar
         config = function() require'config/lualine' end
@@ -37,7 +38,7 @@ local function customization_plugins(use)
     use {
         'akinsho/nvim-bufferline.lua', -- Bufferline: Buffer manager
         requires = 'kyazdani42/nvim-web-devicons',
-        config = function() require'config/bufferline' end
+        config = function() require('config/bufferline') end
     }
     use {
         'kyazdani42/nvim-tree.lua', -- NvimTree Explorer
@@ -69,11 +70,7 @@ local function language_plugins(use)
     use 'hrsh7th/cmp-nvim-lsp'
     use 'saadparwaiz1/cmp_luasnip'
     use {'tzachar/cmp-tabnine', run='./install.sh'}
-
-    use {
-        'hrsh7th/nvim-cmp',
-        config = function () require('config/nvim-cmp') end
-    }
+    use { 'hrsh7th/nvim-cmp', config = function () require('config/nvim-cmp') end }
     use {'windwp/nvim-autopairs', config = function() require('config/autopairs') end }
     use {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true}
     use {'cdelledonne/vim-cmake', ft = {'cpp', 'cmake'}}
