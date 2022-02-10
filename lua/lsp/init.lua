@@ -8,12 +8,8 @@ for _, config in pairs(configs) do
             local opts = {}
             opts.root_dir = config.root_dir
             opts.config = config.config
-            print(string.format("%s: %s, cmd: %s", config.name, config.root_dir, server.cmd))
             server:setup(opts)
         end)
-        -- if not server:is_installed() then
-        --     server:install()
-        -- end
     end
 end
 

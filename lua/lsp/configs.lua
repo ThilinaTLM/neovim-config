@@ -116,6 +116,47 @@ lsp_configs.angular = {
         '.git',
     })
 }
+
+-- C/C++ ----------------------------------------------------------------------------------------------------
+lsp_configs.cpp = {
+    name = 'clangd',
+    cmd = {
+        lsp_path('clangd/bin/clangd'),
+        "--background-index",
+        "--compile-commands-dir=debug",
+        "--all-scopes-completion",
+        "--clang-tidy",
+        "--completion-style=detailed",
+        "--cross-file-rename",
+        "--fallback-style='{BasedOnStyle: LLVM, IndentWidth: 4, ColumnLimit: 120}'",
+        "--header-insertion=iwyu",
+        "--header-insertion-decorators",
+        "--hidden-features"
+    },
+    config = {
+        single_file_support = true,
+        clangd = {
+            args = {
+                '-log=verbose',
+                '-background-index',
+                '-index-file=clangd/data/index',
+                '-targets=clangd/data/targets.json',
+                '-compile-commands-dir=clangd/data/compile_commands',
+                '-header-insertion=iwyu',
+                '-clang-tidy',
+                '-clang-tidy-checks=readability-braces-around-statements',
+            }
+        }
+    },
+    root_dir = root_dirs({
+        'compile_commands.json',
+        'CMakeLists.txt',
+        'main.cpp',
+        'main.c',
+        '.git',
+    })
+}
+
 -------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------
