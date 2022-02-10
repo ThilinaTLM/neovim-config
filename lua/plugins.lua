@@ -4,66 +4,50 @@
 -- ┴  ┘ └└─┘┴ ┘┴─┘┴└┘
 -- Plugin Manager
 -- Install using,
--- 	git clone https://github.com/wbthomason/packer.nvim \
--- 	    ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+-- git clone https://github.com/wbthomason/packer.nvim \
+--     ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 --
 
 local packer = require("packer")
 
-local function basic_plugins(use)
-    use 'nvim-lua/plenary.nvim'
+return packer.startup(function(use)
+    use 'wbthomason/packer.nvim' -- packer can manage itself
+
+    -- ----------------------------------------------
+    -- Basic Plugins
+    -- ----------------------------------------------
+    use 'nvim-lua/plenary.nvim' -- reusable lua functions
+    use { 'easymotion/vim-easymotion', config = function () require('config/easy-motion') end }
+    use { "folke/which-key.nvim", config = function() require('config/whichkey').setup() end }
     use {
-        'nvim-telescope/telescope.nvim', -- Telecope
+        'nvim-telescope/telescope.nvim',
         config = function () require('config/telescope') end,
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
+        requires = {{'nvim-lua/popup.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
     }
     use {
-        'nvim-treesitter/nvim-treesitter', -- Tresitter: Treesitter for neovim
+        'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate', config = function () require'config/treesitter' end,
     }
-    use { "folke/which-key.nvim", config = function() require('config/whichkey').setup() end }
-    use { 'terrortylor/nvim-comment', config = function() require('config/comment') end, }
-    use { 'tpope/vim-surround' }
-    use { 'easymotion/vim-easymotion', config = function () require('config/easy-motion') end }
-end
 
-local function customization_plugins(use)
+    -- ----------------------------------------------
+    -- Customization Plugins
+    -- ----------------------------------------------
     use 'kyazdani42/nvim-web-devicons' -- for file icons
-    use 'EdenEast/nightfox.nvim' -- nightfox theme
     use 'lifepillar/vim-gruvbox8' -- gruvbox8 theme
-    use {
-        'hoob3rt/lualine.nvim', -- Lualine: Status bar
-        config = function() require'config/lualine' end
-    }
-    use {
-        'akinsho/nvim-bufferline.lua', -- Bufferline: Buffer manager
-        requires = 'kyazdani42/nvim-web-devicons',
-        config = function() require('config/bufferline') end
-    }
-    use {
-        'kyazdani42/nvim-tree.lua', -- NvimTree Explorer
-        requires = {'kyazdani42/nvim-web-devicons'},
-        config = function() require'config/nvimtree' end
-    }
-    use {'folke/lsp-colors.nvim', config = function() require'config/lspcolors' end }
-end
+    use { 'hoob3rt/lualine.nvim', config = function() require'config/lualine' end } -- Lualine: Status bar
+    use { 'akinsho/nvim-bufferline.lua', config = function() require('config/bufferline') end }
+    use { 'kyazdani42/nvim-tree.lua', config = function() require'config/nvimtree' end }
 
-local function language_plugins(use)
+    -- ----------------------------------------------
+    -- Language Plugins
+    -- ----------------------------------------------
     -- Lsp Config
-    use 'neovim/nvim-lspconfig'         -- Language server protocol support
+    use 'neovim/nvim-lspconfig' -- Language server protocol support
     use 'williamboman/nvim-lsp-installer'
-    use {
-        'ray-x/navigator.lua', -- Better gui for code navigation
-        requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
-        config = function() require'config/navigator' end
-    }
-    use 'mfussenegger/nvim-jdtls'
+    use 'L3MON4D3/LuaSnip' -- LuaSnip: Snippet engine
 
     -- Auto Completion
-    use 'onsails/lspkind-nvim' -- Add vs-code like pictogram to completion list
-    use 'L3MON4D3/LuaSnip'
-
-    -- nvim cmp
+    use 'onsails/lspkind-nvim'
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-nvim-lua'
@@ -71,33 +55,16 @@ local function language_plugins(use)
     use 'saadparwaiz1/cmp_luasnip'
     use {'tzachar/cmp-tabnine', run='./install.sh'}
     use { 'hrsh7th/nvim-cmp', config = function () require('config/nvim-cmp') end }
+
+    use {'github/copilot.vim', config = function () require('config/copilot') end}
     use {'windwp/nvim-autopairs', config = function() require('config/autopairs') end }
     use {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true}
-    use {'cdelledonne/vim-cmake', ft = {'cpp', 'cmake'}}
-    use {'github/copilot.vim', config = function () require('config/copilot') end}
-end
+    use { 'terrortylor/nvim-comment', config = function() require('config/comment') end, }
 
-local function ehancement_plugins(use)
-    use {
-        'lewis6991/gitsigns.nvim',
-        requires = {
-            'nvim-lua/plenary.nvim'
-        },
-        config = function()
-            require('gitsigns').setup()
-        end,
-        opt = true
-    }
-    use { 'michaelb/sniprun', run = 'bash ./install.sh'}
-    use {'is0n/jaq-nvim', config = function() require('config/jaq') end}
-end
-
-return packer.startup(function(use)
-    use 'wbthomason/packer.nvim' -- packer can manage itself
-    basic_plugins(use)
-    customization_plugins(use)
-    language_plugins(use)
-    ehancement_plugins(use)
+    -- ----------------------------------------------
+    -- Enhancement Plugins
+    -- ----------------------------------------------
+    use {'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
+    use {'michaelb/sniprun', run = 'bash ./install.sh', opt = true, cmd = {'SnipRun'} }
 end)
-
 

@@ -9,4 +9,3 @@ npairs.setup({
     check_ts = true,
 })
 
-print('this is for test')

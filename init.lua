@@ -13,7 +13,6 @@ require('options')
 require('plugins')
 require('lsp')
 require('keymaps')
-require('utils/runner')
 
 -- set colorscheme
 vim.cmd [[
