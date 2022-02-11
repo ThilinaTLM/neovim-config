@@ -14,7 +14,4 @@ for _, config in pairs(configs) do
     end
 end
 
--- lsp related keybindings
-km.nmap('gd', '<cmd>Telescope lsp_definitions theme=cursor<CR>', 'Goto Definitions')
-km.nmap('gca', '<cmd>Telescope lsp_code_actions theme=cursor<CR>', 'Code Actions')
 

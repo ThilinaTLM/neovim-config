@@ -52,17 +52,6 @@ local config = {
   }
 }
 
-local keymaps = {
-    f = {
-        name = "Find",
-        f = { "<cmd>Telescope find_files theme=get_ivy<CR>", "Find Files" },
-        g = { "<cmd>Telescope live_grep theme=get_ivy<CR>", "Live Grep" },
-    },
-    p = { "<cmd>Telescope registers theme=dropdown<CR>", "Clipboard" },
-}
-
-
-km.lnreg(keymaps)
 telescope.setup(config)
 telescope.load_extension('fzy_native')
 
