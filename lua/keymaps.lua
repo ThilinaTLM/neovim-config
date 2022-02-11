@@ -1,5 +1,4 @@
 local wk = require('config/whichkey')
-
 local reg = wk.register;
 
 local km = {
