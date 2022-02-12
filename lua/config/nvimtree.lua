@@ -25,7 +25,7 @@ local configuration = {
         args = {}
     },
     view = {
-        width = 30,
+        width = 40,
         side = 'right',
         auto_resize = false,
         mappings = {
