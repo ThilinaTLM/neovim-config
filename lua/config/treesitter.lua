@@ -6,13 +6,12 @@ require'nvim-treesitter.configs'.setup {
       "c", "cpp", "rust", "go",
       "json", "yaml"
   },
-  ignore_install = {},          -- List of parsers to ignore installing
+  ignore_install = {},
   highlight = {
-    enable = true,              -- false will disable the whole extension
+    enable = true,
   },
   indent = {
       enable = true,
-       -- disable = {'javascript'}
   },
   incremental_selection = {
     enable = true,

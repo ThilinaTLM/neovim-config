@@ -18,7 +18,9 @@ return packer.startup(function(use)
     -- ----------------------------------------------
     use 'nvim-lua/plenary.nvim' -- reusable lua functions
     use { 'easymotion/vim-easymotion', config = function () require('config/easy-motion') end }
+    use { 'tpope/vim-surround' }
     use { "folke/which-key.nvim", config = function() require('config/whichkey').setup() end }
+    use { "nvim-telescope/telescope-file-browser.nvim" }
     use {
         'nvim-telescope/telescope.nvim',
         config = function () require('config/telescope') end,

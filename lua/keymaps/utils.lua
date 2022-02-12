@@ -18,4 +18,16 @@ local km = {
     lvmap = function(keys, event, comment) wk.register({[keys] = {event, comment}}, {prefix="<leader>", mode="v", noremap = true}) end,
 }
 
-return km
+local function vim_cmd(cmd)
+    return string.format('<cmd>%s<CR>', cmd)
+end
+
+local function telescope_cmd(picker, theme, layout)
+  return vim_cmd(string.format('Telescope %s %s %s', picker, theme, layout))
+end
+
+return {
+    keymapper = km,
+    telescope_cmd = telescope_cmd,
+    vim_cmd = vim_cmd,
+}

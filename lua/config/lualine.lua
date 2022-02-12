@@ -31,23 +31,19 @@ local conditions = {
 -- Config
 local config = {
   options = {
-    -- Disable sections and component separators
     component_separators = "",
     section_separators = "",
     theme = 'auto'
   },
   sections = {
-    -- these are to remove the defaults
     lualine_a = {},
     lualine_b = {},
     lualine_y = {},
     lualine_z = {},
-    -- These will be filled later
     lualine_c = {},
     lualine_x = {}
   },
   inactive_sections = {
-    -- these are to remove the defaults
     lualine_a = {},
     lualine_v = {},
     lualine_y = {},
@@ -57,12 +53,10 @@ local config = {
   }
 }
 
--- Inserts a component in lualine_c at left section
 local function ins_left(component)
   table.insert(config.sections.lualine_c, component)
 end
 
--- Inserts a component in lualine_x ot right section
 local function ins_right(component)
   table.insert(config.sections.lualine_x, component)
 end
