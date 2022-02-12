@@ -2,18 +2,10 @@ local nvim_tree = require('nvim-tree')
 local tree_cb = require('nvim-tree.config').nvim_tree_callback
 
 local configuration = {
-    disable_netrw       = true,
-    hijack_netrw        = true,
-    open_on_setup       = false,
     ignore_ft_on_setup  = {},
-    auto_close          = false,
+    auto_close          = true,
+    auto_reload_on_write = true,
     open_on_tab         = false,
-    update_to_buf_dir   = {
-        enable = true,
-        auto_open = true,
-    },
-    hijack_cursor       = true,
-    update_cwd          = false,
     diagnostics = {
         enable = true,
         icons = {
@@ -34,8 +26,7 @@ local configuration = {
     },
     view = {
         width = 30,
-        height = 30,
-        side = 'left',
+        side = 'right',
         auto_resize = false,
         mappings = {
             custom_only = false,

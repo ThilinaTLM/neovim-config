@@ -23,10 +23,13 @@ local function vim_cmd(cmd)
 end
 
 local function telescope_cmd(picker, theme, layout)
-  return vim_cmd(string.format('Telescope %s %s %s', picker, theme, layout))
+    if theme == nil then theme = '' else theme = string.format('theme=%s', theme) end
+    if layout == nil then layout = '' else layout = string.format('layout_config=%s', layout) end
+    return vim_cmd(string.format('Telescope %s %s %s', picker, theme, layout))
 end
 
 return {
+    register = wk.register,
     keymapper = km,
     telescope_cmd = telescope_cmd,
     vim_cmd = vim_cmd,
