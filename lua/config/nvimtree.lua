@@ -68,6 +68,6 @@ local configuration = {
     }
 }
 
-nvim_tree.setup(configuration)
+-- nvim_tree.setup(configuration)
 
 

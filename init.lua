@@ -58,6 +58,9 @@ km.lnmap('t', vcmd('Telescope'), 'Telescope')
 km.vmap("<C-_>", ":CommentToggle<CR>", "Toggle comments")
 km.nmap("<C-_>", "<cmd>CommentToggle<CR>", "Toggle comments")
 
+-- snippets
+km.map('<C-l>', vcmd('lua require(\'config/luasnip\').expand_or_jump()'), 'Lua snippet expand')
+
 vim.cmd[[ 
     command Format :lua vim.lsp.buf.formatting()<CR>
 ]]

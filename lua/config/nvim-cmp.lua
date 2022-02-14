@@ -30,11 +30,11 @@ cmp.setup({
     },
     sources = {
         { name = 'nvim_lua', priority = 40 },
-        { name = 'nvim_lsp' },
-        { name = 'path' },
-        { name = 'luasnip' },
-        { name = 'buffer', keyword_length = 5 },
-        { name = 'cmp_tabnine', priority = 41 },
+        { name = 'nvim_lsp', priority = 80 },
+        { name = 'path', priority = 90 },
+        { name = 'luasnip', priority = 90 },
+        { name = 'buffer', keyword_length = 10 },
+        { name = 'cmp_tabnine', priority = 20 },
     },
     snippet = {
         expand = function (args)

@@ -46,7 +46,8 @@ return packer.startup(function(use)
     -- Lsp Config
     use 'neovim/nvim-lspconfig' -- Language server protocol support
     use 'williamboman/nvim-lsp-installer'
-    use 'L3MON4D3/LuaSnip' -- LuaSnip: Snippet engine
+    use "rafamadriz/friendly-snippets"
+    use {'L3MON4D3/LuaSnip', config = function() require("config/luasnip") end} -- LuaSnip: Snippet engine
 
     -- Auto Completion
     use 'onsails/lspkind-nvim'
