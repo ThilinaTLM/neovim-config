@@ -48,6 +48,8 @@ km.nmap('gr', tscmd('lsp_references', ts_theme.cursor, ts_layout.more_list), 'Go
 km.lnmap('ca', tscmd('lsp_code_action', ts_theme.cursor, ts_layout.more_list), 'Code Actions')
 km.lnmap('r', vcmd('lua vim.lsp.buf.rename()') , 'Rename Symbol')
 km.lnmap('r', vcmd('lua vim.lsp.buf.rename()') , 'Rename Symbol')
+km.imap('<C-h>', vcmd('lua vim.lsp.buf.hover()'), 'Hover')
+km.nmap('<C-h>', vcmd('lua vim.lsp.buf.hover()'), 'Hover')
 
 km.lnmap('ff', tscmd('find_files', ts_theme.ivy), 'Find Files')
 km.lnmap('fg', '<cmd>Telescope live_grep theme=get_ivy<CR>', 'Live Grep')
@@ -59,7 +61,10 @@ km.vmap("<C-_>", ":CommentToggle<CR>", "Toggle comments")
 km.nmap("<C-_>", "<cmd>CommentToggle<CR>", "Toggle comments")
 
 -- snippets
-km.map('<C-l>', vcmd('lua require(\'config/luasnip\').expand_or_jump()'), 'Lua snippet expand')
+km.map('<C-j>', vcmd('lua require(\'config/luasnip\').expand_or_jump()'), 'Lua snippet expand')
+km.imap('<C-j>', vcmd('lua require(\'config/luasnip\').expand_or_jump()'), 'Lua snippet expand')
+km.map('<C-k>', vcmd('lua require(\'config/luasnip\').back()'), 'Lua snippet back')
+km.imap('<C-k>', vcmd('lua require(\'config/luasnip\').back()'), 'Lua snippet back')
 
 vim.cmd[[ 
     command Format :lua vim.lsp.buf.formatting()<CR>

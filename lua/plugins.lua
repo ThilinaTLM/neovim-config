@@ -36,7 +36,7 @@ return packer.startup(function(use)
     -- ----------------------------------------------
     use 'kyazdani42/nvim-web-devicons' -- for file icons
     use 'lifepillar/vim-gruvbox8' -- gruvbox8 theme
-    use { 'hoob3rt/lualine.nvim', config = function() require'config/lualine' end } -- Lualine: Status bar
+    use { 'hoob3rt/lualine.nvim', config = function() require("config/lualine") end } -- Lualine: Status bar
     use { 'akinsho/nvim-bufferline.lua', config = function() require('config/bufferline') end }
     use { 'kyazdani42/nvim-tree.lua', config = function() require'config/nvimtree' end }
 
@@ -62,7 +62,10 @@ return packer.startup(function(use)
     use {'github/copilot.vim', config = function () require('config/copilot') end}
     use {'windwp/nvim-autopairs', config = function() require('config/autopairs') end }
     use {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true}
-    use { 'terrortylor/nvim-comment', config = function() require('config/comment') end, }
+    use {'terrortylor/nvim-comment', config = function() require('config/comment') end, }
+
+    -- Lua Language
+    use {"rafcamlet/nvim-luapad"}
 
     -- ----------------------------------------------
     -- Enhancement Plugins

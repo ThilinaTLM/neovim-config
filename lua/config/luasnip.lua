@@ -7,6 +7,12 @@ local function expand_or_jump()
     end
 end
 
+local function back()
+    if ls.jumpable(-1) then
+        ls.jump(-1)
+    end
+end
+
 ls.snippets = {
     all = {
         ls.parser.parse_snippet("expand", "this is example of lua snippet")
@@ -18,4 +24,5 @@ ls.snippets = {
 
 return {
     expand_or_jump = expand_or_jump,
+    back = back,
 }
