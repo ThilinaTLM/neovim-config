@@ -36,8 +36,8 @@ return packer.startup(function(use)
     -- ----------------------------------------------
     use 'kyazdani42/nvim-web-devicons' -- for file icons
     use 'lifepillar/vim-gruvbox8' -- gruvbox8 theme
-    use { 'hoob3rt/lualine.nvim', config = function() require("config/lualine") end } -- Lualine: Status bar
-    use { 'akinsho/nvim-bufferline.lua', config = function() require('config/bufferline') end }
+    use { 'hoob3rt/lualine.nvim', config = function() require("config/lua-line") end } -- Lualine: Status bar
+    use { 'akinsho/nvim-bufferline.lua', config = function() require('config/buffer-line') end }
     use { 'kyazdani42/nvim-tree.lua', config = function() require'config/nvimtree' end }
 
     -- ----------------------------------------------
@@ -47,7 +47,7 @@ return packer.startup(function(use)
     use 'neovim/nvim-lspconfig' -- Language server protocol support
     use 'williamboman/nvim-lsp-installer'
     use "rafamadriz/friendly-snippets"
-    use {'L3MON4D3/LuaSnip', config = function() require("config/luasnip") end} -- LuaSnip: Snippet engine
+    use {'L3MON4D3/LuaSnip', config = function() require("config/lua-snip") end} -- LuaSnip: Snippet engine
 
     -- Auto Completion
     use 'onsails/lspkind-nvim'
@@ -72,5 +72,9 @@ return packer.startup(function(use)
     -- ----------------------------------------------
     use {'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     use {'michaelb/sniprun', run = 'bash ./install.sh', opt = true, cmd = {'SnipRun'} }
+    use {"akinsho/toggleterm.nvim", config = function() require('config/toggleterm') end}
+    -- use {'mfussenegger/nvim-dap', config = function() require('config/nvim-dap') end}
+    -- use "Pocco81/DAPInstall.nvim"
+    use {"puremourning/vimspector"}
 end)
 

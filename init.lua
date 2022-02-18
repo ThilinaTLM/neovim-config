@@ -9,6 +9,24 @@ vim.cmd [[
 vim.cmd "filetype plugin on"
 vim.cmd "syntax enable"
 
+
+-- -----------------------------------------------------------------------------
+-- Globals
+-- -----------------------------------------------------------------------------
+P = function (v)
+    print(vim.inspect(v))
+    return v
+end
+
+R = function (name)
+    package.loaded[name] = nil
+    return require(name)
+end
+
+
+-- -----------------------------------------------------------------------------
+-- Configurations
+-- -----------------------------------------------------------------------------
 require('options')
 require('plugins')
 require('lsp')
@@ -23,15 +41,20 @@ vim.cmd [[
 -- -----------------------------------------------------------------------------
 
 local mapper = require('keymapper')
-local km = mapper.keymapper
 local vcmd = mapper.vim_cmd
-local tscmd = mapper.telescope_cmd
 local reg = mapper.register
+local qm = mapper.qmap
+
 
 -- Set leader key
-km.leader(' ')
+mapper.leader(' ')
 
--- constants
+-- telescope utils
+local tscmd = function(picker, theme, layout)
+    if theme == nil then theme = '' else theme = string.format('theme=%s', theme) end
+    if layout == nil then layout = '' else layout = string.format('layout_config=%s', layout) end
+    return string.format('Telescope %s %s %s', picker, theme, layout)
+end
 local ts_theme = {
     dropdown = 'dropdown',
     cursor = 'cursor',
@@ -42,33 +65,32 @@ local ts_layout = {
 }
 
 -- Telescope Mappings
-km.nmap('gd', tscmd('lsp_definitions', ts_theme.cursor, ts_layout.more_list), 'Goto Definitions')
-km.nmap('gi', tscmd('lsp_implementation', ts_theme.cursor, ts_layout.more_list), 'Goto Implementations')
-km.nmap('gr', tscmd('lsp_references', ts_theme.cursor, ts_layout.more_list), 'Goto References')
-km.lnmap('ca', tscmd('lsp_code_action', ts_theme.cursor, ts_layout.more_list), 'Code Actions')
-km.lnmap('r', vcmd('lua vim.lsp.buf.rename()') , 'Rename Symbol')
-km.lnmap('r', vcmd('lua vim.lsp.buf.rename()') , 'Rename Symbol')
-km.imap('<C-h>', vcmd('lua vim.lsp.buf.hover()'), 'Hover')
-km.nmap('<C-h>', vcmd('lua vim.lsp.buf.hover()'), 'Hover')
+qm.nmap('gd', tscmd('lsp_definitions', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
+qm.nmap('gi', tscmd('lsp_implementation', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
+qm.nmap('gr', tscmd('lsp_references', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
+qm.nlmap('ca', tscmd('lsp_code_action', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
+qm.nlmap('r', vim.lsp.buf.rename)
+qm.imap('<C-L>', vim.lsp.buf.hover)
+qm.nmap('<C-L>', vim.lsp.buf.hover)
 
-km.lnmap('ff', tscmd('find_files', ts_theme.ivy), 'Find Files')
-km.lnmap('fg', '<cmd>Telescope live_grep theme=get_ivy<CR>', 'Live Grep')
-km.lnmap('fr', '<cmd>Telescope registers theme=dropdown<CR>', 'Clipboard')
-km.lnmap('F', '<cmd>Telescope file_browser theme=get_ivy<CR>', 'File Browser')
-km.lnmap('t', vcmd('Telescope'), 'Telescope')
+qm.nlmap('ff', tscmd('find_files', ts_theme.ivy), {type = 'command'})
+qm.nlmap('fg', tscmd('live_grep'), {type = 'command'})
+qm.nlmap('fr', tscmd('registers'), {type = 'command'})
+qm.nlmap('F', tscmd('file_browser', ts_theme.ivy), {type = 'command'})
+qm.nlmap('t', vcmd('Telescope'), {type = 'command'})
 
-km.vmap("<C-_>", ":CommentToggle<CR>", "Toggle comments")
-km.nmap("<C-_>", "<cmd>CommentToggle<CR>", "Toggle comments")
+qm.vmap("<C-_>", ":CommentToggle<CR>")
+qm.nmap("<C-_>", "CommentToggle", {type = 'command'})
 
 -- snippets
-km.map('<C-j>', vcmd('lua require(\'config/luasnip\').expand_or_jump()'), 'Lua snippet expand')
-km.imap('<C-j>', vcmd('lua require(\'config/luasnip\').expand_or_jump()'), 'Lua snippet expand')
-km.map('<C-k>', vcmd('lua require(\'config/luasnip\').back()'), 'Lua snippet back')
-km.imap('<C-k>', vcmd('lua require(\'config/luasnip\').back()'), 'Lua snippet back')
+local luasnip_config = require("config/lua-snip")
+qm.nmap('<C-j>', luasnip_config.expand_or_jump)
+qm.imap('<C-j>', luasnip_config.expand_or_jump)
+qm.nmap('<C-k>', luasnip_config.back)
+qm.imap('<C-k>', luasnip_config.back)
 
-vim.cmd[[ 
-    command Format :lua vim.lsp.buf.formatting()<CR>
-]]
+vim.cmd[[ command Format :lua vim.lsp.buf.formatting()<CR> ]]
+vim.cmd[[ command Run :ToggleTerm size=50 direction=vertical]]
 
 -- Copy & Paste
 vim.cmd [[
@@ -121,4 +143,5 @@ vim.cmd [[
 
     inoremap jk <ESC>
 ]]
+
 
