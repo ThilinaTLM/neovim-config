@@ -40,14 +40,34 @@ vim.cmd [[
 -- keymappings and other stuff
 -- -----------------------------------------------------------------------------
 
-local mapper = require('keymapper')
-local vcmd = mapper.vim_cmd
-local reg = mapper.register
-local qm = mapper.qmap
+require('keymapper').set_leader(' ')
+local qm = require('keymapper').qmap
 
+-- Usefull keybindings
+qm.map('C-s', 'w', {type = 'command'})
+qm.nlmap('h', 'nohl', {type = 'command'})
+vim.cmd [[
+    nnoremap Y y$
+    nnoremap n nzzzv
+    nnoremap N Nzzzv
+    nnoremap J mzJ`z
+    
+    inoremap , ,<c-g>u
+    inoremap . .<c-g>u
+    inoremap ! !<c-g>u
+    inoremap ? ?<c-g>u
 
--- Set leader key
-mapper.leader(' ')
+    nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+    nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+
+    vnoremap K :m '>+1<CR>gv=gv
+    vnoremap J :m '<-2<CR>gv=gv
+    nnoremap <leader>k :m .-2<CR>==
+    nnoremap <leader>j :m .+1<CR>==
+
+    inoremap jk <ESC>
+]]
+
 
 -- telescope utils
 local tscmd = function(picker, theme, layout)
@@ -77,7 +97,7 @@ qm.nlmap('ff', tscmd('find_files', ts_theme.ivy), {type = 'command'})
 qm.nlmap('fg', tscmd('live_grep'), {type = 'command'})
 qm.nlmap('fr', tscmd('registers'), {type = 'command'})
 qm.nlmap('F', tscmd('file_browser', ts_theme.ivy), {type = 'command'})
-qm.nlmap('t', vcmd('Telescope'), {type = 'command'})
+qm.nlmap('t', 'Telescope', {type = 'command'})
 
 qm.vmap("<C-_>", ":CommentToggle<CR>")
 qm.nmap("<C-_>", "CommentToggle", {type = 'command'})
@@ -89,6 +109,10 @@ qm.imap('<C-j>', luasnip_config.expand_or_jump)
 qm.nmap('<C-k>', luasnip_config.back)
 qm.imap('<C-k>', luasnip_config.back)
 
+-- diagonostics
+qm.nlmap('dn', vim.diagnostic.goto_next)
+qm.nlmap('db', vim.diagnostic.goto_prev)
+
 vim.cmd[[ command Format :lua vim.lsp.buf.formatting()<CR> ]]
 vim.cmd[[ command Run :ToggleTerm size=50 direction=vertical]]
 
@@ -98,50 +122,9 @@ vim.cmd [[
     map      <C-P> "+p
 ]]
 
--- Essentials
-reg({
-    e = { "<cmd>NvimTreeToggle<CR>", "File Explorer" },
-    b = {
-        name = "Buffer",
-        l = { "<cmd>BufferLineCycleNext<CR>", "Next" },
-        h = { "<cmd>BufferLineCyclePrev<CR>", "Previous" },
-        b = { "<cmd>BufferLinePick<CR>", "Pick" },
-        d = { "<cmd>bd<CR>", "Delete" }
-    },
-    q = { "<cmd>bd<CR>", "Delete" },
-    w = { "<C-w>", "Window" },
-    h = { "<cmd>nohl<CR>", "No Highlight" }
-}, { prefix = "<leader>" })
-
-reg({
-    ['<C-Left>'] = { "<cmd>BufferLineCycleNext<CR>", "Next" },
-    ['<C-Right>'] = { "<cmd>BufferLineCyclePrev<CR>", "Previous" },
-    ['<C-Up>'] = { "<cmd>vertical resize +1<CR>" },
-    ['<C-Down>'] = { "<cmd>vertical resize -1<CR>" },
-    ['<C-s>'] = { "<cmd>w<CR>", "Save" }
-}, { prefix = "" })
-
--- Usefull maps
-vim.cmd [[
-    nnoremap Y y$
-    nnoremap n nzzzv
-    nnoremap N Nzzzv
-    nnoremap J mzJ`z
-    
-    inoremap , ,<c-g>u
-    inoremap . .<c-g>u
-    inoremap ! !<c-g>u
-    inoremap ? ?<c-g>u
-
-    nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
-    nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
-
-    vnoremap K :m '>+1<CR>gv=gv
-    vnoremap J :m '<-2<CR>gv=gv
-    nnoremap <leader>k :m .-2<CR>==
-    nnoremap <leader>j :m .+1<CR>==
-
-    inoremap jk <ESC>
-]]
-
+-- Buufer and Window navigations
+qm.nmap('<C-Left>', 'BufferLineCycleNext', {type = 'command'})
+qm.nmap('<C-Right>', 'BufferLineCyclePrev', {type = 'command'})
+qm.nlmap('bb', 'BufferLinePick', {type = 'command'})
+qm.nlmap('q', 'bd', {type = 'command'})
 
