@@ -9,7 +9,6 @@ vim.cmd [[
 vim.cmd "filetype plugin on"
 vim.cmd "syntax enable"
 
-
 -- -----------------------------------------------------------------------------
 -- Globals
 -- -----------------------------------------------------------------------------
@@ -40,12 +39,18 @@ vim.cmd [[
 -- keymappings and other stuff
 -- -----------------------------------------------------------------------------
 
-require('keymapper').set_leader(' ')
-local qm = require('keymapper').qmap
+local mp = require('nvim-mapper')
+local qm = mp.qmap
+
+mp.set_leader(' ')
 
 -- Usefull keybindings
-qm.map('C-s', 'w', {type = 'command'})
+vim.cmd [[nnoremap <C-s> :w<CR>]]
 qm.nlmap('h', 'nohl', {type = 'command'})
+
+qm.vmap('<C-C>', '"+y', {noremap = true})
+qm.map('<C-p>', '"+p')
+
 vim.cmd [[
     nnoremap Y y$
     nnoremap n nzzzv
@@ -113,14 +118,10 @@ qm.imap('<C-k>', luasnip_config.back)
 qm.nlmap('dn', vim.diagnostic.goto_next)
 qm.nlmap('db', vim.diagnostic.goto_prev)
 
-vim.cmd[[ command Format :lua vim.lsp.buf.formatting()<CR> ]]
-vim.cmd[[ command Run :ToggleTerm size=50 direction=vertical]]
+mp.def_command("Format", vim.lsp.buf.formatting)
+mp.def_command("Run", ':ToggleTerm size=50 direction=vertical')
 
 -- Copy & Paste
-vim.cmd [[
-    vnoremap <C-C> "+y
-    map      <C-P> "+p
-]]
 
 -- Buufer and Window navigations
 qm.nmap('<C-Left>', 'BufferLineCycleNext', {type = 'command'})

@@ -72,8 +72,12 @@ return packer.startup(function(use)
     use {'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     use {'michaelb/sniprun', run = 'bash ./install.sh', opt = true, cmd = {'SnipRun'} }
     use {"akinsho/toggleterm.nvim", config = function() require('config/toggleterm') end}
-    -- use {'mfussenegger/nvim-dap', config = function() require('config/nvim-dap') end}
-    -- use "Pocco81/DAPInstall.nvim"
     use {"puremourning/vimspector"}
+
+    -- ----------------------------------------------
+    -- Personal Plugins
+    -- ----------------------------------------------
+    use {'~/Work/neovim_plugins/neovim_mapper'}
+
 end)
 
