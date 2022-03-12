@@ -3,7 +3,7 @@ My personal neovim configuration.
 
 # Requirements 
 ```
-neovim 0.6+
+neovim 0.7+
 python3 
 ```
 

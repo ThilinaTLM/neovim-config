@@ -93,7 +93,7 @@ local ts_layout = {
 qm.nmap('gd', tscmd('lsp_definitions', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
 qm.nmap('gi', tscmd('lsp_implementation', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
 qm.nmap('gr', tscmd('lsp_references', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
-qm.nlmap('ca', tscmd('lsp_code_action', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
+qm.nlmap('ca', tscmd('lsp_code_actions', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
 qm.nlmap('r', vim.lsp.buf.rename)
 qm.imap('<C-L>', vim.lsp.buf.hover)
 qm.nmap('<C-L>', vim.lsp.buf.hover)
@@ -109,10 +109,10 @@ qm.nmap("<C-_>", "CommentToggle", {type = 'command'})
 
 -- snippets
 local luasnip_config = require("config/lua-snip")
-qm.nmap('<C-j>', luasnip_config.expand_or_jump)
-qm.imap('<C-j>', luasnip_config.expand_or_jump)
-qm.nmap('<C-k>', luasnip_config.back)
-qm.imap('<C-k>', luasnip_config.back)
+qm.nmap('<C-h>', luasnip_config.expand_or_jump)
+qm.imap('<C-h>', luasnip_config.expand_or_jump)
+qm.nmap('<C-l>', luasnip_config.back)
+qm.imap('<C-l>', luasnip_config.back)
 
 -- diagonostics
 qm.nlmap('dn', vim.diagnostic.goto_next)
