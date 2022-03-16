@@ -8,7 +8,44 @@
 --     ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 --
 
+local fn = vim.fn
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local packer_bootstrap = false
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+end
+
 local packer = require("packer")
+
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+  augroup end
+]])
+
+local function get_git_branch()
+    local home = os.getenv("HOME")
+    local git_head = home .. "/.config/nvim/.git/HEAD"
+    local f = io.open( git_head, "rb")
+    if f == nil then
+        return nil
+    end
+    local HEAD = f:read("*all")
+    f:close()
+    local branch = string.match(HEAD, "ref: refs/heads/(.+)")
+    branch = string.gsub(branch, "%s+", "")
+    branch = string.gsub(branch, "%n+", "")
+    return branch
+end
+
+local function is_dev()
+    local branch = get_git_branch()
+    if branch == "dev" then
+        return true
+    end
+    return false
+end
 
 return packer.startup(function(use)
     use 'wbthomason/packer.nvim' -- packer can manage itself
@@ -22,7 +59,7 @@ return packer.startup(function(use)
     use { "nvim-telescope/telescope-file-browser.nvim" }
     use {
         'nvim-telescope/telescope.nvim',
-        config = function () require('config/telescope') end,
+        config = function () require('config/telescope-config') end,
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
     }
     use {
@@ -38,6 +75,7 @@ return packer.startup(function(use)
     use { 'hoob3rt/lualine.nvim', config = function() require("config/lua-line") end } -- Lualine: Status bar
     use { 'akinsho/nvim-bufferline.lua', config = function() require('config/buffer-line') end }
     use { 'kyazdani42/nvim-tree.lua', config = function() require'config/nvimtree' end }
+    -- use { "lukas-reineke/indent-blankline.nvim", config = function() require('config/indent-config') end }
 
     -- ----------------------------------------------
     -- Language Plugins
@@ -71,13 +109,23 @@ return packer.startup(function(use)
     -- ----------------------------------------------
     use {'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     use {'michaelb/sniprun', run = 'bash ./install.sh', opt = true, cmd = {'SnipRun'} }
-    use {"akinsho/toggleterm.nvim", config = function() require('config/toggleterm') end}
+    use {"akinsho/toggleterm.nvim", config = function() require('config/toggleterm-config') end}
     use {"puremourning/vimspector"}
 
     -- ----------------------------------------------
     -- Personal Plugins
     -- ----------------------------------------------
-    use {'~/Work/neovim_plugins/neovim_mapper'}
+    if is_dev() then
+        use {'~/Work/neovim_plugins/neovim_mapper'}
+    else
+        use {'ThilinaTLM/neovim-mapper'}
+    end
 
+    -- ----------------------------------------------
+    -- Packer Bootstrap
+    -- ----------------------------------------------
+    if packer_bootstrap then
+        packer.sync()
+    end
 end)
 

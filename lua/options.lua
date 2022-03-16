@@ -54,13 +54,7 @@ wrp.so("relativenumber", true)
 wrp.so("cursorline", true)
 wrp.so("termguicolors", true)
 
--- Other options
-wrp.so("guifont", "JetBrainsMono Nerd Font Mono:h13")
--- vim.o.neovide_refresh_rate = '150'
--- vim.o.neovide_remember_window_size = true
--- vim.o.neovide_cursor_antialiasing = true
-vim.cmd [[
-    let g:neovide_cursor_antialiasing=v:true
-    let neovide_remember_window_size = v:true
-    let g:neovide_refresh_rate=150
-]]
+vim.opt.list = true
+vim.opt.listchars:append("space: ")
+vim.opt.listchars:append("eol:↴")
+

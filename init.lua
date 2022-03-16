@@ -101,7 +101,7 @@ qm.nmap('<C-L>', vim.lsp.buf.hover)
 qm.nlmap('ff', tscmd('find_files', ts_theme.ivy), {type = 'command'})
 qm.nlmap('fg', tscmd('live_grep'), {type = 'command'})
 qm.nlmap('fr', tscmd('registers'), {type = 'command'})
-qm.nlmap('F', tscmd('file_browser', ts_theme.ivy), {type = 'command'})
+qm.nlmap('e', tscmd('file_browser', ts_theme.ivy), {type = 'command'})
 qm.nlmap('t', 'Telescope', {type = 'command'})
 
 qm.vmap("<C-_>", ":CommentToggle<CR>")
