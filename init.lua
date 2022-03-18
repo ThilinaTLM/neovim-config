@@ -108,7 +108,7 @@ qm.vmap("<C-_>", ":CommentToggle<CR>")
 qm.nmap("<C-_>", "CommentToggle", {type = 'command'})
 
 -- snippets
-local luasnip_config = require("config/lua-snip")
+local luasnip_config = require("plugins/configs/lua-snip")
 qm.nmap('<C-h>', luasnip_config.expand_or_jump)
 qm.imap('<C-h>', luasnip_config.expand_or_jump)
 qm.nmap('<C-l>', luasnip_config.back)

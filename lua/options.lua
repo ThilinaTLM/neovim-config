@@ -54,7 +54,7 @@ wrp.so("relativenumber", true)
 wrp.so("cursorline", true)
 wrp.so("termguicolors", true)
 
-vim.opt.list = true
+wrp.so("list", true)
 vim.opt.listchars:append("space: ")
 vim.opt.listchars:append("eol:↴")
 
