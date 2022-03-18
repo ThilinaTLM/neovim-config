@@ -1,57 +1,83 @@
+local utils = require('utils')
+local config_file_dir = "plugins/configs"
+local plugs = require("plugins/plugs")
+
 vim.cmd([[
-  augroup packer_user_config
+    augroup packer_user_config
     autocmd!
     autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-  augroup end
+    augroup end
 ]])
 
 local function install_packer()
     local fn = vim.fn
     local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-    local packer_bootstrap = false
     if fn.empty(fn.glob(install_path)) > 0 then
-    packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+        return fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
     end
-    return packer_bootstrap
+    return false
 end
 
-local function load_plugins(sync)
-    local packer = require("packer")
-    local plugs = require("plugins/plugs")
-    local config_dir = "plugins/configs"
-
-    local plug_loader = function(use)
-        local plug_lists = {
-            plugs.primary,
-            plugs.customization,
-            plugs.language,
-            plugs.enhancements,
-            plugs.personal
-        }
-        for _, pl in ipairs(plug_lists) do
-            for _, plug in ipairs(pl) do
-                if type(plug) == "table" and type(plug.config) == "string" then
-                    require(config_dir .. "/" .. plug.config)
-                    plug.config = nil
-                end
-                use(plug)
-            end
-        end
-
-        if sync then
-            packer.sync()
-        end
+local function load_configuration(plug)
+    if type(plug) == "table" and type(plug.config ) == "function" then
+        plug.config()
+        return true
     end
 
-    local packer_config = {
+    local cf = ""
+    if type(plug) == "table" and type(plug.config ) == "string" then
+        cf = plug.config
+    elseif type(plug) == "string" then
+        cf = utils.path.get_basename(plug)
+    else
+        cf = utils.path.get_basename(plug[1])
+    end
+
+    if cf == "" then
+        return false
+    end
+
+    cf = config_file_dir .. "/" .. cf
+
+    local has_config, conf = pcall(require, cf)
+    if has_config then
+        if type(conf) == "table" and type(conf.setup) == "function" then
+            conf.setup()
+        end
+        return true
+    end
+    return false
+end
+
+local has_packer, packer = pcall(require, 'packer')
+if not has_packer then
+    if install_packer() then
+        has_packer, packer = pcall(require, 'packer')
+    else
+        print("Packer not installed")
+        return
+    end
+end
+
+for _, plug in ipairs(plugs) do
+    load_configuration(plug)
+end
+
+packer.startup({function(use)
+    for _, plug in ipairs(plugs) do
+        if plug.dev and utils.path.is_exists(plug.dev .. "/lua") then
+            plug[1] = plug.dev
+            plug.dev = nil
+        end
+        plug.config = nil
+        use(plug)
+    end
+end,
+    config = {
         display = {
             open_fn = require('packer.util').float,
         }
     }
+})
 
-    packer.startup({plug_loader, config = packer_config})
-end
-
-local boostrap = install_packer()
-load_plugins(boostrap)
 

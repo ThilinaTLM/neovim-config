@@ -1,6 +1,5 @@
-local M = {}
 
-M.primary = {
+local plugs = {
     { 'nvim-lua/plenary.nvim' },
     { 'easymotion/vim-easymotion', config='easy-motion' },
     { 'tpope/vim-surround' },
@@ -15,17 +14,13 @@ M.primary = {
         run = ':TSUpdate',
         config = 'treesitter',
     },
-}
 
-M.customization = {
-    {'kyazdani42/nvim-web-devicons'}, -- for file icons
-    {'lifepillar/vim-gruvbox8'}, -- gruvbox8 theme
-    { 'hoob3rt/lualine.nvim', config = "lua-line" }, -- Lualine: Status bar
+    -- Customizations
+    {'kyazdani42/nvim-web-devicons'},
+    {'lifepillar/vim-gruvbox8'},
+    { 'hoob3rt/lualine.nvim', config = "lua-line" },
     { 'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
     { 'kyazdani42/nvim-tree.lua', config = 'nvimtree' },
-}
-
-M.language = {
     {'neovim/nvim-lspconfig'}, -- Language server protocol support
     {'williamboman/nvim-lsp-installer'},
     {"rafamadriz/friendly-snippets"},
@@ -44,22 +39,19 @@ M.language = {
     {'windwp/nvim-autopairs', config = 'autopairs' },
     {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true},
     {'terrortylor/nvim-comment', config = 'comment', },
-}
 
-M.enhancements = {
+    -- Enhancements
     {'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end },
     {'michaelb/sniprun', run = 'bash ./install.sh', opt = true, cmd = {'SnipRun'} },
     {"akinsho/toggleterm.nvim", config = 'toggleterm'},
     {"puremourning/vimspector"},
     {"rafcamlet/nvim-luapad"},
-}
 
-
-M.personal = {
+    -- Personal
     {
         'ThilinaTLM/neovim-mapper',
         dev = '~/Work/neovim_plugins/neovim_mapper'
     },
 }
 
-return M
+return plugs
