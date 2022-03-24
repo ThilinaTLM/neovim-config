@@ -18,6 +18,7 @@ local function install_packer()
     return false
 end
 
+
 local function load_configuration(plug)
     if type(plug) == "table" and type(plug.config ) == "function" then
         plug.config()
@@ -31,6 +32,10 @@ local function load_configuration(plug)
         cf = utils.path.get_basename(plug)
     else
         cf = utils.path.get_basename(plug[1])
+    end
+    -- if cf ends with .lua, remove it
+    if cf:sub(-4) == ".lua" then
+        cf = cf:sub(1,-5)
     end
 
     if cf == "" then
@@ -48,6 +53,8 @@ local function load_configuration(plug)
     end
     return false
 end
+
+load_configuration(plugs[13])
 
 local has_packer, packer = pcall(require, 'packer')
 if not has_packer then

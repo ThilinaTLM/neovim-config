@@ -1,4 +1,3 @@
-
 local wrp = require('utils/options')
 
 -- Search and Highliting
@@ -58,3 +57,4 @@ wrp.so("list", true)
 vim.opt.listchars:append("space: ")
 vim.opt.listchars:append("eol:↴")
 
+vim.opt["laststatus"] = 3

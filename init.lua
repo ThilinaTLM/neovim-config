@@ -73,6 +73,9 @@ vim.cmd [[
     inoremap jk <ESC>
 ]]
 
+-- Nvim Tree
+qm.nmap('<C-e>', "NvimTreeToggle", {type = 'command'})
+
 
 -- telescope utils
 local tscmd = function(picker, theme, layout)
@@ -120,8 +123,6 @@ qm.nlmap('db', vim.diagnostic.goto_prev)
 
 mp.def_command("Format", vim.lsp.buf.formatting)
 mp.def_command("Run", ':ToggleTerm size=50 direction=vertical')
-
--- Copy & Paste
 
 -- Buufer and Window navigations
 qm.nmap('<C-Left>', 'BufferLineCycleNext', {type = 'command'})

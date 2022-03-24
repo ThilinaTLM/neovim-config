@@ -1,13 +1,19 @@
 
 local plugs = {
+    {'wbthomason/packer.nvim'},
+    -- common requrements
+    { 'nvim-lua/popup.nvim' },
+    {'kyazdani42/nvim-web-devicons'},
     { 'nvim-lua/plenary.nvim' },
+
+    -- base
     { 'easymotion/vim-easymotion', config='easy-motion' },
     { 'tpope/vim-surround' },
     { "nvim-telescope/telescope-file-browser.nvim" },
     {
         'nvim-telescope/telescope.nvim',
         config = 'telescope-config',
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}},
+        requires = {'nvim-telescope/telescope-fzy-native.nvim'},
     },
     {
         'nvim-treesitter/nvim-treesitter',
@@ -15,12 +21,11 @@ local plugs = {
         config = 'treesitter',
     },
 
-    -- Customizations
-    {'kyazdani42/nvim-web-devicons'},
+        -- Customizations
     {'lifepillar/vim-gruvbox8'},
     { 'hoob3rt/lualine.nvim', config = "lua-line" },
     { 'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
-    { 'kyazdani42/nvim-tree.lua', config = 'nvimtree' },
+    { 'kyazdani42/nvim-tree.lua'},
     {'neovim/nvim-lspconfig'}, -- Language server protocol support
     {'williamboman/nvim-lsp-installer'},
     {"rafamadriz/friendly-snippets"},
