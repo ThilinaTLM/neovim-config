@@ -31,9 +31,11 @@ require('plugins')
 require('lsp')
 
 -- set colorscheme
-vim.cmd [[
-  colorscheme gruvbox8_hard
-]]
+vim.g.tokyonight_style = "night"
+vim.g.tokyonight_italic_functions = true
+vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+vim.cmd[[colorscheme tokyonight]]
 
 -- -----------------------------------------------------------------------------
 -- keymappings and other stuff
@@ -71,6 +73,14 @@ vim.cmd [[
     nnoremap <leader>j :m .+1<CR>==
 
     inoremap jk <ESC>
+]]
+
+vim.cmd [[
+augroup kitty_mp
+    autocmd!
+    au VimLeave * :silent !kitty @ set-spacing padding=4 margin=0
+    au VimEnter * :silent !kitty @ set-spacing padding=0 margin=0
+augroup END
 ]]
 
 -- Nvim Tree

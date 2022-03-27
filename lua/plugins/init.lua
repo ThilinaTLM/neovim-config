@@ -33,9 +33,10 @@ local function load_configuration(plug)
     else
         cf = utils.path.get_basename(plug[1])
     end
-    -- if cf ends with .lua, remove it
-    if cf:sub(-4) == ".lua" then
-        cf = cf:sub(1,-5)
+
+    local path_ext = utils.path.get_extension(cf)
+    if path_ext ~= nil then
+        cf = cf:sub(1, -1 * (#path_ext + 1))
     end
 
     if cf == "" then
@@ -54,7 +55,7 @@ local function load_configuration(plug)
     return false
 end
 
-load_configuration(plugs[13])
+--load_configuration(plugs[32])
 
 local has_packer, packer = pcall(require, 'packer')
 if not has_packer then

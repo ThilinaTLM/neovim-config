@@ -35,7 +35,7 @@ local lsp_status = {
 local config = {
     options = {
         icons_enabled = true,
-        theme = 'gruvbox',
+        theme = 'tokyonight',
         component_separators = { left = '|', right = '|'},
         section_separators = { left = '', right = ''},
         disabled_filetypes = {},

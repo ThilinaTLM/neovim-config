@@ -22,6 +22,10 @@ mod_path.get_basename = function(path)
     return path:match("[^/]+$")
 end
 
+mod_path.get_extension = function(path)
+    return path:match("[.][^.]+$")
+end
+
 return {
     path = mod_path
 }

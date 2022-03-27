@@ -23,8 +23,12 @@ local plugs = {
 
         -- Customizations
     {'lifepillar/vim-gruvbox8'},
+    {'jacoborus/tender.vim'},
+    {'folke/tokyonight.nvim'},
     { 'hoob3rt/lualine.nvim', config = "lua-line" },
     { 'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
+
+    -- Language servers and Completions
     { 'kyazdani42/nvim-tree.lua'},
     {'neovim/nvim-lspconfig'}, -- Language server protocol support
     {'williamboman/nvim-lsp-installer'},
@@ -46,7 +50,7 @@ local plugs = {
     {'terrortylor/nvim-comment', config = 'comment', },
 
     -- Enhancements
-    {'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end },
+    {'lewis6991/gitsigns.nvim'},
     {'michaelb/sniprun', run = 'bash ./install.sh', opt = true, cmd = {'SnipRun'} },
     {"akinsho/toggleterm.nvim", config = 'toggleterm'},
     {"puremourning/vimspector"},
