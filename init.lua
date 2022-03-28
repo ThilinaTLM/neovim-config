@@ -30,12 +30,12 @@ require('options')
 require('plugins')
 require('lsp')
 
--- set colorscheme
-vim.g.tokyonight_style = "night"
-vim.g.tokyonight_italic_functions = true
-vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
-vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
-vim.cmd[[colorscheme tokyonight]]
+local settings = {
+    colorscheme = 'tokyonight'
+}
+
+require('setup').setup(settings)
+
 
 -- -----------------------------------------------------------------------------
 -- keymappings and other stuff
@@ -83,8 +83,8 @@ augroup kitty_mp
 augroup END
 ]]
 
--- Nvim Tree
-qm.nmap('<C-e>', "NvimTreeToggle", {type = 'command'})
+-- Neo Tree
+qm.nmap('<C-e>', "Neotree toggle", {type = 'command'})
 
 
 -- telescope utils
@@ -140,3 +140,4 @@ qm.nmap('<C-Right>', 'BufferLineCyclePrev', {type = 'command'})
 qm.nlmap('bb', 'BufferLinePick', {type = 'command'})
 qm.nlmap('q', 'bd', {type = 'command'})
 
+vim.opt["laststatus"] = 3

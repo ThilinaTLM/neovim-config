@@ -1,10 +1,12 @@
 
 local plugs = {
     {'wbthomason/packer.nvim'},
+
     -- common requrements
     { 'nvim-lua/popup.nvim' },
     {'kyazdani42/nvim-web-devicons'},
     { 'nvim-lua/plenary.nvim' },
+    {'MunifTanjim/nui.nvim'},
 
     -- base
     { 'easymotion/vim-easymotion', config='easy-motion' },
@@ -25,11 +27,13 @@ local plugs = {
     {'lifepillar/vim-gruvbox8'},
     {'jacoborus/tender.vim'},
     {'folke/tokyonight.nvim'},
+    {'EdenEast/nightfox.nvim'},
     { 'hoob3rt/lualine.nvim', config = "lua-line" },
     { 'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
 
     -- Language servers and Completions
-    { 'kyazdani42/nvim-tree.lua'},
+    -- { 'kyazdani42/nvim-tree.lua'},
+    { "nvim-neo-tree/neo-tree.nvim", branch = "v2.x" },
     {'neovim/nvim-lspconfig'}, -- Language server protocol support
     {'williamboman/nvim-lsp-installer'},
     {"rafamadriz/friendly-snippets"},
