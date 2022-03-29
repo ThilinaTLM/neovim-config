@@ -12,12 +12,12 @@ vim.cmd "syntax enable"
 -- -----------------------------------------------------------------------------
 -- Globals
 -- -----------------------------------------------------------------------------
-P = function (v)
+PR = function (v)
     print(vim.inspect(v))
     return v
 end
 
-R = function (name)
+UL = function (name)
     package.loaded[name] = nil
     return require(name)
 end
@@ -31,7 +31,10 @@ require('plugins')
 require('lsp')
 
 local settings = {
-    colorscheme = 'tokyonight'
+    colorscheme = 'tokyonight',
+    keymaps = {
+        telescope = true
+    }
 }
 
 require('setup').setup(settings)
@@ -40,11 +43,8 @@ require('setup').setup(settings)
 -- -----------------------------------------------------------------------------
 -- keymappings and other stuff
 -- -----------------------------------------------------------------------------
-
 local mp = require('nvim-mapper')
 local qm = mp.qmap
-
-mp.set_leader(' ')
 
 -- Usefull keybindings
 vim.cmd [[nnoremap <C-s> :w<CR>]]
@@ -86,36 +86,10 @@ augroup END
 -- Neo Tree
 qm.nmap('<C-e>', "Neotree toggle", {type = 'command'})
 
-
--- telescope utils
-local tscmd = function(picker, theme, layout)
-    if theme == nil then theme = '' else theme = string.format('theme=%s', theme) end
-    if layout == nil then layout = '' else layout = string.format('layout_config=%s', layout) end
-    return string.format('Telescope %s %s %s', picker, theme, layout)
-end
-local ts_theme = {
-    dropdown = 'dropdown',
-    cursor = 'cursor',
-    ivy = 'ivy',
-}
-local ts_layout = {
-    more_list = '{width=0.7,height=0.5,preview_width=0.5}'
-}
-
 -- Telescope Mappings
-qm.nmap('gd', tscmd('lsp_definitions', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
-qm.nmap('gi', tscmd('lsp_implementation', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
-qm.nmap('gr', tscmd('lsp_references', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
-qm.nlmap('ca', tscmd('lsp_code_actions', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
 qm.nlmap('r', vim.lsp.buf.rename)
 qm.imap('<C-L>', vim.lsp.buf.hover)
 qm.nmap('<C-L>', vim.lsp.buf.hover)
-
-qm.nlmap('ff', tscmd('find_files', ts_theme.ivy), {type = 'command'})
-qm.nlmap('fg', tscmd('live_grep'), {type = 'command'})
-qm.nlmap('fr', tscmd('registers'), {type = 'command'})
-qm.nlmap('e', tscmd('file_browser', ts_theme.ivy), {type = 'command'})
-qm.nlmap('t', 'Telescope', {type = 'command'})
 
 qm.vmap("<C-_>", ":CommentToggle<CR>")
 qm.nmap("<C-_>", "CommentToggle", {type = 'command'})

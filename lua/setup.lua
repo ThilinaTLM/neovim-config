@@ -16,8 +16,32 @@ local function colorscheme(config)
     end
 end
 
+local function keymappings(config)
+    local mp = require('nvim-mapper')
+    local qm = mp.qmap
+
+    mp.set_leader(' ')
+
+    if config.keymaps.telescope then
+        local telescope = require('plugins.configs.telescope')
+
+        qm.nmap('gd', telescope.lsp.definitions)
+        qm.nmap('gi', telescope.lsp.implementations)
+        qm.nmap('gr', telescope.lsp.references)
+        qm.nlmap('ca', telescope.lsp.code_actions)
+
+        qm.nlmap('ff', telescope.find_files)
+        qm.nlmap('fg', telescope.live_grep)
+        qm.nlmap('fr', telescope.registers)
+        qm.nlmap('t', telescope.telescope)
+        qm.nlmap('e', telescope.file_browser)
+    end
+
+end
+
 local function setup(config)
     colorscheme(config)
+    keymappings(config)
 end
 
 return {

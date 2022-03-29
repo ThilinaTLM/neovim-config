@@ -14,7 +14,6 @@ local plugs = {
     { "nvim-telescope/telescope-file-browser.nvim" },
     {
         'nvim-telescope/telescope.nvim',
-        config = 'telescope-config',
         requires = {'nvim-telescope/telescope-fzy-native.nvim'},
     },
     {

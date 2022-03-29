@@ -36,4 +36,3 @@ require('nightfox').setup({
   }
 })
 
-print("Nightfox loaded")
