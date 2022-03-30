@@ -4,7 +4,7 @@ require'nvim-treesitter.configs'.setup {
       "html", "css", "scss",
       'python', "lua", "java",
       "c", "cpp", "rust", "go",
-      "json", "yaml"
+      "json", "yaml", "toml",
   },
   ignore_install = {},
   highlight = {
@@ -16,9 +16,9 @@ require'nvim-treesitter.configs'.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "gnn",
+      init_selection = "gw",
       node_incremental = "gw",
-      scope_incremental = "gmm",
+      scope_incremental = "ge",
       node_decremental = "gW",
     },
   }

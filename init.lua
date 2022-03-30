@@ -31,7 +31,7 @@ require('plugins')
 require('lsp')
 
 local settings = {
-    colorscheme = 'tokyonight',
+    colorscheme = 'onedarkpro',
     keymaps = {
         telescope = true
     }
