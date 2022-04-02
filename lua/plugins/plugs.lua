@@ -22,6 +22,8 @@ local plugs = {
 {'folke/tokyonight.nvim'},
 {'EdenEast/nightfox.nvim'},
 {'olimorris/onedarkpro.nvim'},
+{'navarasu/onedark.nvim'},
+{'tiagovla/tokyodark.nvim'},
 { 'hoob3rt/lualine.nvim', config = "lua-line" },
 { 'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
 

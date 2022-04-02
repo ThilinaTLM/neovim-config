@@ -1,8 +1,8 @@
+---@diagnostic disable
 local lush = require("lush")
 local hsl = lush.hsl
 local hsluv = lush.hsluv
 
----@diagnostic disable
 local theme = lush(function()
   return {
     SpecialKey                                                { fg="cyan", }, -- SpecialKey     xxx ctermfg=81 guifg=Cyan

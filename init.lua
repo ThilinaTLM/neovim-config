@@ -31,7 +31,7 @@ require('plugins')
 require('lsp')
 
 local settings = {
-    colorscheme = 'onedarkpro',
+    colorscheme = 'tokyodark',
     keymaps = {
         telescope = true
     }
@@ -114,4 +114,6 @@ qm.nmap('<C-Right>', 'BufferLineCyclePrev', {type = 'command'})
 qm.nlmap('bb', 'BufferLinePick', {type = 'command'})
 qm.nlmap('q', 'bd', {type = 'command'})
 
-vim.opt["laststatus"] = 3
+vim.cmd [[
+    set laststatus=3
+]]

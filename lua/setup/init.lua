@@ -4,11 +4,11 @@ local function colorscheme(config)
         vim.g.tokyonight_italic_functions = true
         vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer", "neo-tree" }
         vim.g.tokyonight_colors = {
-            bg = "#282c34",
-            bg_dark = "#181c24",
+            bg = "#252425",
+            bg_dark = "#252425",
             bg_highlight = "#364A82",
             terminal_black = "#414868",
-            bg_popup = "#181c24",
+            bg_popup = "#252425",
             bg_statusline = "#181c24",
         }
         vim.cmd [[colorscheme tokyonight]]
@@ -18,6 +18,10 @@ local function colorscheme(config)
         vim.cmd [[colorscheme onedarkpro]]
     elseif config.colorscheme == 'clean_colors' then
         vim.cmd [[colorscheme clean_colors]]
+    elseif config.colorscheme == 'onedark' then
+        vim.cmd [[colorscheme onedark]]
+    elseif config.colorscheme == 'tokyodark' then
+        vim.cmd [[colorscheme tokyodark]]
     end
 end
 
