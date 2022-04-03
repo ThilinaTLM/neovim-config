@@ -106,7 +106,6 @@ qm.nlmap('dn', vim.diagnostic.goto_next)
 qm.nlmap('db', vim.diagnostic.goto_prev)
 
 mp.def_command("Format", vim.lsp.buf.formatting)
-mp.def_command("Run", ':ToggleTerm size=50 direction=vertical')
 
 -- Buufer and Window navigations
 qm.nmap('<C-Left>', 'BufferLineCycleNext', {type = 'command'})
