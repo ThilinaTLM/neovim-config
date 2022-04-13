@@ -1,30 +1,22 @@
+
+-- Constants and Variables
+local NEOVIDE = vim.g.neovide
+local DEFAULT_COLORSCHEME = 'pablo'
+
+-- setup colorscheme and other theming stuff
 local function colorscheme(config)
-    if config.colorscheme == 'tokyonight' then
-        vim.g.tokyonight_style = "storm"
-        vim.g.tokyonight_italic_functions = true
-        vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer", "neo-tree" }
-        vim.g.tokyonight_colors = {
-            bg = "#252425",
-            bg_dark = "#252425",
-            bg_highlight = "#364A82",
-            terminal_black = "#414868",
-            bg_popup = "#252425",
-            bg_statusline = "#181c24",
-        }
-        vim.cmd [[colorscheme tokyonight]]
-    elseif config.colorscheme == 'duskfox' then
-        vim.cmd [[colorscheme duskfox]]
-    elseif config.colorscheme == 'onedarkpro' then
-        vim.cmd [[colorscheme onedarkpro]]
-    elseif config.colorscheme == 'clean_colors' then
-        vim.cmd [[colorscheme clean_colors]]
-    elseif config.colorscheme == 'onedark' then
-        vim.cmd [[colorscheme onedark]]
-    elseif config.colorscheme == 'tokyodark' then
-        vim.cmd [[colorscheme tokyodark]]
+    local theme = config.theme
+    local cs = theme.colorscheme or DEFAULT_COLORSCHEME
+    if NEOVIDE and theme.neovide ~= nil then
+        cs = theme.neovide
     end
+    if type(theme.config) == 'function' then
+        theme.config(cs)
+    end
+    vim.cmd('colorscheme ' .. cs)
 end
 
+-- setup keymappings
 local function keymappings(config)
     local mp = require('nvim-mapper')
     local qm = mp.qmap
@@ -46,6 +38,26 @@ local function keymappings(config)
         qm.nlmap('e', telescope.file_browser)
     end
 
+    -- comment/uncomment
+    if NEOVIDE then
+        qm.vmap("<C-/>", ":CommentToggle<CR>")
+        qm.nmap("<C-/>", "CommentToggle", {type = 'command'})
+    else
+        qm.vmap("<C-_>", ":CommentToggle<CR>")
+        qm.nmap("<C-_>", "CommentToggle", {type = 'command'})
+    end
+
+    -- Clipboard
+    if NEOVIDE then
+        vim.cmd [[ 
+            nmap <c-c> "+y
+            vmap <c-c> "+y
+            nmap <c-v> "+p
+            inoremap <c-v> <c-r>+
+            cnoremap <c-v> <c-r>+
+            inoremap <c-r> <c-v>
+        ]]
+    end
 end
 
 local function setup(config)

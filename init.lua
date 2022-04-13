@@ -22,23 +22,30 @@ UL = function (name)
     return require(name)
 end
 
-
 -- -----------------------------------------------------------------------------
 -- Configurations
 -- -----------------------------------------------------------------------------
+require('impatient')
 require('options')
 require('plugins')
 require('lsp')
 
 local settings = {
-    colorscheme = 'tokyodark',
+    theme = {
+        colorscheme = 'tokyonight',
+        neovide = 'tokyonight',
+        config = function ()
+            vim.g.tokyonight_style = "storm"
+            vim.g.tokyonight_italic_functions = true
+            vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer", "neo-tree" }
+        end,
+    },
     keymaps = {
-        telescope = true
+        telescope = true,
     }
 }
 
 require('setup').setup(settings)
-
 
 -- -----------------------------------------------------------------------------
 -- keymappings and other stuff
@@ -91,9 +98,6 @@ qm.nlmap('r', vim.lsp.buf.rename)
 qm.imap('<C-L>', vim.lsp.buf.hover)
 qm.nmap('<C-L>', vim.lsp.buf.hover)
 
-qm.vmap("<C-_>", ":CommentToggle<CR>")
-qm.nmap("<C-_>", "CommentToggle", {type = 'command'})
-
 -- snippets
 local luasnip_config = require("plugins/configs/lua-snip")
 qm.nmap('<C-h>', luasnip_config.expand_or_jump)
@@ -106,6 +110,7 @@ qm.nlmap('dn', vim.diagnostic.goto_next)
 qm.nlmap('db', vim.diagnostic.goto_prev)
 
 mp.def_command("Format", vim.lsp.buf.formatting)
+mp.def_command("Projects", require('plugins.configs.telescope').projects)
 
 -- Buufer and Window navigations
 qm.nmap('<C-Left>', 'BufferLineCycleNext', {type = 'command'})
@@ -116,3 +121,40 @@ qm.nlmap('q', 'bd', {type = 'command'})
 vim.cmd [[
     set laststatus=3
 ]]
+
+vim.cmd [[set updatetime=700]]
+vim.api.nvim_create_augroup('lsp-hold-highlight', {clear = true})
+vim.api.nvim_create_autocmd('CursorHold', {
+    callback = function ()
+        vim.lsp.buf.document_highlight()
+    end,
+    group = 'lsp-hold-highlight',
+})
+vim.api.nvim_create_autocmd('CursorMoved', {
+    callback = function ()
+        vim.lsp.buf.clear_references()
+    end,
+    group = 'lsp-hold-highlight',
+})
+
+vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
+  vim.lsp.util.focusable_float(method, function()
+    if not (result and result.contents) then
+      -- return { 'No information available' }
+      return
+    end
+    local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+    markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
+    if vim.tbl_isempty(markdown_lines) then
+      -- return { 'No information available' }
+      return
+    end
+    local bufnr, winnr = vim.lsp.util.fancy_floating_markdown(markdown_lines, {
+      pad_left = 1; pad_right = 1;
+    })
+    vim.lsp.util.close_preview_autocmd({"CursorMoved", "BufHidden"}, winnr)
+    return bufnr, winnr
+  end)
+end
+
+

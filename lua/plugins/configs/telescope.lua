@@ -1,4 +1,4 @@
-local telescope = require("telescope")
+local ts = require("telescope")
 local themes = require("telescope.themes")
 local builtins = require("telescope.builtin")
 
@@ -14,9 +14,11 @@ local config = {
     }
 }
 
-telescope.load_extension('fzy_native')
-telescope.load_extension('file_browser')
-telescope.setup(config)
+ts.load_extension('fzy_native')
+ts.load_extension('file_browser')
+ts.load_extension('project')
+
+ts.setup(config)
 
 local M = {}
 
@@ -37,7 +39,11 @@ M.telescope = function ()
 end
 
 M.file_browser = function ()
-    return telescope.extensions.file_browser.file_browser()
+    return ts.extensions.file_browser.file_browser()
+end
+
+M.projects = function ()
+    return ts.extensions.project.project{display_type = "full"}
 end
 
 M.lsp = {
@@ -45,7 +51,7 @@ M.lsp = {
         return builtins.lsp_definitions(themes.get_cursor({}))
     end,
     references = function ()
-        return builtins.lsp_references(themes.get_cursor({}))
+        return builtins.lsp_references(themes.get_cursor({width = 1000}))
     end,
     symbols = function ()
         return builtins.lsp_symbols(themes.get_cursor({}))
