@@ -15,6 +15,7 @@ local plugs = {
     {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     {"nvim-neo-tree/neo-tree.nvim", branch = "v2.x" },
     {'nvim-telescope/telescope-project.nvim'},
+    {'danymat/neogen'},
 
     -- Customizations
     {'rktjmp/lush.nvim' },

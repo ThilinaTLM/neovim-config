@@ -58,7 +58,7 @@ vim.opt.listchars:append("space: ")
 vim.opt.listchars:append("eol:↴")
 
 if vim.g.neovide == true then
-    vim.o.guifont = "JetBrainsMono Nerd Font Mono:h8.4"
+    vim.o.guifont = "JetBrainsMono NF:h9"
     vim.g.neovide_refresh_rate = 50
     vim.g.neovide_remember_window_size = true
     vim.g.neovide_cursor_vfx_mode = "sonicboom"
