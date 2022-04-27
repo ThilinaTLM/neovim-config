@@ -18,7 +18,7 @@ local plugs = {
     {'danymat/neogen'},
 
     -- Customizations
-    {'rktjmp/lush.nvim' },
+    -- {'rktjmp/lush.nvim' },
     {'lifepillar/vim-gruvbox8'},
     {'jacoborus/tender.vim'},
     {'folke/tokyonight.nvim'},
@@ -28,7 +28,8 @@ local plugs = {
     {'tiagovla/tokyodark.nvim'},
     {'hoob3rt/lualine.nvim', config = "lua-line" },
     {'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
-    {'stevearc/dressing.nvim'},
+    -- {'stevearc/dressing.nvim'},
+    { "catppuccin/nvim", as = "catppuccin" },
 
     -- Language Servers
     {'neovim/nvim-lspconfig'}, -- Language server protocol support
@@ -49,6 +50,7 @@ local plugs = {
     {'windwp/nvim-autopairs', config = 'autopairs' },
     {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true},
     {'terrortylor/nvim-comment', config = 'comment', },
+    { "peterhoeg/vim-qml" },
 
     -- Enhancements
     {'lewis6991/gitsigns.nvim'},

@@ -32,13 +32,8 @@ require('lsp')
 
 local settings = {
     theme = {
-        colorscheme = 'tokyonight',
-        neovide = 'tokyonight',
-        config = function ()
-            vim.g.tokyonight_style = "storm"
-            vim.g.tokyonight_italic_functions = true
-            vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer", "neo-tree" }
-        end,
+        colorscheme = 'catppuccin',
+        neovide = 'catppuccin',
     },
     keymaps = {
         telescope = true,
@@ -117,10 +112,6 @@ qm.nmap('<C-Left>', 'BufferLineCycleNext', {type = 'command'})
 qm.nmap('<C-Right>', 'BufferLineCyclePrev', {type = 'command'})
 qm.nlmap('bb', 'BufferLinePick', {type = 'command'})
 qm.nlmap('q', 'bd', {type = 'command'})
-
-vim.cmd [[
-    set laststatus=3
-]]
 
 vim.cmd [[set updatetime=700]]
 vim.api.nvim_create_augroup('lsp-hold-highlight', {clear = true})
