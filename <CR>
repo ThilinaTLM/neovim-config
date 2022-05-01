@@ -32,7 +32,7 @@ M.toggle_auto_format = function ()
         auto_format_id = vim.api.nvim_create_autocmd('BufWritePre',  {
             callback = function ()
                 M.format()
-                vim.cmd(":w")
+                vim.cmd(":w<CR>")
             end,
             group = auto_format_group,
         })
