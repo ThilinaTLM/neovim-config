@@ -12,11 +12,6 @@ vim.cmd "syntax enable"
 -- -----------------------------------------------------------------------------
 -- Globals
 -- -----------------------------------------------------------------------------
-PR = function (v)
-    print(vim.inspect(v))
-    return v
-end
-
 UL = function (name)
     package.loaded[name] = nil
     return require(name)
@@ -30,52 +25,71 @@ require('options')
 require('plugins')
 require('lsp')
 
+local ts = require('plugins.configs.telescope')
+local keymaps = require('setup.keymaps')
+local format = require('setup.format')
+local N = keymaps.nnoremap
+local NL = keymaps.nnoremap_leader
+local V = keymaps.vnoremap
+
+-- local luasnip_config = require("plugins/configs/lua-snip")
+-- qm.nmap('<C-h>', luasnip_config.expand_or_jump)
+-- qm.imap('<C-h>', luasnip_config.expand_or_jump)
+-- qm.nmap('<C-l>', luasnip_config.back)
+-- qm.imap('<C-l>', luasnip_config.back)
+
+
 local settings = {
     theme = {
         colorscheme = 'catppuccin',
         neovide = 'catppuccin',
     },
+    commands = {
+        AutoFormat = format.toggle_auto_format,
+        AutoTrim = format.toggle_auto_trim,
+        Format =  format.format,
+        Projects = require('plugins.configs.telescope').projects,
+    },
     keymaps = {
-        telescope = true,
-    }
+        leader = ' ',
+        copy_paste = true,
+        enhacement = true,
+        custom = {
+            N('<leader>h', ':nohl<CR>'),
+            N('<C-s>', ':w<CR>'), -- save CTRL+s
+
+            -- buffers
+            N('<C-Left>', ':BufferLineCycleNext<CR>'),
+            N('<C-Right>', ':BufferLineCyclePrev<CR>'),
+            NL('q', ':bd<CR>'), -- close buffer
+
+            -- LSP related
+            N('gd', ts.lsp.definitions),
+            N('gi', ts.lsp.implementations),
+            N('gr', ts.lsp.references),
+            N('ca', ts.lsp.code_actions),
+            NL('r', vim.lsp.buf.rename),
+            N('<C-l>', vim.lsp.buf.hover),
+
+            -- diagonostics
+            NL('dn', vim.diagnostic.goto_next),
+            NL('db', vim.diagnostic.goto_prev),
+
+            -- Project and files related
+            NL('ff', ts.find_files),
+            NL('fg', ts.live_grep),
+            NL('fr', ts.registers),
+            NL('t', ts.telescope),
+            N('<C-e>', ':Neotree toggle<CR>'),
+
+            -- Comment
+            N('<C-_>', ':CommentToggle<CR>'),
+            V('<C-_>', ':CommentToggle<CR>'),
+        },
+    },
 }
 
 require('setup').setup(settings)
-
--- -----------------------------------------------------------------------------
--- keymappings and other stuff
--- -----------------------------------------------------------------------------
-local mp = require('nvim-mapper')
-local qm = mp.qmap
-
--- Usefull keybindings
-vim.cmd [[nnoremap <C-s> :w<CR>]]
-qm.nlmap('h', 'nohl', {type = 'command'})
-
-qm.vmap('<C-C>', '"+y', {noremap = true})
-qm.map('<C-p>', '"+p')
-
-vim.cmd [[
-    nnoremap Y y$
-    nnoremap n nzzzv
-    nnoremap N Nzzzv
-    nnoremap J mzJ`z
-    
-    inoremap , ,<c-g>u
-    inoremap . .<c-g>u
-    inoremap ! !<c-g>u
-    inoremap ? ?<c-g>u
-
-    nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
-    nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
-
-    vnoremap K :m '>+1<CR>gv=gv
-    vnoremap J :m '<-2<CR>gv=gv
-    nnoremap <leader>k :m .-2<CR>==
-    nnoremap <leader>j :m .+1<CR>==
-
-    inoremap jk <ESC>
-]]
 
 vim.cmd [[
 augroup kitty_mp
@@ -84,34 +98,6 @@ augroup kitty_mp
     au VimEnter * :silent !kitty @ set-spacing padding=0 margin=0
 augroup END
 ]]
-
--- Neo Tree
-qm.nmap('<C-e>', "Neotree toggle", {type = 'command'})
-
--- Telescope Mappings
-qm.nlmap('r', vim.lsp.buf.rename)
-qm.imap('<C-L>', vim.lsp.buf.hover)
-qm.nmap('<C-L>', vim.lsp.buf.hover)
-
--- snippets
-local luasnip_config = require("plugins/configs/lua-snip")
-qm.nmap('<C-h>', luasnip_config.expand_or_jump)
-qm.imap('<C-h>', luasnip_config.expand_or_jump)
-qm.nmap('<C-l>', luasnip_config.back)
-qm.imap('<C-l>', luasnip_config.back)
-
--- diagonostics
-qm.nlmap('dn', vim.diagnostic.goto_next)
-qm.nlmap('db', vim.diagnostic.goto_prev)
-
-mp.def_command("Format", vim.lsp.buf.formatting)
-mp.def_command("Projects", require('plugins.configs.telescope').projects)
-
--- Buufer and Window navigations
-qm.nmap('<C-Left>', 'BufferLineCycleNext', {type = 'command'})
-qm.nmap('<C-Right>', 'BufferLineCyclePrev', {type = 'command'})
-qm.nlmap('bb', 'BufferLinePick', {type = 'command'})
-qm.nlmap('q', 'bd', {type = 'command'})
 
 vim.cmd [[set updatetime=700]]
 vim.api.nvim_create_augroup('lsp-hold-highlight', {clear = true})
@@ -129,23 +115,24 @@ vim.api.nvim_create_autocmd('CursorMoved', {
 })
 
 vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
-  vim.lsp.util.focusable_float(method, function()
-    if not (result and result.contents) then
-      -- return { 'No information available' }
-      return
-    end
-    local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
-    markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
-    if vim.tbl_isempty(markdown_lines) then
-      -- return { 'No information available' }
-      return
-    end
-    local bufnr, winnr = vim.lsp.util.fancy_floating_markdown(markdown_lines, {
-      pad_left = 1; pad_right = 1;
-    })
-    vim.lsp.util.close_preview_autocmd({"CursorMoved", "BufHidden"}, winnr)
-    return bufnr, winnr
-  end)
+    vim.lsp.util.focusable_float(method, function()
+        if not (result and result.contents) then
+            -- return { 'No information available' }
+            return
+        end
+        local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+        markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
+        if vim.tbl_isempty(markdown_lines) then
+            -- return { 'No information available' }
+            return
+        end
+        local bufnr, winnr = vim.lsp.util.fancy_floating_markdown(markdown_lines, {
+            pad_left = 1; pad_right = 1;
+        })
+        vim.lsp.util.close_preview_autocmd({"CursorMoved", "BufHidden"}, winnr)
+        return bufnr, winnr
+    end)
 end
+
 
 

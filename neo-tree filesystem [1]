@@ -1,0 +1,16 @@
+  ~/.config/nvim
+    ftplugin
+    lua
+   │  lsp
+   │  plugins
+   │  setup
+   │ │  format.lua                                                                                                                                                                               ✚ 
+   │ │  init.lua                                                                                                                                                                                  
+   │ │  keymaps.lua                                                                                                                                                                                
+   │ └  theme.lua
+   │  utils
+   └  options.lua
+    plugin
+    spell
+    README.md
+    init.lua                                                                                                                                                                                      

@@ -15,20 +15,18 @@ local plugs = {
     {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     {"nvim-neo-tree/neo-tree.nvim", branch = "v2.x" },
     {'nvim-telescope/telescope-project.nvim'},
-    {'danymat/neogen'},
+    {'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
+    {'danymat/neogen'}, -- Annotation Generator
+    {'stevearc/dressing.nvim'},
 
     -- Customizations
-    -- {'rktjmp/lush.nvim' },
     {'lifepillar/vim-gruvbox8'},
-    {'jacoborus/tender.vim'},
     {'folke/tokyonight.nvim'},
     {'EdenEast/nightfox.nvim'},
     {'olimorris/onedarkpro.nvim'},
     {'navarasu/onedark.nvim'},
     {'tiagovla/tokyodark.nvim'},
     {'hoob3rt/lualine.nvim', config = "lua-line" },
-    {'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
-    -- {'stevearc/dressing.nvim'},
     { "catppuccin/nvim", as = "catppuccin" },
 
     -- Language Servers
@@ -60,9 +58,6 @@ local plugs = {
     {"rafcamlet/nvim-luapad"},
     {'chrisbra/Colorizer'},
 
-    -- Personal
-    {'ThilinaTLM/neovim-mapper', dev = '~/Work/neovim_plugins/neovim_mapper' },
-    {'ThilinaTLM/nvim-clean-colors', dev = '~/Work/neovim_plugins/clean_colors'}
 }
 
 return plugs

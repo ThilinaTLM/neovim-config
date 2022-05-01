@@ -38,10 +38,6 @@ M.telescope = function ()
     return builtins.telescope(themes.get_dropdown({}))
 end
 
-M.file_browser = function ()
-    return ts.extensions.file_browser.file_browser()
-end
-
 M.projects = function ()
     return ts.extensions.project.project{display_type = "full"}
 end
