@@ -17,7 +17,7 @@ local plugs = {
     {'nvim-telescope/telescope-project.nvim'},
     {'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
     {'danymat/neogen'}, -- Annotation Generator
-    {'stevearc/dressing.nvim'},
+    -- {'stevearc/dressing.nvim'},
 
     -- Customizations
     {'lifepillar/vim-gruvbox8'},
