@@ -20,7 +20,7 @@ end
 -- -----------------------------------------------------------------------------
 -- Configurations
 -- -----------------------------------------------------------------------------
-require('impatient')
+pcall(require, 'impatient')
 require('options')
 require('plugins')
 require('lsp')

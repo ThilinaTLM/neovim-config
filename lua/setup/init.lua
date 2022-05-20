@@ -1,5 +1,4 @@
 local keymaps = require("setup.keymaps")
-local format = require("setup.format")
 
 
 -- Constants and Variables
