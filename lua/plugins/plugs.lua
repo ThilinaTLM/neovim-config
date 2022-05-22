@@ -52,8 +52,10 @@ local plugs = {
 
     -- Debugging
     {'rcarriga/nvim-dap-ui'},
+    {'theHamsta/nvim-dap-virtual-text', config = "require('nvim-dap-virtual-text').setup()"},
     {'nvim-telescope/telescope-dap.nvim'},
-    {'mfussenegger/nvim-dap-python', opt=true, ft="python", conf="dap-python"},
+    {'mfussenegger/nvim-dap-python', opt=true, ft="python", config="require('dap-python').setup()"},
+    {'leoluz/nvim-dap-go', opt=true, ft="go", config="require('dap-go').setup()"},
     {'mfussenegger/nvim-dap'},
 
     {'windwp/nvim-autopairs', conf = 'autopairs' },

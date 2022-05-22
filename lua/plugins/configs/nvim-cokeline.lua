@@ -9,7 +9,6 @@ local config = {
             return buffer.is_focused and "#ff9800" or get_hex('Normal', 'bg')
         end
     },
-
     components = {
         {
             text = ' ',
@@ -34,19 +33,25 @@ local config = {
             text = ' ',
         },
     },
-
     sidebar = {
-    filetype = 'neo-tree',
-    components = {
-      {
-        text = '  NeoTree  ',
-        fg = get_hex('Comment', 'fg'),
-        bg = get_hex('NeoTreeNormal', 'bg'),
-        style = 'bold',
-      },
+        filetype = 'neo-tree',
+        components = {
+            {
+                text = '  NeoTree  ',
+                fg = get_hex('Comment', 'fg'),
+                bg = get_hex('NeoTreeNormal', 'bg'),
+                style = 'bold',
+            },
+        }
+    },
+    buffers = {
+        filter_valid = function(buffer)
+            if buffer.filename == '[dap-repl]' then
+                return false
+            end
+            return true
+        end,
     }
-  },
-
 }
 
 require('cokeline').setup(config)

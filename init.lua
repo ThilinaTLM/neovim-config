@@ -68,12 +68,14 @@ local settings = {
             N('<C-h>', vim.lsp.buf.hover),
 
             -- Debugging
-            N('<F5>', require("dapui").toggle),
-            N('<F6>', require('dap').continue),
+            N('<F4>', require('dapui').toggle),
+            N('<F5>', require('dap').continue),
+            N('<F6>', require('dap').terminate),
             N('<F7>', require('dap').restart),
-            N('<F8>', require('dap').terminate),
             N('<C-b>', require('dap').toggle_breakpoint),
-            NL('cd', ":Telescope dap commands<CR>"),
+            NL('dw', require("plugins.configs.nvim-dap-ui").open_float),
+            NL('de', require("plugins.configs.nvim-dap-ui").open_scope),
+            NL('dd', ":Telescope dap commands<CR>"),
 
             -- diagonostics
             NL('dn', vim.diagnostic.goto_next),
