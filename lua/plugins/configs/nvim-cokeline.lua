@@ -3,12 +3,11 @@ local get_hex = require('cokeline/utils').get_hex
 local config = {
     default_hl = {
         fg = function(buffer)
-            return
-                buffer.is_focused
-                and get_hex('Normal', 'bg')
-                or get_hex('Comment', 'fg')
+            return buffer.is_focused and get_hex('Normal', 'bg') or get_hex('Comment', 'fg')
         end,
-        bg = "#ff9800",
+        bg = function (buffer)
+            return buffer.is_focused and "#ff9800" or get_hex('Normal', 'bg')
+        end
     },
 
     components = {
@@ -35,6 +34,18 @@ local config = {
             text = ' ',
         },
     },
+
+    sidebar = {
+    filetype = 'neo-tree',
+    components = {
+      {
+        text = '  NeoTree  ',
+        fg = get_hex('Comment', 'fg'),
+        bg = get_hex('NeoTreeNormal', 'bg'),
+        style = 'bold',
+      },
+    }
+  },
 
 }
 

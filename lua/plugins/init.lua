@@ -1,6 +1,7 @@
-local utils = require('utils')
-local config_file_dir = "plugins/configs"
+local path_utils = require('utils.path')
 local plugs = require("plugins/plugs")
+
+local config_file_dir = "plugins/configs"
 
 vim.cmd([[
     augroup packer_user_config
@@ -29,12 +30,12 @@ local function load_configuration(plug)
     if type(plug) == "table" and type(plug.config ) == "string" then
         cf = plug.config
     elseif type(plug) == "string" then
-        cf = utils.path.get_basename(plug)
+        cf = path_utils.get_basename(plug)
     else
-        cf = utils.path.get_basename(plug[1])
+        cf = path_utils.get_basename(plug[1])
     end
 
-    local path_ext = utils.path.get_extension(cf)
+    local path_ext = path_utils.get_extension(cf)
     if path_ext ~= nil then
         cf = cf:sub(1, -1 * (#path_ext + 1))
     end
@@ -73,7 +74,7 @@ end
 
 packer.startup({function(use)
     for _, plug in ipairs(plugs) do
-        if plug.dev and utils.path.is_exists(plug.dev .. "/lua") then
+        if plug.dev and path_utils.is_exists(plug.dev .. "/lua") then
             plug[1] = plug.dev
             plug.dev = nil
         end

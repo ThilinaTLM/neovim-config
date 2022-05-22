@@ -27,7 +27,7 @@ require('lsp')
 
 local ts = require('plugins.configs.telescope')
 local keymaps = require('setup.keymaps')
-local format = require('setup.format')
+local format = require('utils.format')
 local N = keymaps.nnoremap
 local NL = keymaps.nnoremap_leader
 local V = keymaps.vnoremap
@@ -38,12 +38,12 @@ local V = keymaps.vnoremap
 -- qm.nmap('<C-l>', luasnip_config.back)
 -- qm.imap('<C-l>', luasnip_config.back)
 
-vim.g.material_style = "darker"
-
 local settings = {
     theme = {
+        pre = function ()
+            vim.g.material_style = "darker"
+        end,
         colorscheme = 'material',
-        neovide = 'material',
     },
     commands = {
         AutoFormat = format.toggle_auto_format,
@@ -60,8 +60,8 @@ local settings = {
             N('<C-s>', ':w<CR>'), -- save CTRL+s
 
             -- buffers
-            N('<C-Left>', ':BufferLineCycleNext<CR>'),
-            N('<C-Right>', ':BufferLineCyclePrev<CR>'),
+            N('<C-Left>', '<Plug>(cokeline-focus-prev)'),
+            N('<C-Right>', '<Plug>(cokeline-focus-next)'),
             NL('q', ':bd<CR>'), -- close buffer
 
             -- LSP related
