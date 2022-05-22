@@ -14,28 +14,28 @@ local plugs = {
     {'nvim-telescope/telescope-project.nvim'},
     {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     {"nvim-neo-tree/neo-tree.nvim", branch = "v2.x" },
-    -- {'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
     {'noib3/nvim-cokeline'},
     {'hoob3rt/lualine.nvim', config = "lua-line"},
     {'danymat/neogen', opt=true}, -- Annotation Generator
 
-    -- Customizations
+    -- Colorschmes
     {'lifepillar/vim-gruvbox8', opt=true},
     {'folke/tokyonight.nvim', opt=true},
     {'EdenEast/nightfox.nvim', opt=true},
     {'olimorris/onedarkpro.nvim', opt=true},
     {'navarasu/onedark.nvim', opt=true},
     {'tiagovla/tokyodark.nvim', opt=true},
-    { "catppuccin/nvim", as = "catppuccin" , opt=true},
-    { 'marko-cerovac/material.nvim'},
+    {"catppuccin/nvim", as = "catppuccin" , opt=true},
+    {'marko-cerovac/material.nvim'},
 
-    -- Language Servers
-    {'neovim/nvim-lspconfig'}, -- Language server protocol support
+    -- Language Server and Snippets
+    {'neovim/nvim-lspconfig'},                 -- Language server protocol support
     {'williamboman/nvim-lsp-installer'},
     {'L3MON4D3/LuaSnip', config = "lua-snip"}, -- LuaSnip: Snippet engine
     {"rafamadriz/friendly-snippets"},
     {'onsails/lspkind-nvim'},
 
+    -- Autocompeltion
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-nvim-lua'},
@@ -43,6 +43,9 @@ local plugs = {
     {'saadparwaiz1/cmp_luasnip'},
     {'tzachar/cmp-tabnine', run='./install.sh'},
     {'hrsh7th/nvim-cmp', config = 'nvim-cmp' },
+
+    -- Debugging
+    {'mfussenegger/nvim-dap'},
 
     {'github/copilot.vim', config = 'copilot'},
     {'windwp/nvim-autopairs', config = 'autopairs' },
