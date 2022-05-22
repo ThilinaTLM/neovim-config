@@ -62,7 +62,7 @@ local settings = {
             N('gr', ts.lsp.references),
             N('ca', ts.lsp.code_actions),
             NL('r', vim.lsp.buf.rename),
-            N('<C-l>', vim.lsp.buf.hover),
+            N('<C-h>', vim.lsp.buf.hover),
 
             -- diagonostics
             NL('dn', vim.diagnostic.goto_next),

@@ -1,3 +1,4 @@
+
 local plugs = {
     -- core plugins
     {'wbthomason/packer.nvim'},
@@ -13,9 +14,9 @@ local plugs = {
     {'nvim-telescope/telescope.nvim', requires = {'nvim-telescope/telescope-fzy-native.nvim'}, },
     {'nvim-telescope/telescope-project.nvim'},
     {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
-    {"nvim-neo-tree/neo-tree.nvim", branch = "v2.x" },
+    {'nvim-neo-tree/neo-tree.nvim', branch = "v2.x" },
     {'noib3/nvim-cokeline'},
-    {'hoob3rt/lualine.nvim', config = "lua-line"},
+    {'hoob3rt/lualine.nvim', conf = "lua-line"},
     {'danymat/neogen', opt=true}, -- Annotation Generator
 
     -- Colorschmes
@@ -25,38 +26,42 @@ local plugs = {
     {'olimorris/onedarkpro.nvim', opt=true},
     {'navarasu/onedark.nvim', opt=true},
     {'tiagovla/tokyodark.nvim', opt=true},
-    {"catppuccin/nvim", as = "catppuccin" , opt=true},
+    {'catppuccin/nvim', as = "catppuccin" , opt=true},
     {'marko-cerovac/material.nvim'},
 
     -- Language Server and Snippets
     {'neovim/nvim-lspconfig'},                 -- Language server protocol support
     {'williamboman/nvim-lsp-installer'},
-    {'L3MON4D3/LuaSnip', config = "lua-snip"}, -- LuaSnip: Snippet engine
-    {"rafamadriz/friendly-snippets"},
-    {'onsails/lspkind-nvim'},
+    {'L3MON4D3/LuaSnip', conf = "lua-snip"}, -- LuaSnip: Snippet engine
+    {'rafamadriz/friendly-snippets'},
+    -- {'onsails/lspkind-nvim'},
 
     -- Autocompeltion
+    {'onsails/lspkind.nvim'},
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-nvim-lua'},
     {'hrsh7th/cmp-nvim-lsp'},
     {'saadparwaiz1/cmp_luasnip'},
     {'tzachar/cmp-tabnine', run='./install.sh'},
-    {'hrsh7th/nvim-cmp', config = 'nvim-cmp' },
+    {'hrsh7th/nvim-cmp', conf = 'nvim-cmp'},
+    {'github/copilot.vim'},
 
     -- Debugging
+    {'rcarriga/nvim-dap-ui'},
+    {'nvim-telescope/telescope-dap.nvim'},
+    {'mfussenegger/nvim-dap-python', opt=true, ft="python"},
     {'mfussenegger/nvim-dap'},
 
-    {'github/copilot.vim', config = 'copilot'},
-    {'windwp/nvim-autopairs', config = 'autopairs' },
+    {'windwp/nvim-autopairs', conf = 'autopairs' },
     {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true},
-    {'terrortylor/nvim-comment', config = 'comment', },
+    {'terrortylor/nvim-comment', conf = "comment"},
 
     -- Enhancements
     {'lewis6991/gitsigns.nvim'},
     {'michaelb/sniprun', run = 'bash ./install.sh', opt = true, cmd = {'SnipRun'} },
-    {"akinsho/toggleterm.nvim", config = 'toggleterm'},
-    {"rafcamlet/nvim-luapad"},
+    {'akinsho/toggleterm.nvim'},
+    {'rafcamlet/nvim-luapad'},
 }
 
 return plugs

@@ -3,13 +3,6 @@ local plugs = require("plugins/plugs")
 
 local config_file_dir = "plugins/configs"
 
-vim.cmd([[
-    augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-    augroup end
-]])
-
 local function install_packer()
     local fn = vim.fn
     local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -19,44 +12,46 @@ local function install_packer()
     return false
 end
 
-
-local function load_configuration(plug)
-    if type(plug) == "table" and type(plug.config ) == "function" then
-        plug.config()
-        return true
-    end
-
-    local cf = ""
-    if type(plug) == "table" and type(plug.config ) == "string" then
-        cf = plug.config
-    elseif type(plug) == "string" then
-        cf = path_utils.get_basename(plug)
-    else
-        cf = path_utils.get_basename(plug[1])
-    end
-
+local function get_fb_config_path(plugin_name)
+    local cf = path_utils.get_basename(plugin_name)
     local path_ext = path_utils.get_extension(cf)
+
     if path_ext ~= nil then
-        cf = cf:sub(1, -1 * (#path_ext + 1))
+        cf = cf:sub(1, -1 * (#path_ext + 1)) -- remove extension
     end
 
     if cf == "" then
-        return false
+        return nil
     end
-
-    cf = config_file_dir .. "/" .. cf
-
-    local has_config, conf = pcall(require, cf)
-    if has_config then
-        if type(conf) == "table" and type(conf.setup) == "function" then
-            conf.setup()
-        end
-        return true
-    end
-    return false
+    return config_file_dir.."/"..cf
 end
 
---load_configuration(plugs[32])
+local function configure_plugin_configs(plugin)
+
+    assert(type(plugin) == "table", "plugin must be a table")
+    assert(plugin.config == nil or type(plugin.config) ~= "function", "plugin.config must not be a function")
+
+    local config_path = nil
+    if type(plugin.conf) == "string" then
+        config_path = config_file_dir .. "/" .. plugin.conf
+    else
+        config_path = get_fb_config_path(plugin[1])
+    end
+    if config_path == nil then
+        return
+    end
+
+    local has_config, mod = pcall(require, config_path)
+    if has_config then
+        if type(mod) == "table" and mod.setup ~= nil then
+            plugin.config = "require('" .. config_path .. "').setup()"
+        else
+            plugin.config = "require('" .. config_path .. "')"
+        end
+    else
+        package.loaded[config_path] = nil
+    end
+end
 
 local has_packer, packer = pcall(require, 'packer')
 if not has_packer then
@@ -69,7 +64,7 @@ if not has_packer then
 end
 
 for _, plug in ipairs(plugs) do
-    load_configuration(plug)
+    configure_plugin_configs(plug)
 end
 
 packer.startup({function(use)
@@ -78,7 +73,6 @@ packer.startup({function(use)
             plug[1] = plug.dev
             plug.dev = nil
         end
-        plug.config = nil
         use(plug)
     end
 end,
