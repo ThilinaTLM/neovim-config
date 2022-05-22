@@ -35,9 +35,9 @@ local lsp_status = {
 local config = {
     options = {
         icons_enabled = true,
-        theme = 'tokyonight',
-        component_separators = { left = '|', right = '|'},
-        section_separators = { left = '', right = ''},
+        theme = 'auto',
+        section_separators = { left = '', right = '' },
+        component_separators = { left = '|', right = '|' },
         disabled_filetypes = {},
         always_divide_middle = true,
     },

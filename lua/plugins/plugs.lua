@@ -1,48 +1,51 @@
-
 local plugs = {
+    -- core plugins
     {'wbthomason/packer.nvim'},
-    -- common requrements
-    { 'nvim-lua/popup.nvim' },
+    {'nvim-lua/popup.nvim' },
     {'kyazdani42/nvim-web-devicons'},
-    { 'nvim-lua/plenary.nvim' },
+    {'nvim-lua/plenary.nvim' },
+    {'MunifTanjim/nui.nvim'},
+    {'lewis6991/impatient.nvim'},
 
-    -- base
-    { 'easymotion/vim-easymotion', config='easy-motion' },
-    { 'tpope/vim-surround' },
-    { "nvim-telescope/telescope-file-browser.nvim" },
-    {
-        'nvim-telescope/telescope.nvim',
-        config = 'telescope-config',
-        requires = {'nvim-telescope/telescope-fzy-native.nvim'},
-    },
-    {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
-        config = 'treesitter',
-    },
+    -- Essential plugins
+    {'easymotion/vim-easymotion'},
+    {'tpope/vim-surround' },
+    {'nvim-telescope/telescope.nvim', requires = {'nvim-telescope/telescope-fzy-native.nvim'}, },
+    {'nvim-telescope/telescope-project.nvim'},
+    {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
+    {"nvim-neo-tree/neo-tree.nvim", branch = "v2.x" },
+    {'noib3/nvim-cokeline'},
+    {'hoob3rt/lualine.nvim', config = "lua-line"},
+    {'danymat/neogen', opt=true}, -- Annotation Generator
 
-        -- Customizations
-    {'lifepillar/vim-gruvbox8'},
-    {'jacoborus/tender.vim'},
-    {'folke/tokyonight.nvim'},
-    { 'hoob3rt/lualine.nvim', config = "lua-line" },
-    { 'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
+    -- Colorschmes
+    {'lifepillar/vim-gruvbox8', opt=true},
+    {'folke/tokyonight.nvim', opt=true},
+    {'EdenEast/nightfox.nvim', opt=true},
+    {'olimorris/onedarkpro.nvim', opt=true},
+    {'navarasu/onedark.nvim', opt=true},
+    {'tiagovla/tokyodark.nvim', opt=true},
+    {"catppuccin/nvim", as = "catppuccin" , opt=true},
+    {'marko-cerovac/material.nvim'},
 
-    -- Language servers and Completions
-    { 'kyazdani42/nvim-tree.lua'},
-    {'neovim/nvim-lspconfig'}, -- Language server protocol support
+    -- Language Server and Snippets
+    {'neovim/nvim-lspconfig'},                 -- Language server protocol support
     {'williamboman/nvim-lsp-installer'},
-    {"rafamadriz/friendly-snippets"},
     {'L3MON4D3/LuaSnip', config = "lua-snip"}, -- LuaSnip: Snippet engine
-
+    {"rafamadriz/friendly-snippets"},
     {'onsails/lspkind-nvim'},
+
+    -- Autocompeltion
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-nvim-lua'},
     {'hrsh7th/cmp-nvim-lsp'},
     {'saadparwaiz1/cmp_luasnip'},
     {'tzachar/cmp-tabnine', run='./install.sh'},
-    { 'hrsh7th/nvim-cmp', config = 'nvim-cmp' },
+    {'hrsh7th/nvim-cmp', config = 'nvim-cmp' },
+
+    -- Debugging
+    {'mfussenegger/nvim-dap'},
 
     {'github/copilot.vim', config = 'copilot'},
     {'windwp/nvim-autopairs', config = 'autopairs' },
@@ -53,14 +56,7 @@ local plugs = {
     {'lewis6991/gitsigns.nvim'},
     {'michaelb/sniprun', run = 'bash ./install.sh', opt = true, cmd = {'SnipRun'} },
     {"akinsho/toggleterm.nvim", config = 'toggleterm'},
-    {"puremourning/vimspector"},
     {"rafcamlet/nvim-luapad"},
-
-    -- Personal
-    {
-        'ThilinaTLM/neovim-mapper',
-        dev = '~/Work/neovim_plugins/neovim_mapper'
-    },
 }
 
 return plugs

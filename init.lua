@@ -10,70 +10,79 @@ vim.cmd "filetype plugin on"
 vim.cmd "syntax enable"
 
 -- -----------------------------------------------------------------------------
--- Globals
--- -----------------------------------------------------------------------------
-P = function (v)
-    print(vim.inspect(v))
-    return v
-end
-
-R = function (name)
-    package.loaded[name] = nil
-    return require(name)
-end
-
-
--- -----------------------------------------------------------------------------
 -- Configurations
 -- -----------------------------------------------------------------------------
+pcall(require, 'impatient')
 require('options')
 require('plugins')
 require('lsp')
 
--- set colorscheme
-vim.g.tokyonight_style = "night"
-vim.g.tokyonight_italic_functions = true
-vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
-vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
-vim.cmd[[colorscheme tokyonight]]
+local ts = require('plugins.configs.telescope')
+local keymaps = require('setup.keymaps')
+local format = require('utils.format')
+local N = keymaps.nnoremap
+local NL = keymaps.nnoremap_leader
+local V = keymaps.vnoremap
 
--- -----------------------------------------------------------------------------
--- keymappings and other stuff
--- -----------------------------------------------------------------------------
+-- local luasnip_config = require("plugins/configs/lua-snip")
+-- qm.nmap('<C-h>', luasnip_config.expand_or_jump)
+-- qm.imap('<C-h>', luasnip_config.expand_or_jump)
+-- qm.nmap('<C-l>', luasnip_config.back)
+-- qm.imap('<C-l>', luasnip_config.back)
 
-local mp = require('nvim-mapper')
-local qm = mp.qmap
+local settings = {
+    theme = {
+        pre = function ()
+            vim.g.material_style = "darker"
+        end,
+        colorscheme = 'material',
+    },
+    commands = {
+        AutoFormat = format.toggle_auto_format,
+        AutoTrim = format.toggle_auto_trim,
+        Format =  format.format,
+        Projects = require('plugins.configs.telescope').projects,
+    },
+    keymaps = {
+        leader = ' ',
+        copy_paste = true,
+        enhacement = true,
+        custom = {
+            N('<leader>h', ':nohl<CR>'),
+            N('<C-s>', ':w<CR>'), -- save CTRL+s
 
-mp.set_leader(' ')
+            -- buffers
+            N('<C-Left>', '<Plug>(cokeline-focus-prev)'),
+            N('<C-Right>', '<Plug>(cokeline-focus-next)'),
+            NL('q', ':bd<CR>'), -- close buffer
 
--- Usefull keybindings
-vim.cmd [[nnoremap <C-s> :w<CR>]]
-qm.nlmap('h', 'nohl', {type = 'command'})
+            -- LSP related
+            N('gd', ts.lsp.definitions),
+            N('gi', ts.lsp.implementations),
+            N('gr', ts.lsp.references),
+            N('ca', ts.lsp.code_actions),
+            NL('r', vim.lsp.buf.rename),
+            N('<C-l>', vim.lsp.buf.hover),
 
-qm.vmap('<C-C>', '"+y', {noremap = true})
-qm.map('<C-p>', '"+p')
+            -- diagonostics
+            NL('dn', vim.diagnostic.goto_next),
+            NL('db', vim.diagnostic.goto_prev),
 
-vim.cmd [[
-    nnoremap Y y$
-    nnoremap n nzzzv
-    nnoremap N Nzzzv
-    nnoremap J mzJ`z
-    
-    inoremap , ,<c-g>u
-    inoremap . .<c-g>u
-    inoremap ! !<c-g>u
-    inoremap ? ?<c-g>u
+            -- Project and files related
+            NL('ff', ts.find_files),
+            NL('fg', ts.live_grep),
+            NL('fr', ts.registers),
+            NL('t', ts.telescope),
+            N('<C-e>', ':Neotree toggle<CR>'),
 
-    nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
-    nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+            -- Comment
+            N('<C-_>', ':CommentToggle<CR>'),
+            V('<C-_>', ':CommentToggle<CR>'),
+        },
+    },
+}
 
-    vnoremap K :m '>+1<CR>gv=gv
-    vnoremap J :m '<-2<CR>gv=gv
-    nnoremap <leader>k :m .-2<CR>==
-    nnoremap <leader>j :m .+1<CR>==
-
-    inoremap jk <ESC>
-]]
+require('setup').setup(settings)
 
 vim.cmd [[
 augroup kitty_mp
@@ -83,60 +92,38 @@ augroup kitty_mp
 augroup END
 ]]
 
--- Nvim Tree
-qm.nmap('<C-e>', "NvimTreeToggle", {type = 'command'})
+vim.cmd [[set updatetime=700]]
+vim.api.nvim_create_augroup('lsp-hold-highlight', {clear = true})
+vim.api.nvim_create_autocmd('CursorHold', {
+    callback = function ()
+        vim.lsp.buf.document_highlight()
+    end,
+    group = 'lsp-hold-highlight',
+})
+vim.api.nvim_create_autocmd('CursorMoved', {
+    callback = function ()
+        vim.lsp.buf.clear_references()
+    end,
+    group = 'lsp-hold-highlight',
+})
 
-
--- telescope utils
-local tscmd = function(picker, theme, layout)
-    if theme == nil then theme = '' else theme = string.format('theme=%s', theme) end
-    if layout == nil then layout = '' else layout = string.format('layout_config=%s', layout) end
-    return string.format('Telescope %s %s %s', picker, theme, layout)
+vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
+    vim.lsp.util.focusable_float(method, function()
+        if not (result and result.contents) then
+            -- return { 'No information available' }
+            return
+        end
+        local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+        markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
+        if vim.tbl_isempty(markdown_lines) then
+            -- return { 'No information available' }
+            return
+        end
+        local bufnr, winnr = vim.lsp.util.fancy_floating_markdown(markdown_lines, {
+            pad_left = 1; pad_right = 1;
+        })
+        vim.lsp.util.close_preview_autocmd({"CursorMoved", "BufHidden"}, winnr)
+        return bufnr, winnr
+    end)
 end
-local ts_theme = {
-    dropdown = 'dropdown',
-    cursor = 'cursor',
-    ivy = 'ivy',
-}
-local ts_layout = {
-    more_list = '{width=0.7,height=0.5,preview_width=0.5}'
-}
-
--- Telescope Mappings
-qm.nmap('gd', tscmd('lsp_definitions', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
-qm.nmap('gi', tscmd('lsp_implementation', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
-qm.nmap('gr', tscmd('lsp_references', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
-qm.nlmap('ca', tscmd('lsp_code_actions', ts_theme.cursor, ts_layout.more_list), {type = 'command'})
-qm.nlmap('r', vim.lsp.buf.rename)
-qm.imap('<C-L>', vim.lsp.buf.hover)
-qm.nmap('<C-L>', vim.lsp.buf.hover)
-
-qm.nlmap('ff', tscmd('find_files', ts_theme.ivy), {type = 'command'})
-qm.nlmap('fg', tscmd('live_grep'), {type = 'command'})
-qm.nlmap('fr', tscmd('registers'), {type = 'command'})
-qm.nlmap('e', tscmd('file_browser', ts_theme.ivy), {type = 'command'})
-qm.nlmap('t', 'Telescope', {type = 'command'})
-
-qm.vmap("<C-_>", ":CommentToggle<CR>")
-qm.nmap("<C-_>", "CommentToggle", {type = 'command'})
-
--- snippets
-local luasnip_config = require("plugins/configs/lua-snip")
-qm.nmap('<C-h>', luasnip_config.expand_or_jump)
-qm.imap('<C-h>', luasnip_config.expand_or_jump)
-qm.nmap('<C-l>', luasnip_config.back)
-qm.imap('<C-l>', luasnip_config.back)
-
--- diagonostics
-qm.nlmap('dn', vim.diagnostic.goto_next)
-qm.nlmap('db', vim.diagnostic.goto_prev)
-
-mp.def_command("Format", vim.lsp.buf.formatting)
-mp.def_command("Run", ':ToggleTerm size=50 direction=vertical')
-
--- Buufer and Window navigations
-qm.nmap('<C-Left>', 'BufferLineCycleNext', {type = 'command'})
-qm.nmap('<C-Right>', 'BufferLineCyclePrev', {type = 'command'})
-qm.nlmap('bb', 'BufferLinePick', {type = 'command'})
-qm.nlmap('q', 'bd', {type = 'command'})
 

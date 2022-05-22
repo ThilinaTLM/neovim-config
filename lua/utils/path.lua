@@ -26,8 +26,5 @@ mod_path.get_extension = function(path)
     return path:match("[.][^.]+$")
 end
 
-return {
-    path = mod_path
-}
-
+return mod_path
 
