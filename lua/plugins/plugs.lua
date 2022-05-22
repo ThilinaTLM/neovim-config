@@ -19,6 +19,9 @@ local plugs = {
     {'hoob3rt/lualine.nvim', conf = "lua-line"},
     {'danymat/neogen', opt=true}, -- Annotation Generator
 
+    -- Cutomization
+    {'stevearc/dressing.nvim'},
+
     -- Colorschmes
     {'lifepillar/vim-gruvbox8', opt=true},
     {'folke/tokyonight.nvim', opt=true},
@@ -34,7 +37,6 @@ local plugs = {
     {'williamboman/nvim-lsp-installer'},
     {'L3MON4D3/LuaSnip', conf = "lua-snip"}, -- LuaSnip: Snippet engine
     {'rafamadriz/friendly-snippets'},
-    -- {'onsails/lspkind-nvim'},
 
     -- Autocompeltion
     {'onsails/lspkind.nvim'},
