@@ -10,32 +10,32 @@ local plugs = {
     -- Essential plugins
     {'easymotion/vim-easymotion'},
     {'tpope/vim-surround' },
-    {"nvim-telescope/telescope-file-browser.nvim" },
     {'nvim-telescope/telescope.nvim', requires = {'nvim-telescope/telescope-fzy-native.nvim'}, },
+    {'nvim-telescope/telescope-project.nvim'},
     {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     {"nvim-neo-tree/neo-tree.nvim", branch = "v2.x" },
-    {'nvim-telescope/telescope-project.nvim'},
-    {'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
-    {'danymat/neogen'}, -- Annotation Generator
-    -- {'stevearc/dressing.nvim'},
+    -- {'akinsho/nvim-bufferline.lua', config = 'buffer-line' },
+    {'noib3/nvim-cokeline'},
+    {'hoob3rt/lualine.nvim', config = "lua-line"},
+    {'danymat/neogen', opt=true}, -- Annotation Generator
 
     -- Customizations
-    {'lifepillar/vim-gruvbox8'},
-    {'folke/tokyonight.nvim'},
-    {'EdenEast/nightfox.nvim'},
-    {'olimorris/onedarkpro.nvim'},
-    {'navarasu/onedark.nvim'},
-    {'tiagovla/tokyodark.nvim'},
-    {'hoob3rt/lualine.nvim', config = "lua-line" },
-    { "catppuccin/nvim", as = "catppuccin" },
+    {'lifepillar/vim-gruvbox8', opt=true},
+    {'folke/tokyonight.nvim', opt=true},
+    {'EdenEast/nightfox.nvim', opt=true},
+    {'olimorris/onedarkpro.nvim', opt=true},
+    {'navarasu/onedark.nvim', opt=true},
+    {'tiagovla/tokyodark.nvim', opt=true},
+    { "catppuccin/nvim", as = "catppuccin" , opt=true},
+    { 'marko-cerovac/material.nvim'},
 
     -- Language Servers
     {'neovim/nvim-lspconfig'}, -- Language server protocol support
     {'williamboman/nvim-lsp-installer'},
-    {"rafamadriz/friendly-snippets"},
     {'L3MON4D3/LuaSnip', config = "lua-snip"}, -- LuaSnip: Snippet engine
-
+    {"rafamadriz/friendly-snippets"},
     {'onsails/lspkind-nvim'},
+
     {'hrsh7th/cmp-buffer'},
     {'hrsh7th/cmp-path'},
     {'hrsh7th/cmp-nvim-lua'},
@@ -48,16 +48,12 @@ local plugs = {
     {'windwp/nvim-autopairs', config = 'autopairs' },
     {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true},
     {'terrortylor/nvim-comment', config = 'comment', },
-    { "peterhoeg/vim-qml" },
 
     -- Enhancements
     {'lewis6991/gitsigns.nvim'},
     {'michaelb/sniprun', run = 'bash ./install.sh', opt = true, cmd = {'SnipRun'} },
     {"akinsho/toggleterm.nvim", config = 'toggleterm'},
-    {"puremourning/vimspector"},
     {"rafcamlet/nvim-luapad"},
-    {'chrisbra/Colorizer'},
-
 }
 
 return plugs

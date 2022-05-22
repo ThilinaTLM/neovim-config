@@ -15,7 +15,6 @@ local config = {
 }
 
 ts.load_extension('fzy_native')
-ts.load_extension('file_browser')
 ts.load_extension('project')
 
 ts.setup(config)

@@ -54,8 +54,8 @@ wrp.so("cursorline", true)
 wrp.so("termguicolors", true)
 
 wrp.so("list", true)
-vim.opt.listchars:append("space: ")
-vim.opt.listchars:append("eol:↴")
+vim.opt.listchars:append("trail:◆")
+vim.opt.listchars:append("tab:▷ ")
 
 if vim.g.neovide == true then
     vim.o.guifont = "JetBrainsMono Nerd Font:h9"

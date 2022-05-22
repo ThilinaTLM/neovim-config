@@ -38,11 +38,12 @@ local V = keymaps.vnoremap
 -- qm.nmap('<C-l>', luasnip_config.back)
 -- qm.imap('<C-l>', luasnip_config.back)
 
+vim.g.material_style = "darker"
 
 local settings = {
     theme = {
-        colorscheme = 'catppuccin',
-        neovide = 'catppuccin',
+        colorscheme = 'material',
+        neovide = 'material',
     },
     commands = {
         AutoFormat = format.toggle_auto_format,
@@ -133,6 +134,4 @@ vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
         return bufnr, winnr
     end)
 end
-
-
 
