@@ -67,6 +67,14 @@ local settings = {
             NL('r', vim.lsp.buf.rename),
             N('<C-h>', vim.lsp.buf.hover),
 
+            -- Debugging
+            N('<F5>', require("dapui").toggle),
+            N('<F6>', require('dap').continue),
+            N('<F7>', require('dap').restart),
+            N('<F8>', require('dap').terminate),
+            N('<C-b>', require('dap').toggle_breakpoint),
+            NL('cd', ":Telescope dap commands<CR>"),
+
             -- diagonostics
             NL('dn', vim.diagnostic.goto_next),
             NL('db', vim.diagnostic.goto_prev),
@@ -109,24 +117,4 @@ vim.api.nvim_create_autocmd('CursorMoved', {
     end,
     group = 'lsp-hold-highlight',
 })
-
--- vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
---     vim.lsp.util.focusable_float(method, function()
---         if not (result and result.contents) then
---             -- return { 'No information available' }
---             return
---         end
---         local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
---         markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
---         if vim.tbl_isempty(markdown_lines) then
---             -- return { 'No information available' }
---             return
---         end
---         local bufnr, winnr = vim.lsp.util.fancy_floating_markdown(markdown_lines, {
---             pad_left = 1; pad_right = 1;
---         })
---         vim.lsp.util.close_preview_autocmd({"CursorMoved", "BufHidden"}, winnr)
---         return bufnr, winnr
---     end)
--- end
 

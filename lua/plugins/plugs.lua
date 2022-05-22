@@ -13,6 +13,7 @@ local plugs = {
     {'tpope/vim-surround' },
     {'nvim-telescope/telescope.nvim', requires = {'nvim-telescope/telescope-fzy-native.nvim'}, },
     {'nvim-telescope/telescope-project.nvim'},
+    {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
     {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     {'nvim-neo-tree/neo-tree.nvim', branch = "v2.x" },
     {'noib3/nvim-cokeline'},
@@ -33,7 +34,7 @@ local plugs = {
     {'marko-cerovac/material.nvim'},
 
     -- Language Server and Snippets
-    {'neovim/nvim-lspconfig'},                 -- Language server protocol support
+    {'neovim/nvim-lspconfig'},               -- Language server protocol support
     {'williamboman/nvim-lsp-installer'},
     {'L3MON4D3/LuaSnip', conf = "lua-snip"}, -- LuaSnip: Snippet engine
     {'rafamadriz/friendly-snippets'},
@@ -52,7 +53,7 @@ local plugs = {
     -- Debugging
     {'rcarriga/nvim-dap-ui'},
     {'nvim-telescope/telescope-dap.nvim'},
-    {'mfussenegger/nvim-dap-python', opt=true, ft="python"},
+    {'mfussenegger/nvim-dap-python', opt=true, ft="python", conf="dap-python"},
     {'mfussenegger/nvim-dap'},
 
     {'windwp/nvim-autopairs', conf = 'autopairs' },
