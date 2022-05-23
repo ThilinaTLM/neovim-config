@@ -1,4 +1,4 @@
-require('dap')
+local dap = require('dap')
 
 -- - `DapBreakpoint` for breakpoints (default: `B`)
 -- - `DapBreakpointCondition` for conditional breakpoints (default: `C`)
@@ -13,4 +13,7 @@ vim.fn.sign_define('DapLogPoint', {text='🖊️', texthl='', linehl='', numhl='
 vim.fn.sign_define('DapStopped', {text='🟢', texthl='', linehl='', numhl=''})
 vim.fn.sign_define('DapBreakpointRejected', {text='🚫', texthl='', linehl='', numhl=''})
 
-
+dap.defaults.fallback.external_terminal = {
+    command = '/usr/bin/kitty';
+    args = {};
+}

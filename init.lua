@@ -15,7 +15,7 @@ vim.cmd "syntax enable"
 pcall(require, 'impatient')
 require('options')
 require('plugins')
-require('lsp')
+-- require('lsp')
 
 local ts = require('plugins.configs.telescope')
 local keymaps = require('setup.keymaps')

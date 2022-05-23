@@ -35,7 +35,7 @@ local plugs = {
 
     -- Language Server and Snippets
     {'neovim/nvim-lspconfig'},               -- Language server protocol support
-    {'williamboman/nvim-lsp-installer'},
+    {'williamboman/nvim-lsp-installer', conf = "lsp-installer"},
     {'L3MON4D3/LuaSnip', conf = "lua-snip"}, -- LuaSnip: Snippet engine
     {'rafamadriz/friendly-snippets'},
 
@@ -54,15 +54,17 @@ local plugs = {
     {'rcarriga/nvim-dap-ui'},
     {'theHamsta/nvim-dap-virtual-text', config = "require('nvim-dap-virtual-text').setup()"},
     {'nvim-telescope/telescope-dap.nvim'},
-    {'mfussenegger/nvim-dap-python', opt=true, ft="python", config="require('dap-python').setup()"},
-    {'leoluz/nvim-dap-go', opt=true, ft="go", config="require('dap-go').setup()"},
+    {'mfussenegger/nvim-dap-python', ft="python", config="require('dap-python').setup()"},
+    {'leoluz/nvim-dap-go', ft="go", config="require('dap-go').setup()"},
     {'mfussenegger/nvim-dap'},
 
+    -- Language tools
+    {'simrat39/rust-tools.nvim', ft="rust"},
+
+    -- Enhancements
     {'windwp/nvim-autopairs', conf = 'autopairs' },
     {'sbdchd/neoformat', cmd = {'Neoformat'}, opt=true},
     {'terrortylor/nvim-comment', conf = "comment"},
-
-    -- Enhancements
     {'lewis6991/gitsigns.nvim'},
     {'michaelb/sniprun', run = 'bash ./install.sh', opt = true, cmd = {'SnipRun'} },
     {'akinsho/toggleterm.nvim'},
