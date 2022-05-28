@@ -59,10 +59,10 @@ local settings = {
             NL('q', ':bd<CR>'), -- close buffer
 
             -- LSP related
-            N('gd', ts.lsp.definitions),
-            N('gi', ts.lsp.implementations),
-            N('gr', ts.lsp.references),
-            N('ca', ts.lsp.code_actions),
+            N('gd', vim.lsp.buf.definition),
+            N('gi', vim.lsp.buf.implementation),
+            N('gr', vim.lsp.buf.references),
+            N('ca', vim.lsp.buf.code_action),
             NL('r', vim.lsp.buf.rename),
             N('<C-h>', vim.lsp.buf.hover),
 

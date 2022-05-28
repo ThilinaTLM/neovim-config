@@ -16,7 +16,7 @@ local config = {
     }
 }
 
-local extensions = { 'fzf', 'project', 'dap' }
+local extensions = { 'fzf', 'project', 'dap', 'lsp_handlers' }
 
 for _, ext in ipairs(extensions) do
     local ok, _ = pcall(ts.load_extension, ext)

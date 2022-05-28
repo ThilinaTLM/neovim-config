@@ -14,6 +14,7 @@ local plugs = {
     {'nvim-telescope/telescope.nvim', requires = {'nvim-telescope/telescope-fzy-native.nvim'}, },
     {'nvim-telescope/telescope-project.nvim'},
     {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
+    {'gbrlsnchs/telescope-lsp-handlers.nvim'},
     {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     {'nvim-neo-tree/neo-tree.nvim', branch = "v2.x" },
     {'noib3/nvim-cokeline'},
