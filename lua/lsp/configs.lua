@@ -83,7 +83,7 @@ end
 M.clangd = function(config)
     config = config or {}
     config.cmd = config.cmd or {"clangd"}
-    config.cmd = require("utils.lua").extend(config.cmd, {
+    config.cmd = require("utils.lua").extend_arr(config.cmd, {
         "--background-index",
         "--compile-commands-dir=debug",
         "--all-scopes-completion",
