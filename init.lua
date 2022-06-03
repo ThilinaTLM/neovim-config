@@ -44,6 +44,8 @@ local settings = {
         AutoTrim = format.toggle_auto_trim,
         Format =  format.format,
         Projects = require('plugins.configs.telescope').projects,
+        DapUi = function() require('dapui').toggle() end,
+        Diagnostic = ":Telescope diagnostics",
     },
     keymaps = {
         leader = ' ',
@@ -67,10 +69,12 @@ local settings = {
             N('<C-h>', vim.lsp.buf.hover),
 
             -- Debugging
-            N('<F4>', require('dapui').toggle),
-            N('<F5>', require('dap').continue),
-            N('<F6>', require('dap').terminate),
-            N('<F7>', require('dap').restart),
+            N('<F6>', require('dap').continue),
+            N('<F7>', require('dap').terminate),
+            N('<F8>', require('dap').restart),
+            N('<F10>', require('dap').step_over),
+            N('<F11>', require('dap').step_into),
+            N('<F12>', require('dap').step_out),
             N('<C-b>', require('dap').toggle_breakpoint),
             NL('dw', require("plugins.configs.nvim-dap-ui").open_float),
             NL('de', require("plugins.configs.nvim-dap-ui").open_scope),

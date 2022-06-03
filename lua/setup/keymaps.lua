@@ -23,15 +23,14 @@ end
 local function copy_paste_keymaps()
     if NEOVIDE then
         vim.cmd [[ 
-                nmap <c-c> "+y
-                vmap <c-c> "+y
-                nmap <c-v> "+p
-                inoremap <c-v> <c-r>+
-                cnoremap <c-v> <c-r>+
-                inoremap <c-r> <c-v>
+                vnoremap <C-c> "+y
+                nnroemap <C-v> "+p
+                inoremap <C-v> <C-r>+
+                cnoremap <C-v> <C-r>+
+                inoremap <C-r> <C-v>
             ]]
     else
-        vim.api.nvim_set_keymap('n', '<C-C>', '"+y', {noremap = true})
+        vim.api.nvim_set_keymap('v', '<C-c>', '"+y', {noremap = true})
         vim.api.nvim_set_keymap('n', '<C-p>', '"+p', {noremap = true})
     end
 end
