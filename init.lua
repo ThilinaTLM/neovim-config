@@ -44,8 +44,9 @@ local settings = {
         AutoTrim = format.toggle_auto_trim,
         Format =  format.format,
         Projects = require('plugins.configs.telescope').projects,
-        DapUi = function() require('dapui').toggle() end,
         Diagnostic = ":Telescope diagnostics",
+        DapUi = function() require('dapui').toggle() end,
+        CB = function() require('dap').set_breakpoint(vim.fn.input('Condition: ')) end,
     },
     keymaps = {
         leader = ' ',

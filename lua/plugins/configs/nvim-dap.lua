@@ -10,7 +10,7 @@ local dap = require('dap')
 vim.fn.sign_define('DapBreakpoint', {text='🔴', texthl='', linehl='', numhl=''})
 vim.fn.sign_define('DapBreakpointCondition', {text='🟠', texthl='', linehl='', numhl=''})
 vim.fn.sign_define('DapLogPoint', {text='🖊️', texthl='', linehl='', numhl=''})
-vim.fn.sign_define('DapStopped', {text='->', texthl='', linehl='', numhl=''})
+vim.fn.sign_define('DapStopped', {text='👉', texthl='', linehl='', numhl=''})
 vim.fn.sign_define('DapBreakpointRejected', {text='🚫', texthl='', linehl='', numhl=''})
 
 dap.defaults.fallback.external_terminal = {
@@ -43,5 +43,18 @@ dap.configurations.javascript = {
     type = 'node2',
     request = 'attach',
     processId = require'dap.utils'.pick_process,
+  },
+}
+
+dap.configurations.typescript = {
+  {
+    type = 'node2';
+    request = 'launch';
+    program = '/home/tlm/.nvm/versions/node/v14.19.3/bin/npm run {path}';
+    cwd = vim.fn.getcwd();
+    sourceMaps = true;
+    restart = true;
+    protocol = 'inspector';
+    console = 'integratedTerminal';
   },
 }
