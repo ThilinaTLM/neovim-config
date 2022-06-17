@@ -30,6 +30,7 @@ local function copy_paste_keymaps()
                 inoremap <C-r> <C-v>
             ]]
     else
+        vim.api.nvim_set_keymap('n', '<C-c>', '"+yy', {noremap = true})
         vim.api.nvim_set_keymap('v', '<C-c>', '"+y', {noremap = true})
         vim.api.nvim_set_keymap('n', '<C-p>', '"+p', {noremap = true})
     end

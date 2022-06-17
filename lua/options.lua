@@ -45,7 +45,11 @@ wrp.so("shell", "zsh")
 wrp.so("path", ".,,**")
 wrp.so("hidden", true)
 wrp.so("mouse", "a")
+
+-- Persitency related things
 wrp.so('spellfile', '/home/tlm/.config/nvim/spell/en.utf-8.add')
+vim.opt.undodir = '/home/tlm/.config/nvim/undo'
+vim.opt.undofile = true
 
 --- Interface options
 wrp.so("number", true)
@@ -58,7 +62,7 @@ vim.opt.listchars:append("trail:◆")
 vim.opt.listchars:append("tab:▷ ")
 
 if vim.g.neovide == true then
-    vim.o.guifont = "JetBrainsMono Nerd Font:h9"
+    vim.o.guifont = "Iosevka Term:h9"
     vim.g.neovide_refresh_rate = 50
     vim.g.neovide_remember_window_size = true
     vim.g.neovide_cursor_vfx_mode = "sonicboom"

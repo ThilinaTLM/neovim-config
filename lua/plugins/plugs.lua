@@ -9,17 +9,17 @@ local plugs = {
     {'lewis6991/impatient.nvim'},
 
     -- Essential plugins
-    {'easymotion/vim-easymotion'},
     {'tpope/vim-surround' },
-    {'nvim-telescope/telescope.nvim', requires = {'nvim-telescope/telescope-fzy-native.nvim'}, },
-    {'nvim-telescope/telescope-project.nvim'},
-    {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
-    {'gbrlsnchs/telescope-lsp-handlers.nvim'},
     {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     {'nvim-neo-tree/neo-tree.nvim', branch = "v2.x" },
     {'noib3/nvim-cokeline'},
     {'hoob3rt/lualine.nvim', conf = "lua-line"},
-    {'danymat/neogen', opt=true}, -- Annotation Generator
+    {'phaazon/hop.nvim'},
+    -- telescope
+    {'nvim-telescope/telescope-project.nvim'},
+    {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
+    {'gbrlsnchs/telescope-lsp-handlers.nvim'},
+    {'nvim-telescope/telescope.nvim'},
 
     -- Cutomization
     {'stevearc/dressing.nvim'},
@@ -27,7 +27,6 @@ local plugs = {
     -- Colorschmes
     {'lifepillar/vim-gruvbox8', opt=true},
     {'folke/tokyonight.nvim', opt=true},
-    {'EdenEast/nightfox.nvim', opt=true},
     {'olimorris/onedarkpro.nvim', opt=true},
     {'navarasu/onedark.nvim', opt=true},
     {'tiagovla/tokyodark.nvim', opt=true},
@@ -70,6 +69,7 @@ local plugs = {
     {'michaelb/sniprun', run = 'bash ./install.sh', opt = true, cmd = {'SnipRun'} },
     {'akinsho/toggleterm.nvim'},
     {'rafcamlet/nvim-luapad'},
+    {'danymat/neogen', opt=true}, -- Annotation Generator
 }
 
 return plugs

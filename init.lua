@@ -23,12 +23,6 @@ local N = keymaps.nnoremap
 local NL = keymaps.nnoremap_leader
 local V = keymaps.vnoremap
 
--- local luasnip_config = require("plugins/configs/lua-snip")
--- qm.nmap('<C-h>', luasnip_config.expand_or_jump)
--- qm.imap('<C-h>', luasnip_config.expand_or_jump)
--- qm.nmap('<C-l>', luasnip_config.back)
--- qm.imap('<C-l>', luasnip_config.back)
-
 local settings = {
     theme = {
         pre = function ()
@@ -56,10 +50,15 @@ local settings = {
             N('<leader>h', ':nohl<CR>'),
             N('<C-s>', ':w<CR>'), -- save CTRL+s
 
-            -- buffers
+            -- Buffers
             N('<C-Left>', '<Plug>(cokeline-focus-prev)'),
             N('<C-Right>', '<Plug>(cokeline-focus-next)'),
             NL('q', ':bd<CR>'), -- close buffer
+
+            -- Motions
+            N(',w', require('plugins.configs.hop').jump_word_forward),
+            N(',b', require('plugins.configs.hop').jump_word_backward),
+            N(',f', require('plugins.configs.hop').find_char2),
 
             -- LSP related
             N('gd', vim.lsp.buf.definition),
@@ -103,9 +102,9 @@ require('setup').setup(settings)
 
 vim.cmd [[
 augroup kitty_mp
-    autocmd!
-    au VimLeave * :silent !kitty @ set-spacing padding=4 margin=0
-    au VimEnter * :silent !kitty @ set-spacing padding=0 margin=0
+autocmd!
+au VimLeave * :silent !kitty @ set-spacing padding=4 margin=0
+au VimEnter * :silent !kitty @ set-spacing padding=0 margin=0
 augroup END
 ]]
 
