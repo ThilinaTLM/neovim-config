@@ -1,12 +1,12 @@
 
 local plugs = {
     -- core plugins
+    {'lewis6991/impatient.nvim'}, -- optimize lua imports
     {'wbthomason/packer.nvim'},
-    {'nvim-lua/popup.nvim' },
+    {'nvim-lua/popup.nvim' }, -- ?
     {'kyazdani42/nvim-web-devicons'},
     {'nvim-lua/plenary.nvim' },
     {'MunifTanjim/nui.nvim'},
-    {'lewis6991/impatient.nvim'},
 
     -- Essential plugins
     {'tpope/vim-surround' },

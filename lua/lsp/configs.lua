@@ -1,11 +1,5 @@
 -- LSP Configurations
 
--- Generate absolute path to lsp servers
--- local lsp_dir = vim.fn.stdpath('data') .. '/lsp_servers'
--- local function lsp_path(relative_path)
---   return vim.fn.expand(lsp_dir .. '/' .. relative_path)
--- end
-
 -- root dir pattern generator
 local function root_dirs(patterns)
     return function (fname)

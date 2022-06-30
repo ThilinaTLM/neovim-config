@@ -2,18 +2,25 @@ local dapui = require("dapui")
 local dap = require("dap")
 
 dapui.setup({
-    sidebar = {
-        elements = {
-            {
-                id = "scopes",
-                size = 0.25, -- Can be float or integer > 1
+    layouts = {
+        {
+            elements = {
+                'scopes',
+                'breakpoints',
+                'stacks',
+                'watches',
             },
-            { id = "breakpoints", size = 0.25 },
-            { id = "stacks", size = 0.25 },
-            { id = "watches", size = 00.25 },
+            size = 40,
+            position = 'left',
         },
-        size = 50,
-        position = "right",
+        {
+            elements = {
+                'repl',
+                'console',
+            },
+            size = 10,
+            position = 'bottom',
+        },
     },
 })
 

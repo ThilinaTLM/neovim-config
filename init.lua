@@ -51,9 +51,9 @@ local settings = {
             N('<C-s>', ':w<CR>'), -- save CTRL+s
 
             -- Buffers
-            N('<C-Left>', '<Plug>(cokeline-focus-prev)'),
-            N('<C-Right>', '<Plug>(cokeline-focus-next)'),
-            NL('q', ':bd<CR>'), -- close buffer
+            N('<C-Left>', require('utils.buffers').prev),
+            N('<C-Right>', require('utils.buffers').next),
+            NL('q', require('utils.buffers').delete),
 
             -- Motions
             N(',w', require('plugins.configs.hop').jump_word_forward),
@@ -110,16 +110,16 @@ augroup END
 
 vim.cmd [[set updatetime=700]]
 vim.api.nvim_create_augroup('lsp-hold-highlight', {clear = true})
-vim.api.nvim_create_autocmd('CursorHold', {
-    callback = function ()
-        vim.lsp.buf.document_highlight()
-    end,
-    group = 'lsp-hold-highlight',
-})
-vim.api.nvim_create_autocmd('CursorMoved', {
-    callback = function ()
-        vim.lsp.buf.clear_references()
-    end,
-    group = 'lsp-hold-highlight',
-})
-
+-- vim.api.nvim_create_autocmd('CursorHold', {
+--     callback = function ()
+--         vim.lsp.buf.document_highlight()
+--     end,
+--     group = 'lsp-hold-highlight',
+-- })
+-- vim.api.nvim_create_autocmd('CursorMoved', {
+--     callback = function ()
+--         vim.lsp.buf.clear_references()
+--     end,
+--     group = 'lsp-hold-highlight',
+-- })
+--

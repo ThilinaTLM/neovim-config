@@ -1,17 +1,18 @@
 
 local M = {}
 
--- Switch to next buffer
 M.next = function ()
-    vim.cmd [[:bnext]]
+    vim.api.nvim_exec('execute "normal \\<Plug>(cokeline-focus-next)"', false)
 end
 
 M.prev = function ()
-    vim.cmd [[:bprevious]]
+    vim.api.nvim_exec('execute "normal \\<Plug>(cokeline-focus-prev)"', false)
 end
 
 M.delete = function ()
-    vim.cmd [[:bd]]
+    local current_buffer = vim.api.nvim_get_current_buf()
+    M.next()
+    vim.api.nvim_buf_delete(current_buffer, {})
 end
 
 return M
