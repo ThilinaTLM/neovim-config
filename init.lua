@@ -114,13 +114,13 @@ vim.cmd [[set updatetime=700]]
 vim.api.nvim_create_augroup('lsp-hold-highlight', {clear = true})
 vim.api.nvim_create_autocmd('CursorHold', {
     callback = function ()
-        vim.lsp.buf.document_highlight()
+        -- vim.lsp.buf.document_highlight()
     end,
     group = 'lsp-hold-highlight',
 })
 vim.api.nvim_create_autocmd('CursorMoved', {
     callback = function ()
-        vim.lsp.buf.clear_references()
+        -- vim.lsp.buf.clear_references()
     end,
     group = 'lsp-hold-highlight',
 })

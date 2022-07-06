@@ -14,7 +14,6 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim \
  ```
 
 # Get Setup
-
 ```
 git clone --depth 1 https://github.com/ThilinaTLM/neovim-config.git \
 ~/.config/nvim 
