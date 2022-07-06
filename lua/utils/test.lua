@@ -3,23 +3,23 @@ local event = require("nui.utils.autocmd").event
 
 local popup = Popup({
   enter = true,
-  focusable = true,
+  focusable = false,
   border = {
     style = "rounded",
   },
-  position = "50%",
+  position = '100%',
   size = {
-    width = "80%",
+    width = "50%",
     height = "60%",
   },
   buf_options = {
     modifiable = true,
     readonly = false,
   },
+    win_options = {
+    winhighlight = "Normal:Normal,FloatBorder:Normal",
+  },
 })
-
-local cokeline = require("cokeline.utils")
-vim.pretty_print(cokeline)
 
 -- mount/open the component
 popup:mount()

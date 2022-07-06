@@ -23,6 +23,7 @@ local plugs = {
 
     -- Cutomization
     {'stevearc/dressing.nvim'},
+    {'rcarriga/nvim-notify'},
 
     -- Colorschmes
     {'lifepillar/vim-gruvbox8', opt=true},
