@@ -12,7 +12,7 @@ vim.cmd "syntax enable"
 -- -----------------------------------------------------------------------------
 -- Configurations
 -- -----------------------------------------------------------------------------
-pcall(require, 'impatient')
+-- pcall(require, 'impatient')
 require('options')
 require('plugins')
 

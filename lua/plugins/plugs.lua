@@ -71,6 +71,9 @@ local plugs = {
     {'akinsho/toggleterm.nvim'},
     {'rafcamlet/nvim-luapad'},
     {'danymat/neogen', opt=true}, -- Annotation Generator
+
+    -- My plugins
+    {'/home/tlm/Work/neovim_plugins/runner'}
 }
 
 return plugs
