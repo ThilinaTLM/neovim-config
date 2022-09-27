@@ -94,6 +94,8 @@ local settings = {
             -- Comment
             N('<C-/>', ':CommentToggle<CR>'),
             V('<C-/>', ':CommentToggle<CR>'),
+            N('<C-_>', ':CommentToggle<CR>'),
+            V('<C-_>', ':CommentToggle<CR>'),
         },
     },
 }
