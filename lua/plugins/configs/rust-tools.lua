@@ -1,13 +1,12 @@
-local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/'
-local codelldb_path = extension_path .. 'adapter/codelldb'
-local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
 
 local opts = {
-    -- ... other configs
     dap = {
-        adapter = require('rust-tools.dap').get_codelldb_adapter(
-            codelldb_path, liblldb_path)
-    }
+        adapter = {
+            type = "executable",
+            command = "lldb-vscode",
+            name = "rt_lldb",
+        },
+    },
 }
 
 -- Normal setup

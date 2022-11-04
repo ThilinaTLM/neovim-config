@@ -61,7 +61,7 @@ local plugs = {
     {'mfussenegger/nvim-dap'},
 
     -- Language tools
-    {'simrat39/rust-tools.nvim', ft="rust"},
+    {'simrat39/rust-tools.nvim', conf = "rust-tools"},
 
     -- Enhancements
     {'windwp/nvim-autopairs', conf = 'autopairs' },
@@ -72,9 +72,8 @@ local plugs = {
     {'akinsho/toggleterm.nvim'},
     {'rafcamlet/nvim-luapad'},
     {'danymat/neogen', opt=true}, -- Annotation Generator
+    {'j-hui/fidget.nvim'}
 
-    -- My plugins
-    {'/home/tlm/Work/neovim_plugins/runner'}
 }
 
 return plugs
