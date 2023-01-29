@@ -1,5 +1,5 @@
 # Neovim Configuration 
-My personal neovim configuration. 
+My personal neovim configuration.
 
 # Requirements 
 ```
