@@ -1,86 +1,71 @@
-local path_utils = require('utils.path')
-local plugs = require("plugins/plugs")
+local plugs = {
+    -- core plugins
+    {'lewis6991/impatient.nvim'}, -- optimize lua imports
+    {'wbthomason/packer.nvim'},
+    {'nvim-lua/popup.nvim' }, -- ?
+    {'kyazdani42/nvim-web-devicons'},
+    {'nvim-lua/plenary.nvim' },
+    {'MunifTanjim/nui.nvim'},
 
-local config_file_dir = "plugins/configs"
+    -- Essential plugins
+    {'tpope/vim-surround' },
+    {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
+    {'nvim-neo-tree/neo-tree.nvim', branch = "v2.x" },
+    {'noib3/nvim-cokeline'},
+    {'hoob3rt/lualine.nvim'},
+    {'phaazon/hop.nvim'},
+    -- telescope
+    {'nvim-telescope/telescope-project.nvim'},
+    {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
+    {'gbrlsnchs/telescope-lsp-handlers.nvim'},
+    {'nvim-telescope/telescope.nvim'},
 
-local function install_packer()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        return fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    end
-    return false
-end
+    -- Cutomization
+    {'stevearc/dressing.nvim'},
+    {'rcarriga/nvim-notify'},
 
-local function get_fb_config_path(plugin_name)
-    local cf = path_utils.get_basename(plugin_name)
-    local path_ext = path_utils.get_extension(cf)
+    -- Colorschmes
+    {'marko-cerovac/material.nvim'},
 
-    if path_ext ~= nil then
-        cf = cf:sub(1, -1 * (#path_ext + 1)) -- remove extension
-    end
+    -- Language Server and Snippets
+    {'neovim/nvim-lspconfig'},               -- Language server protocol support
+    { "williamboman/mason-lspconfig.nvim" },
+    { "williamboman/mason.nvim"},
+    {'L3MON4D3/LuaSnip'}, -- LuaSnip: Snippet engine
+    {'rafamadriz/friendly-snippets'},
 
-    if cf == "" then
-        return nil
-    end
-    return config_file_dir.."/"..cf
-end
+    -- Autocompeltion
+    {'onsails/lspkind.nvim'},
+    {'hrsh7th/cmp-buffer'},
+    {'hrsh7th/cmp-path'},
+    {'hrsh7th/cmp-nvim-lua'},
+    {'hrsh7th/cmp-nvim-lsp'},
+    {'saadparwaiz1/cmp_luasnip'},
+    {'tzachar/cmp-tabnine', build='./install.sh'},
+    {'hrsh7th/nvim-cmp'},
+    {'github/copilot.vim'},
 
-local function configure_plugin_configs(plugin)
+    -- Debugging
+    {'rcarriga/nvim-dap-ui'},
+    {'theHamsta/nvim-dap-virtual-text'},
+    {'nvim-telescope/telescope-dap.nvim'},
+    {'mfussenegger/nvim-dap-python', ft="python"},
+    {'leoluz/nvim-dap-go', ft="go"},
+    {'mfussenegger/nvim-dap'},
 
-    assert(type(plugin) == "table", "plugin must be a table")
-    assert(plugin.config == nil or type(plugin.config) ~= "function", "plugin.config must not be a function")
+    -- Language tools
+    {'simrat39/rust-tools.nvim'},
 
-    local config_path = nil
-    if type(plugin.conf) == "string" then
-        config_path = config_file_dir .. "/" .. plugin.conf
-    else
-        config_path = get_fb_config_path(plugin[1])
-    end
-    if config_path == nil then
-        return
-    end
+    -- Enhancements
+    {'windwp/nvim-autopairs'},
+    {'sbdchd/neoformat'},
+    {'terrortylor/nvim-comment'},
+    {'lewis6991/gitsigns.nvim'},
+    {'michaelb/sniprun', build='bash ./install.sh'},
+    {'akinsho/toggleterm.nvim'},
+    {'rafcamlet/nvim-luapad'},
+    {'danymat/neogen'}, -- Annotation Generator
+    {'j-hui/fidget.nvim'}
+}
 
-    local has_config, mod = pcall(require, config_path)
-    if has_config then
-        if type(mod) == "table" and mod.setup ~= nil then
-            plugin.config = "require('" .. config_path .. "').setup()"
-        else
-            plugin.config = "require('" .. config_path .. "')"
-        end
-    else
-        package.loaded[config_path] = nil
-    end
-end
-
-local has_packer, packer = pcall(require, 'packer')
-if not has_packer then
-    if install_packer() then
-        has_packer, packer = pcall(require, 'packer')
-    else
-        print("Packer not installed")
-        return
-    end
-end
-
-for _, plug in ipairs(plugs) do
-    configure_plugin_configs(plug)
-end
-
-packer.startup({function(use)
-    for _, plug in ipairs(plugs) do
-        if plug.dev and path_utils.is_exists(plug.dev .. "/lua") then
-            plug[1] = plug.dev
-            plug.dev = nil
-        end
-        use(plug)
-    end
-end,
-    config = {
-        display = {
-            open_fn = require('packer.util').float,
-        }
-    }
-})
-
-
+return plugs

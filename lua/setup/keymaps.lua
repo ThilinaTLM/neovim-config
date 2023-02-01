@@ -62,7 +62,7 @@ end
 
 local M = {}
 
-M.setup_keymaps = function(keymaps_config)
+M.setup = function(keymaps_config)
     -- map leader key
     vim.g.mapleader = keymaps_config.leader or ' '
 
