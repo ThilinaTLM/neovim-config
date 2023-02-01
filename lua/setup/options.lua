@@ -55,7 +55,7 @@ vim.o.relativenumber = true
 vim.o.cursorline = true
 vim.o.termguicolors = true
 vim.o.list = true
--- vim.o.listchars:append("trail:◆")
--- vim.o.listchars:append("tab:▷ ")
+vim.opt.listchars:append("trail:◆")
+vim.opt.listchars:append("tab:▷ ")
 vim.o.laststatus = 3
 

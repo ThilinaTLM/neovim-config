@@ -1,24 +1,16 @@
 local plugs = {
     -- core plugins
-    {'lewis6991/impatient.nvim'}, -- optimize lua imports
-    {'wbthomason/packer.nvim'},
     {'nvim-lua/popup.nvim' }, -- ?
     {'kyazdani42/nvim-web-devicons'},
     {'nvim-lua/plenary.nvim' },
     {'MunifTanjim/nui.nvim'},
 
     -- Essential plugins
-    {'tpope/vim-surround' },
+    {'tpope/vim-surround'},
     {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     {'nvim-neo-tree/neo-tree.nvim', branch = "v2.x" },
-    {'noib3/nvim-cokeline'},
     {'hoob3rt/lualine.nvim'},
     {'phaazon/hop.nvim'},
-    -- telescope
-    {'nvim-telescope/telescope-project.nvim'},
-    {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
-    {'gbrlsnchs/telescope-lsp-handlers.nvim'},
-    {'nvim-telescope/telescope.nvim'},
 
     -- Cutomization
     {'stevearc/dressing.nvim'},
@@ -43,7 +35,17 @@ local plugs = {
     {'saadparwaiz1/cmp_luasnip'},
     {'tzachar/cmp-tabnine', build='./install.sh'},
     {'hrsh7th/nvim-cmp'},
-    {'github/copilot.vim'},
+
+    -- Copilot
+    {
+        'github/copilot.vim',
+        config = function()
+            vim.cmd [[
+                imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
+                let g:copilot_no_tab_map = v:true 
+            ]]
+        end
+    },
 
     -- Debugging
     {'rcarriga/nvim-dap-ui'},
