@@ -62,22 +62,6 @@ end
 
 local M = {}
 
-M.setup = function(keymaps_config)
-    -- map leader key
-    vim.g.mapleader = keymaps_config.leader or ' '
-
-    if keymaps_config.copy_paste then
-        copy_paste_keymaps()
-    end
-
-    if keymaps_config.enhancement then
-        enhancement_keymaps()
-    end
-
-    for _, keymap in ipairs(keymaps_config.custom) do
-        set_keymap(unpack(keymap))
-    end
-end
 
 -- helper function to set a keymap
 M.map = function (lhs, rhs)
@@ -112,6 +96,35 @@ end
 M.inoremap_leader = function (lhs, rhs)
     lhs = '<leader>' .. lhs
     return { "i", lhs, rhs }
+end
+
+M.setup = function(keymaps_config)
+    local N = M.nnoremap
+    local NL = M.nnoremap_leader
+    local V = M.vnoremap
+
+    if keymaps_config == nil then
+        keymaps_config = {}
+    elseif type(keymaps_config) == 'function' then
+        keymaps_config = keymaps_config(N, NL, V)
+    else
+        keymaps_config = keymaps_config
+    end
+
+    -- map leader key
+    vim.g.mapleader = keymaps_config.leader or ' '
+
+    if keymaps_config.copy_paste then
+        copy_paste_keymaps()
+    end
+
+    if keymaps_config.enhancement then
+        enhancement_keymaps()
+    end
+
+    for _, keymap in ipairs(keymaps_config.custom) do
+        set_keymap(unpack(keymap))
+    end
 end
 
 return M

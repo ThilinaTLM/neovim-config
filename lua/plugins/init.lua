@@ -20,8 +20,6 @@ local plugs = {
 
     -- Language Server and Snippets
     {'neovim/nvim-lspconfig'},               -- Language server protocol support
-    { 'williamboman/mason-lspconfig.nvim' },
-    { 'williamboman/mason.nvim'},
     {'L3MON4D3/LuaSnip'}, -- LuaSnip: Snippet engine
     {'rafamadriz/friendly-snippets'},
 
