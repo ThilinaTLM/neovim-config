@@ -1,13 +1,12 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "sumneko_lua", "rust_analyzer" },
+    ensure_installed = { "sumneko_lua", "rust_analyzer", "pylsp", "clangd" },
     automatic_installation = false,
 })
 
 
 local configs = require('lsp/configs')
 
--- sumenko lua 
 require'lspconfig'.sumneko_lua.setup(configs.sumneko_lua())
 require'lspconfig'.pylsp.setup(configs.pylsp())
 require'lspconfig'.rust_analyzer.setup(configs.rust_analyzer())

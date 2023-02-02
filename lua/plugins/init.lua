@@ -7,8 +7,7 @@ local plugs = {
 
     -- Essential plugins
     {'tpope/vim-surround'},
-    {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
-    {'nvim-neo-tree/neo-tree.nvim', branch = "v2.x" },
+    {'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x' },
     {'hoob3rt/lualine.nvim'},
     {'phaazon/hop.nvim'},
 
@@ -21,8 +20,8 @@ local plugs = {
 
     -- Language Server and Snippets
     {'neovim/nvim-lspconfig'},               -- Language server protocol support
-    { "williamboman/mason-lspconfig.nvim" },
-    { "williamboman/mason.nvim"},
+    { 'williamboman/mason-lspconfig.nvim' },
+    { 'williamboman/mason.nvim'},
     {'L3MON4D3/LuaSnip'}, -- LuaSnip: Snippet engine
     {'rafamadriz/friendly-snippets'},
 
@@ -41,7 +40,7 @@ local plugs = {
         'github/copilot.vim',
         config = function()
             vim.cmd [[
-                imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
+                imap <silent><script><expr> <C-j> copilot#Accept('\<CR>')
                 let g:copilot_no_tab_map = v:true 
             ]]
         end
@@ -51,15 +50,14 @@ local plugs = {
     {'rcarriga/nvim-dap-ui'},
     {'theHamsta/nvim-dap-virtual-text'},
     {'nvim-telescope/telescope-dap.nvim'},
-    {'mfussenegger/nvim-dap-python', ft="python"},
-    {'leoluz/nvim-dap-go', ft="go"},
+    {'mfussenegger/nvim-dap-python', ft='python'},
+    {'leoluz/nvim-dap-go', ft='go'},
     {'mfussenegger/nvim-dap'},
 
     -- Language tools
     {'simrat39/rust-tools.nvim'},
 
     -- Enhancements
-    {'windwp/nvim-autopairs'},
     {'sbdchd/neoformat'},
     {'terrortylor/nvim-comment'},
     {'lewis6991/gitsigns.nvim'},
