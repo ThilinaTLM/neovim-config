@@ -23,6 +23,8 @@ require('setup').commands({
     CB = function() require('dap').set_breakpoint(vim.fn.input('Condition: ')) end,
 })
 
+require('runner').setup({terminal = 'konsole'})
+
 require('setup').keymaps(function (N, NL, V)
     return {
         leader = ' ',
@@ -78,6 +80,9 @@ require('setup').keymaps(function (N, NL, V)
             V('<C-/>', ':CommentToggle<CR>'),
             N('<C-_>', ':CommentToggle<CR>'),
             V('<C-_>', ':CommentToggle<CR>'),
+
+            -- Runner
+            N('<F5>', require('runner').run_project),
         },
     }
 end)

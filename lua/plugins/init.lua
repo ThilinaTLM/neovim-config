@@ -24,12 +24,6 @@ local plugs = {
     {'rafamadriz/friendly-snippets'},
 
     -- Autocompeltion
-    {'onsails/lspkind.nvim'},
-    {'hrsh7th/cmp-buffer'},
-    {'hrsh7th/cmp-path'},
-    {'hrsh7th/cmp-nvim-lua'},
-    {'hrsh7th/cmp-nvim-lsp'},
-    {'saadparwaiz1/cmp_luasnip'},
     {'tzachar/cmp-tabnine', build='./install.sh'},
     {'hrsh7th/nvim-cmp'},
 

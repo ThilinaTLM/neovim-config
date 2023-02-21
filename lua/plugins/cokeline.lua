@@ -1,4 +1,4 @@
-function cokeline_config()
+local function cokeline_config()
     local get_hex = require('cokeline/utils').get_hex
     local config = {
         default_hl = {
