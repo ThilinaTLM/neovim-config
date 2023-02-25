@@ -1,18 +1,15 @@
 local plugs = {
     -- core plugins
-    {'nvim-lua/popup.nvim' }, -- ?
+    {'nvim-lua/popup.nvim' },
     {'kyazdani42/nvim-web-devicons'},
     {'nvim-lua/plenary.nvim' },
     {'MunifTanjim/nui.nvim'},
 
     -- Essential plugins
     {'tpope/vim-surround'},
-    {'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x' },
-    {'hoob3rt/lualine.nvim'},
     {'phaazon/hop.nvim'},
 
     -- Cutomization
-    {'stevearc/dressing.nvim'},
     {'rcarriga/nvim-notify'},
 
     -- Colorschmes
@@ -46,18 +43,23 @@ local plugs = {
     {'leoluz/nvim-dap-go', ft='go'},
     {'mfussenegger/nvim-dap'},
 
-    -- Language tools
-    {'simrat39/rust-tools.nvim'},
-
     -- Enhancements
     {'sbdchd/neoformat'},
     {'terrortylor/nvim-comment'},
-    {'lewis6991/gitsigns.nvim'},
-    {'michaelb/sniprun', build='bash ./install.sh'},
+    {
+        'lewis6991/gitsigns.nvim',
+        config = function () require('gitsigns').setup({}) end
+    },
     {'akinsho/toggleterm.nvim'},
     {'rafcamlet/nvim-luapad'},
-    {'danymat/neogen'}, -- Annotation Generator
-    {'j-hui/fidget.nvim'}
+    {
+        'danymat/neogen',
+        config = function () require('neogen').setup({ snippet_engine = "luasnip" }) end
+    },
+    {
+        'j-hui/fidget.nvim',
+        config = function () require('fidget').setup({}) end
+    }
 }
 
 return plugs

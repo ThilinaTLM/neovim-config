@@ -1,5 +1,3 @@
-local wrp = require('utils/options')
-
 -- Search and Highliting
 vim.o.hlsearch = true
 vim.o.ignorecase = true
@@ -58,4 +56,9 @@ vim.o.list = true
 vim.opt.listchars:append("trail:◆")
 vim.opt.listchars:append("tab:▷ ")
 vim.o.laststatus = 3
+
+-- Characters
+vim.opt.list = true
+vim.opt.listchars:append("space: ")
+vim.opt.listchars:append("eol:↴")
 

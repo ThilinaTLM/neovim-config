@@ -1,5 +1,4 @@
 
-
 local function config()
     local lspkind = require("lspkind")
     local cmp = require("cmp")
