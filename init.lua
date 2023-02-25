@@ -35,14 +35,14 @@ require('setup').keymaps(function (N, NL, V)
             N('<C-s>', ':w<CR>'), -- save CTRL+s
 
             -- Buffers
-            N('<C-Left>', require('utils.buffers').prev),
-            N('<C-Right>', require('utils.buffers').next),
-            NL('q', require('utils.buffers').delete),
+            N('<C-Left>', require('plugins.cokeline').fn.prev),
+            N('<C-Right>', require('plugins.cokeline').fn.next),
+            NL('q', require('plugins.cokeline').fn.delete),
 
             -- Motions
-            N(',w', require('plugins.configs.hop').jump_word_forward),
-            N(',b', require('plugins.configs.hop').jump_word_backward),
-            N(',f', require('plugins.configs.hop').find_char2),
+            N(',w', require('plugins.hop').fn.jump_word_forward),
+            N(',b', require('plugins.hop').fn.jump_word_backward),
+            N(',f', require('plugins.hop').fn.find_char2),
 
             -- LSP related
             N('gd', vim.lsp.buf.definition),

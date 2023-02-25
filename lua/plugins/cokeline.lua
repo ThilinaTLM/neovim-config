@@ -1,4 +1,4 @@
-local function cokeline_config()
+local function setup()
     local get_hex = require('cokeline/utils').get_hex
     local config = {
         default_hl = {
@@ -57,7 +57,25 @@ local function cokeline_config()
     require('cokeline').setup(config)
 end
 
+
+local fn = {}
+
+fn.next = function ()
+    vim.api.nvim_exec('execute "normal \\<Plug>(cokeline-focus-next)"', false)
+end
+
+fn.prev = function ()
+    vim.api.nvim_exec('execute "normal \\<Plug>(cokeline-focus-prev)"', false)
+end
+
+fn.delete = function ()
+    local current_buffer = vim.api.nvim_get_current_buf()
+    fn.next()
+    vim.api.nvim_buf_delete(current_buffer, {})
+end
+
 return {
     'noib3/nvim-cokeline',
-    config = cokeline_config,
+    config = setup,
+    fn = fn,
 }
