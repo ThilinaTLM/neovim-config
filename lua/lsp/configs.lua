@@ -1,11 +1,5 @@
 -- LSP Configurations
 
--- Generate absolute path to lsp servers
-local lsp_dir = vim.fn.stdpath('data') .. '/lsp_servers'
-local function lsp_path(relative_path)
-  return vim.fn.expand(lsp_dir .. '/' .. relative_path)
-end
-
 -- root dir pattern generator
 local function root_dirs(patterns)
     return function (fname)
@@ -14,40 +8,36 @@ local function root_dirs(patterns)
     end
 end
 
--------------------------------------------------------------------------------------------------------------
-local lsp_configs = {}
+local M = {}
 
--- Lua ------------------------------------------------------------------------------------------------------
-lsp_configs.lua = {
-        name = 'sumneko_lua',
-        cmd = {lsp_path('sumneko_lua/extension/server/bin/lua-language-server')};
-        settings = {
-            Lua = {
-                runtime = {
-                    version = 'LuaJIT',
-                    path = vim.split(package.path, ';'),
-                },
-                diagnostics = {
-                    globals = {'vim'},
-                },
-                workspace = {
-                    library = {
-                        [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                        [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-                    },
-                },
-                telemetry = {
-                    enable = false,
+M.sumneko_lua = function(config)
+    config = config or {}
+    config.settings = {
+        Lua = {
+            runtime = {
+                version = 'LuaJIT',
+                path = vim.split(package.path, ';'),
+            },
+            diagnostics = {
+                globals = {'vim'},
+            },
+            workspace = {
+                library = {
+                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
                 },
             },
-        },
-}
+            telemetry = {
+                enable = false,
+            },
+        }
+    }
+    return config
+end
 
--- Python ---------------------------------------------------------------------------------------------------
-lsp_configs.python = {
-    name = 'pylsp',
-    cmd = {lsp_path('pylsp/venv/bin/pylsp')};
-    config = {
+M.pylsp = function(config)
+    config = config or {}
+    config.config = {
         configurationSources = { "flake8" },
         plugins = {
             pyls_mypy = {
@@ -61,67 +51,33 @@ lsp_configs.python = {
                 enabled = true
             }
         }
-    },
-    root_dir = root_dirs({
+    }
+    config.root_dir = root_dirs({
         'pyproject.toml',
         'setup.py',
         'setup.cfg',
         'requirements.txt',
         'Pipfile',
         'main.py'
-    }),
+    })
+    return config
+end
 
-}
-
--- Go lang --------------------------------------------------------------------------------------------------
-lsp_configs.go = {
-    name = 'gopls',
-    cmd = {lsp_path('go/gopls')},
-    config = {},
-    root_dir = root_dirs({
+M.gopls = function (config)
+    config = config or {}
+    config.root_dir = root_dirs({
         'go.mod',
         '.git',
         'main.go',
         'test.go'
-    }),
-
-}
-
--- Typescript, Javascript -----------------------------------------------------------------------------------
-lsp_configs.typescript = {
-    name = 'tsserver',
-    cmd = {'node', lsp_path('tsserver/node_modules/typescript-language-server/lib/cli.js'), '--stdio'},
-    config = {},
-    init_options = { hostInfo = "neovim" },
-    root_dir = root_dirs({
-        'package.json',
-        'tsconfig.json',
-        '.git',
-        'main.ts',
-        'main.js',
-        'index.ts',
-        'index.js',
     })
-}
+    return config
+end
 
--- Angular --------------------------------------------------------------------------------------------------
-lsp_configs.angular = {
-    name = 'angularls',
-    cmd = {lsp_path('angularls/node_modules/@angular/language-server/bin/ngserver'), '--stdio'},
-    config = {},
-    root_dir = root_dirs({
-        'angular.json',
-        'package.json',
-        'tsconfig.json',
-        '.git',
-    })
-}
-
--- C/C++ ----------------------------------------------------------------------------------------------------
-lsp_configs.cpp = {
-    name = 'clangd',
-    cmd = {
-        lsp_path('clangd/bin/clangd'),
+M.clangd = function(config)
+    config = config or {}
+    config.cmd = config.cmd or {"clangd"}
+    config.cmd = require("utils.lua").extend_arr(config.cmd, {
         "--background-index",
         "--compile-commands-dir=debug",
         "--all-scopes-completion",
@@ -132,8 +88,8 @@ lsp_configs.cpp = {
         "--header-insertion=iwyu",
         "--header-insertion-decorators",
         "--hidden-features"
-    },
-    config = {
+    })
+    config.config = {
         single_file_support = true,
         clangd = {
             args = {
@@ -147,32 +103,27 @@ lsp_configs.cpp = {
                 '-clang-tidy-checks=readability-braces-around-statements',
             }
         }
-    },
-    root_dir = root_dirs({
+    }
+    config.root_dir = root_dirs({
         'compile_commands.json',
         'CMakeLists.txt',
         'main.cpp',
         'main.c',
         '.git',
     })
-}
+    return config
+end
 
--- Rust ----------------------------------------------------------------------------------------------------
-lsp_configs.rust = {
-    name = 'rust_analyzer',
-    config = {},
-    root_dir = root_dirs({
+M.rust_analyzer = function (config)
+    config = config or {}
+    config.root_dir = root_dirs({
         'Cargo.toml',
         'rust-project.json',
         'main.rs',
         '.git',
     })
-}
+    return config
+end
 
--------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------
-return {
-    configs = lsp_configs
-}
+return M
 

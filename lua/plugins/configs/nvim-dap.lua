@@ -1,58 +1,60 @@
 local dap = require('dap')
-dap.adapters.cppdbg = {
-  id = 'cppdbg',
+
+-- - `DapBreakpoint` for breakpoints (default: `B`)
+-- - `DapBreakpointCondition` for conditional breakpoints (default: `C`)
+-- - `DapLogPoint` for log points (default: `L`)
+-- - `DapStopped` to indicate where the debugee is stopped (default: `→`)
+-- - `DapBreakpointRejected` to indicate breakpoints rejected by the debug
+--   adapter (default: `R`)
+
+vim.fn.sign_define('DapBreakpoint', {text='🔴', texthl='', linehl='', numhl=''})
+vim.fn.sign_define('DapBreakpointCondition', {text='🟠', texthl='', linehl='', numhl=''})
+vim.fn.sign_define('DapLogPoint', {text='🖊️', texthl='', linehl='', numhl=''})
+vim.fn.sign_define('DapStopped', {text='👉', texthl='', linehl='', numhl=''})
+vim.fn.sign_define('DapBreakpointRejected', {text='🚫', texthl='', linehl='', numhl=''})
+
+dap.defaults.fallback.external_terminal = {
+    command = '/usr/bin/kitty';
+    args = {};
+}
+
+
+local dap_adapter_dir = vim.fn.stdpath('data') .. '/dap_adapters'
+
+dap.adapters.node2 = {
   type = 'executable',
-  command = '/home/tlm/.vscode/extensions/ms-vscode.cpptools-1.7.1/debugAdapters/bin/OpenDebugAD7',
+  command = 'node',
+  args = {dap_adapter_dir .. '/vscode-node-debug2/out/src/nodeDebug.js'},
 }
-
-dap.configurations.cpp = {
+dap.configurations.javascript = {
   {
-    name = "Launch file",
-    type = "cppdbg",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopOnEntry = true,
-  },
-  {
-    name = 'Attach to gdbserver :1234',
-    type = 'cppdbg',
+    name = 'Launch',
+    type = 'node2',
     request = 'launch',
-    MIMode = 'gdb',
-    miDebuggerServerAddress = 'localhost:1234',
-    miDebuggerPath = '/usr/bin/gdb',
-    cwd = '${workspaceFolder}',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    console = 'integratedTerminal',
+  },
+  {
+    -- For this to work you need to make sure the node process is started with the `--inspect` flag.
+    name = 'Attach to process',
+    type = 'node2',
+    request = 'attach',
+    processId = require'dap.utils'.pick_process,
   },
 }
 
-
--- ~/.config/lvim/ftplugin/cpp.lua
-local dap_install = require "dap-install"
-dap_install.config("ccppr_vsc", {
-  adapters = {
-    type = "executable",
+dap.configurations.typescript = {
+  {
+    type = 'node2';
+    request = 'launch';
+    program = '/home/tlm/.nvm/versions/node/v14.19.3/bin/npm run {path}';
+    cwd = vim.fn.getcwd();
+    sourceMaps = true;
+    restart = true;
+    protocol = 'inspector';
+    console = 'integratedTerminal';
   },
-  configurations = {
-    {
-      type = "cpptools",
-      request = "launch",
-      name = "Launch with pretty-print",
-      program = function()
-        return vim.fn.input('Path to exe: ', vim.fn.getcwd() .. '/', 'file')
-      end,
-      cwd = "${workspaceFolder}",
-      stopOnEntry = true,
-      setupCommands = {
-        {
-          description = "Enable pretty-printing",
-          text = "-enable-pretty-printing",
-        }
-      }
-    },
-  }
-})
+}

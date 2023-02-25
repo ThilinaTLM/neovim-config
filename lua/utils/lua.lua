@@ -17,6 +17,21 @@ M.extend = function(target, ...)
     return target
 end
 
+
+--- Extends a array with a another array.
+---@param target table The table to extend.
+---@vararg table The tables to extend the target table with.
+---@return table The extended table.
+M.extend_arr = function(target, ...)
+    for i = 1, select("#", ...) do
+        local source = select(i, ...)
+        for _, value in ipairs(source) do
+            table.insert(target, value)
+        end
+    end
+    return target
+end
+
 --- Create new lua object with given meta type.
 -- if the provided object is function then wrapped object is callable
 ---@param meta_type string Meta type
