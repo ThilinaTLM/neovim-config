@@ -1,4 +1,3 @@
-
 local M = {}
 
 M.remote_trailling_whitespaces = function()
@@ -10,4 +9,3 @@ M.remote_trailling_whitespaces = function()
 end
 
 return M
-

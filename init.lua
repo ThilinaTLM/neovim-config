@@ -81,11 +81,15 @@ require('setup').keymaps(function (N, NL, V)
             N('<C-_>', ':CommentToggle<CR>'),
             V('<C-_>', ':CommentToggle<CR>'),
 
+            -- Terminal
+            N('<C-`>', ':ToggleTerm size=60 direction=vertical<CR>'),
+
             -- Runner
             N('<F5>', require('runner').run_project),
         },
     }
 end)
+
 
 vim.cmd [[
     augroup kitty_mp

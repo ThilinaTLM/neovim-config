@@ -15,12 +15,7 @@ M.remove_post_whitespaces = function ()
 end
 
 M.format = function ()
-    local ft = vim.bo.filetype
-    if ft == "lua" then
-        M.treesitter_format()
-    else
-        M.lsp_format()
-    end
+    M.lsp_format()
 end
 
 local auto_format_status = false
