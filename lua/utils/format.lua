@@ -1,31 +1,31 @@
 local M = {}
 
-M.lsp_format = function ()
+M.lsp_format = function()
     vim.lsp.buf.formatting()
 end
 
-M.treesitter_format = function ()
+M.treesitter_format = function()
     local pos = vim.api.nvim_win_get_cursor(0)
     vim.cmd("normal gg=G")
     vim.api.nvim_win_set_cursor(0, pos)
 end
 
-M.remove_post_whitespaces = function ()
+M.remove_post_whitespaces = function()
     pcall(vim.cmd, "%s/\\s\\+$//g")
 end
 
-M.format = function ()
+M.format = function()
     M.lsp_format()
 end
 
 local auto_format_status = false
-local auto_format_group = vim.api.nvim_create_augroup("auto_format", {clear = true})
+local auto_format_group = vim.api.nvim_create_augroup("auto_format", { clear = true })
 local auto_format_id = 0
 
-M.toggle_auto_format = function ()
+M.toggle_auto_format = function()
     if auto_format_status == false then
-        auto_format_id = vim.api.nvim_create_autocmd('BufWritePre',  {
-            callback = function ()
+        auto_format_id = vim.api.nvim_create_autocmd('BufWritePre', {
+            callback = function()
                 M.format()
                 vim.cmd(":w")
             end,
@@ -41,12 +41,12 @@ M.toggle_auto_format = function ()
 end
 
 local auto_trim_status = false
-local auto_trim_group = vim.api.nvim_create_augroup("auto_trim", {clear = true})
+local auto_trim_group = vim.api.nvim_create_augroup("auto_trim", { clear = true })
 local auto_trim_id = 0
 
-M.toggle_auto_trim = function ()
+M.toggle_auto_trim = function()
     if auto_trim_status == false then
-        auto_trim_id = vim.api.nvim_create_autocmd('BufWritePre',  {
+        auto_trim_id = vim.api.nvim_create_autocmd('BufWritePre', {
             callback = M.remove_post_whitespaces,
             group = auto_trim_group,
         })
@@ -60,5 +60,3 @@ M.toggle_auto_trim = function ()
 end
 
 return M
-
-
