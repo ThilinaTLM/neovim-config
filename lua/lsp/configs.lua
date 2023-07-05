@@ -2,7 +2,7 @@
 
 -- root dir pattern generator
 local function root_dirs(patterns)
-    return function (fname)
+    return function(fname)
         local util = require('lspconfig').util
         return util.root_pattern(unpack(patterns))(fname) or util.find_git_ancestor(fname) or util.path.dirname(fname)
     end
@@ -19,7 +19,7 @@ M.sumneko_lua = function(config)
                 path = vim.split(package.path, ';'),
             },
             diagnostics = {
-                globals = {'vim'},
+                globals = { 'vim' },
             },
             workspace = {
                 library = {
@@ -49,7 +49,13 @@ M.pylsp = function(config)
             },
             pydocstyle = {
                 enabled = true
-            }
+            },
+            pycodestyle = {
+                enabled = true,
+                ignore = { 'E501', 'E231' },
+                maxLineLength = 120
+            },
+
         }
     }
     config.root_dir = root_dirs({
@@ -63,7 +69,7 @@ M.pylsp = function(config)
     return config
 end
 
-M.gopls = function (config)
+M.gopls = function(config)
     config = config or {}
     config.root_dir = root_dirs({
         'go.mod',
@@ -76,7 +82,7 @@ end
 
 M.clangd = function(config)
     config = config or {}
-    config.cmd = config.cmd or {"clangd"}
+    config.cmd = config.cmd or { "clangd" }
     config.cmd = require("utils.lua").extend_arr(config.cmd, {
         "--background-index",
         "--compile-commands-dir=debug",
@@ -114,7 +120,7 @@ M.clangd = function(config)
     return config
 end
 
-M.rust_analyzer = function (config)
+M.rust_analyzer = function(config)
     config = config or {}
     config.root_dir = root_dirs({
         'Cargo.toml',
@@ -126,4 +132,3 @@ M.rust_analyzer = function (config)
 end
 
 return M
-
