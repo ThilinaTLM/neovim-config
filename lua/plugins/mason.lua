@@ -13,6 +13,8 @@ local function config()
     require'lspconfig'.rust_analyzer.setup(configs.rust_analyzer())
     require'lspconfig'.clangd.setup(configs.clangd())
     require'lspconfig'.gopls.setup(configs.gopls())
+    require'lspconfig'.jdtls.setup({})
+    require'lspconfig'.slint_lsp.setup({})
 end
 
 return {
