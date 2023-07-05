@@ -45,7 +45,7 @@ local plugs = {
 
     -- Enhancements
     {'sbdchd/neoformat'},
-    {'terrortylor/nvim-comment'},
+    {'terrortylor/nvim-comment', config = function () require('nvim_comment').setup() end},
     {
         'lewis6991/gitsigns.nvim',
         config = function () require('gitsigns').setup({}) end
