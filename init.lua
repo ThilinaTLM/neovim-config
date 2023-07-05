@@ -4,6 +4,7 @@ vim.g.mapleader = ' '
 -- options and plugins
 require('setup.options')
 require('setup.plugins')
+require('utils.globals')
 
 -- set theme
 vim.g.material_style = "darker"
@@ -22,8 +23,6 @@ require('setup').commands({
     DapUi = function() require('dapui').toggle() end,
     CB = function() require('dap').set_breakpoint(vim.fn.input('Condition: ')) end,
 })
-
-require('runner').setup({terminal = 'konsole'})
 
 require('setup').keymaps(function (N, NL, V)
     return {
@@ -99,3 +98,6 @@ vim.cmd [[
     augroup END
 ]]
 
+vim.cmd[[
+    au BufRead,BufNewFile *.slint set filetype=slint
+]]
